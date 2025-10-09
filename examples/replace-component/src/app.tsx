@@ -6,7 +6,7 @@ import {connect} from 'react-redux';
 import {Dispatch} from 'redux';
 import AutoSizer from 'react-virtualized/dist/commonjs/AutoSizer';
 import {addDataToMap, wrapTo} from '@kepler.gl/actions';
-import KeplerGl from '@kepler.gl/components';
+import KeplerGl from './kepler-gl-custom';
 import {RootState} from './types';
 import {jakartaSampleData, jakartaConfig} from './data/sample-data';
 
