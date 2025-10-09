@@ -2,9 +2,11 @@
   "name": "kepler.gl-replace-component-ts",
   "version": "0.1.0",
   "scripts": {
+    "prestart": "taskkill /F /IM node.exe 2>nul || echo No Node processes to kill",
     "start": "node esbuild.config.mjs --start",
     "build": "node esbuild.config.mjs --build",
     "start:local": "NODE_ENV=local node esbuild.config.mjs --start",
+    "start:clean": "npm run prestart && npm start",
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
