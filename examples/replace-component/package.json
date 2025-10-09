@@ -1,0 +1,48 @@
+{
+  "name": "kepler.gl-replace-component-ts",
+  "version": "0.1.0",
+  "scripts": {
+    "start": "node esbuild.config.mjs --start",
+    "build": "node esbuild.config.mjs --build",
+    "start:local": "NODE_ENV=local node esbuild.config.mjs --start",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@kepler.gl/actions": "^3.0.0",
+    "@kepler.gl/components": "^3.0.0",
+    "@kepler.gl/constants": "^3.0.0",
+    "@kepler.gl/reducers": "^3.0.0",
+    "@kepler.gl/schemas": "^3.0.0",
+    "@kepler.gl/utils": "^3.0.0",
+    "esbuild": "^0.19.0",
+    "global": "^4.3.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-palm": "^3.3.6",
+    "react-redux": "^8.1.0",
+    "react-virtualized": "^9.21.0",
+    "redux": "^4.2.1",
+    "redux-actions": "^2.2.1",
+    "styled-components": "^5.3.11"
+  },
+  "devDependencies": {
+    "@dotenv-run/esbuild": "^1.0.0",
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "@types/react-redux": "^7.1.25",
+    "@types/react-virtualized": "^9.21.0",
+    "@types/redux-actions": "^2.6.0",
+    "@types/styled-components": "^5.1.26",
+    "esbuild-plugin-copy": "^2.1.1",
+    "esbuild-plugin-replace": "^1.4.0",
+    "typescript": "^5.0.0"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "volta": {
+    "node": "18.18.2",
+    "yarn": "4.4.0"
+  },
+  "packageManager": "yarn@4.4.0"
+}
