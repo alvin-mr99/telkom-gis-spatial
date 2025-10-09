@@ -1,0 +1,33 @@
+{
+  "options": {
+    "paths": {
+      "root": "/data",
+      "fonts": "fonts",
+      "sprites": "sprites", 
+      "styles": "styles",
+      "mbtiles": "/data"
+    },
+    "serveAllFonts": true,
+    "serveStaticMaps": true,
+    "domains": ["localhost:8080", "127.0.0.1:8080"],
+    "maxzoom": 14,
+    "maxsize": 2048
+  },
+  "styles": {
+    "jakarta-population": {
+      "style": "jakarta-population.json",
+      "tilejson": {
+        "bounds": [106.7698, -6.3087, 106.8984, -6.1575],
+        "center": [106.8341, -6.2331, 11],
+        "format": "pbf",
+        "maxzoom": 14,
+        "minzoom": 8
+      }
+    }
+  },
+  "data": {
+    "jakarta-population": {
+      "mbtiles": "jakarta-population.mbtiles"
+    }
+  }
+}

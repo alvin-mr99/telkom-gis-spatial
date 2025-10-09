@@ -258,7 +258,7 @@ export const jakartaConfig = {
         building: true,
         water: true,
         land: true,
-        '3d building': false
+        '3d building': true
       },
       threeDBuildingColor: [9.665468314072013, 17.18305478057247, 31.1442867897876],
       mapStyles: {}

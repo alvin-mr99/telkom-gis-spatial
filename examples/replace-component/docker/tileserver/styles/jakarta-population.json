@@ -1,0 +1,46 @@
+{
+  "version": 8,
+  "name": "Jakarta Population Simple",
+  "center": [106.8341, -6.2331],
+  "zoom": 11,
+  "sources": {
+    "jakarta-population": {
+      "type": "vector",
+      "url": "http://localhost:8080/data/jakarta-population.json"
+    }
+  },
+  "sprite": "https://openmaptiles.github.io/osm-bright-gl-style/sprite",
+  "glyphs": "https://fonts.openmaptiles.org/{fontstack}/{range}.pbf",
+  "layers": [
+    {
+      "id": "background",
+      "type": "background",
+      "paint": {
+        "background-color": "#f8f4f0"
+      }
+    },
+    {
+      "id": "jakarta-population-circles",
+      "type": "circle",
+      "source": "jakarta-population",
+      "source-layer": "jakarta-population",
+      "paint": {
+        "circle-radius": 8,
+        "circle-color": [
+          "interpolate",
+          ["linear"],
+          ["get", "populasi"],
+          23400, "#0198BD",
+          28000, "#42C1BC", 
+          32000, "#9CE3B1",
+          36000, "#F5B272",
+          40000, "#EB7053",
+          41500, "#D50255"
+        ],
+        "circle-opacity": 0.8,
+        "circle-stroke-width": 1,
+        "circle-stroke-color": "#ffffff"
+      }
+    }
+  ]
+}

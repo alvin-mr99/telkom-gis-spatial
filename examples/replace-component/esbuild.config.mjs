@@ -26,7 +26,7 @@ const SRC_DIR = resolve(LIB_DIR, 'src');
 // Load environment variables from .env file
 dotenvConfig({path: resolve(LIB_DIR, '.env')});
 
-const port = 8080;
+const port = 8081;
 const NODE_ENV = JSON.stringify(process.env.NODE_ENV || 'production');
 
 // Add alias to serve from kepler src, resolve libraries so there is only one copy of them
