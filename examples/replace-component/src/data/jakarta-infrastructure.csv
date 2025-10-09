@@ -1,0 +1,26 @@
+id,name,type,latitude,longitude,height,status,description
+1,Building A,Office,-6.2088,106.8456,50,Active,Office Building in Central Jakarta
+2,Pole 001,Telecom,-6.2100,106.8470,15,Active,Telecommunication Pole near Plaza Indonesia
+3,Cable Route 1,Cable,-6.2095,106.8465,0,Active,Main fiber optic cable route
+4,ODC Jakarta 1,ODC,-6.2085,106.8450,3,Active,Optical Distribution Cabinet
+5,Manhole MH001,Manhole,-6.2090,106.8460,0,Active,Underground cable access point
+6,Building B,Residential,-6.2080,106.8440,30,Active,Residential Complex Menteng
+7,Pole 002,Telecom,-6.2105,106.8475,12,Active,Secondary telecom pole
+8,Conduit C001,Conduit,-6.2092,106.8462,0,Active,Underground conduit system
+9,Building C,Commercial,-6.2110,106.8480,45,Active,Commercial Building Thamrin
+10,ODC Jakarta 2,ODC,-6.2075,106.8445,3,Active,Secondary ODC location
+11,Pole 003,Telecom,-6.2115,106.8485,18,Active,Main distribution pole
+12,Cable Route 2,Cable,-6.2085,106.8455,0,Active,Secondary cable route
+13,Manhole MH002,Manhole,-6.2100,106.8470,0,Active,Junction manhole
+14,Building D,Mixed,-6.2120,106.8490,60,Active,Mixed-use development
+15,Conduit C002,Conduit,-6.2082,106.8452,0,Active,Branch conduit line
+16,Pole 004,Telecom,-6.2070,106.8435,14,Active,Coverage extension pole
+17,ODC Jakarta 3,ODC,-6.2125,106.8495,3,Active,Distribution cabinet east
+18,Building E,Office,-6.2130,106.8500,40,Active,Office Tower Sudirman
+19,Cable Route 3,Cable,-6.2072,106.8442,0,Active,Backup cable route
+20,Manhole MH003,Manhole,-6.2118,106.8488,0,Active,Service access point
+21,Pole 005,Telecom,-6.2135,106.8505,16,Active,Southern coverage pole
+22,Building F,Residential,-6.2065,106.8425,25,Active,Apartment Complex
+23,Conduit C003,Conduit,-6.2128,106.8498,0,Active,Main trunk conduit
+24,ODC Jakarta 4,ODC,-6.2068,106.8430,3,Active,Western distribution point
+25,Cable Route 4,Cable,-6.2132,106.8502,0,Active,Ring protection cable

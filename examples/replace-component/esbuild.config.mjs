@@ -40,7 +40,7 @@ process.env = cleanEnv;
 
 const port = parseInt(process.env.PORT) || 3001;
 const NODE_ENV = JSON.stringify(process.env.NODE_ENV || 'production');
-
+  
 // Add alias to serve from kepler src, resolve libraries so there is only one copy of them
 const RESOLVE_LOCAL_ALIASES = {
   react: `${NODE_MODULES_DIR}/react`,

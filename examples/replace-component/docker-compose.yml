@@ -1,0 +1,50 @@
+services:
+  tileserver:
+    build:
+      context: ./docker/tileserver
+      dockerfile: Dockerfile
+    container_name: jakarta-tileserver
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./src/data/jakarta-population-mvt/jakarta-population.mbtiles:/data/jakarta-population.mbtiles:ro
+    environment:
+      - NODE_ENV=production
+      - TILESERVER_GL_VERBOSE=true
+    restart: unless-stopped
+    networks:
+      - jakarta-network
+    healthcheck:
+      test: ["CMD-SHELL", "wget --no-verbose --tries=1 --spider http://localhost:8080/ || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
+
+  kepler-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: jakarta-kepler
+    ports:
+      - "3000:3000"
+    depends_on:
+      tileserver:
+        condition: service_healthy
+    environment:
+      - NODE_ENV=development
+      - REACT_APP_TILESERVER_URL=http://localhost:8080
+      - CHOKIDAR_USEPOLLING=true
+    volumes:
+      - .:/app
+      - /app/node_modules
+    networks:
+      - jakarta-network
+    restart: unless-stopped
+
+networks:
+  jakarta-network:
+    driver: bridge
+
+volumes:
+  node_modules:

@@ -1,0 +1,780 @@
+{
+    "type": "FeatureCollection",
+    "features": [
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    106.8318,
+                    -6.1950
+                ]
+            },
+            "properties": {
+                "kelurahan": "Menteng",
+                "kecamatan": "Menteng",
+                "kota": "Jakarta Pusat",
+                "populasi": 25430,
+                "kepadatan": 15800,
+                "luas_km2": 1.61,
+                "jumlah_kk": 7850,
+                "pria": 12650,
+                "wanita": 12780,
+                "usia_0_14": 4120,
+                "usia_15_64": 18200,
+                "usia_65_plus": 3110,
+                "tahun": 2024
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    106.8107,
+                    -6.1867
+                ]
+            },
+            "properties": {
+                "kelurahan": "Tanah Abang",
+                "kecamatan": "Tanah Abang",
+                "kota": "Jakarta Pusat",
+                "populasi": 32150,
+                "kepadatan": 18900,
+                "luas_km2": 1.70,
+                "jumlah_kk": 9450,
+                "pria": 16080,
+                "wanita": 16070,
+                "usia_0_14": 5890,
+                "usia_15_64": 22450,
+                "usia_65_plus": 3810,
+                "tahun": 2024
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    106.8275,
+                    -6.1751
+                ]
+            },
+            "properties": {
+                "kelurahan": "Gambir",
+                "kecamatan": "Gambir",
+                "kota": "Jakarta Pusat",
+                "populasi": 28900,
+                "kepadatan": 16500,
+                "luas_km2": 1.75,
+                "jumlah_kk": 8670,
+                "pria": 14500,
+                "wanita": 14400,
+                "usia_0_14": 5340,
+                "usia_15_64": 20100,
+                "usia_65_plus": 3460,
+                "tahun": 2024
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    106.8342,
+                    -6.1628
+                ]
+            },
+            "properties": {
+                "kelurahan": "Sawah Besar",
+                "kecamatan": "Sawah Besar",
+                "kota": "Jakarta Pusat",
+                "populasi": 31250,
+                "kepadatan": 19200,
+                "luas_km2": 1.63,
+                "jumlah_kk": 9380,
+                "pria": 15630,
+                "wanita": 15620,
+                "usia_0_14": 6150,
+                "usia_15_64": 21800,
+                "usia_65_plus": 3300,
+                "tahun": 2024
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    106.8984,
+                    -6.1575
+                ]
+            },
+            "properties": {
+                "kelurahan": "Kemayoran",
+                "kecamatan": "Kemayoran",
+                "kota": "Jakarta Pusat",
+                "populasi": 35600,
+                "kepadatan": 17300,
+                "luas_km2": 2.06,
+                "jumlah_kk": 10680,
+                "pria": 17800,
+                "wanita": 17800,
+                "usia_0_14": 7480,
+                "usia_15_64": 24500,
+                "usia_65_plus": 3620,
+                "tahun": 2024
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    106.8499,
+                    -6.1766
+                ]
+            },
+            "properties": {
+                "kelurahan": "Senen",
+                "kecamatan": "Senen",
+                "kota": "Jakarta Pusat",
+                "populasi": 29800,
+                "kepadatan": 18100,
+                "luas_km2": 1.65,
+                "jumlah_kk": 8940,
+                "pria": 14920,
+                "wanita": 14880,
+                "usia_0_14": 5960,
+                "usia_15_64": 20800,
+                "usia_65_plus": 3040,
+                "tahun": 2024
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    106.8707,
+                    -6.1679
+                ]
+            },
+            "properties": {
+                "kelurahan": "Cempaka Putih",
+                "kecamatan": "Cempaka Putih",
+                "kota": "Jakarta Pusat",
+                "populasi": 33450,
+                "kepadatan": 19800,
+                "luas_km2": 1.69,
+                "jumlah_kk": 10035,
+                "pria": 16730,
+                "wanita": 16720,
+                "usia_0_14": 6920,
+                "usia_15_64": 23100,
+                "usia_65_plus": 3430,
+                "tahun": 2024
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    106.8698,
+                    -6.1949
+                ]
+            },
+            "properties": {
+                "kelurahan": "Johar Baru",
+                "kecamatan": "Johar Baru",
+                "kota": "Jakarta Pusat",
+                "populasi": 36700,
+                "kepadatan": 20500,
+                "luas_km2": 1.79,
+                "jumlah_kk": 11010,
+                "pria": 18350,
+                "wanita": 18350,
+                "usia_0_14": 7710,
+                "usia_15_64": 25300,
+                "usia_65_plus": 3690,
+                "tahun": 2024
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    106.8504,
+                    -6.2285
+                ]
+            },
+            "properties": {
+                "kelurahan": "Menteng Dalam",
+                "kecamatan": "Tebet",
+                "kota": "Jakarta Selatan",
+                "populasi": 27850,
+                "kepadatan": 14200,
+                "luas_km2": 1.96,
+                "jumlah_kk": 8355,
+                "pria": 13930,
+                "wanita": 13920,
+                "usia_0_14": 5290,
+                "usia_15_64": 19600,
+                "usia_65_plus": 2960,
+                "tahun": 2024
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    106.8426,
+                    -6.2358
+                ]
+            },
+            "properties": {
+                "kelurahan": "Tebet Barat",
+                "kecamatan": "Tebet",
+                "kota": "Jakarta Selatan",
+                "populasi": 30200,
+                "kepadatan": 15600,
+                "luas_km2": 1.94,
+                "jumlah_kk": 9060,
+                "pria": 15110,
+                "wanita": 15090,
+                "usia_0_14": 6040,
+                "usia_15_64": 21200,
+                "usia_65_plus": 2960,
+                "tahun": 2024
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    106.8576,
+                    -6.2376
+                ]
+            },
+            "properties": {
+                "kelurahan": "Tebet Timur",
+                "kecamatan": "Tebet",
+                "kota": "Jakarta Selatan",
+                "populasi": 28950,
+                "kepadatan": 15100,
+                "luas_km2": 1.92,
+                "jumlah_kk": 8685,
+                "pria": 14480,
+                "wanita": 14470,
+                "usia_0_14": 5510,
+                "usia_15_64": 20300,
+                "usia_65_plus": 3140,
+                "tahun": 2024
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    106.8424,
+                    -6.2845
+                ]
+            },
+            "properties": {
+                "kelurahan": "Pasar Minggu",
+                "kecamatan": "Pasar Minggu",
+                "kota": "Jakarta Selatan",
+                "populasi": 41500,
+                "kepadatan": 12800,
+                "luas_km2": 3.24,
+                "jumlah_kk": 12450,
+                "pria": 20750,
+                "wanita": 20750,
+                "usia_0_14": 9130,
+                "usia_15_64": 28500,
+                "usia_65_plus": 3870,
+                "tahun": 2024
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    106.8395,
+                    -6.2957
+                ]
+            },
+            "properties": {
+                "kelurahan": "Kebagusan",
+                "kecamatan": "Pasar Minggu",
+                "kota": "Jakarta Selatan",
+                "populasi": 38200,
+                "kepadatan": 13500,
+                "luas_km2": 2.83,
+                "jumlah_kk": 11460,
+                "pria": 19100,
+                "wanita": 19100,
+                "usia_0_14": 8550,
+                "usia_15_64": 26100,
+                "usia_65_plus": 3550,
+                "tahun": 2024
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    106.8287,
+                    -6.2789
+                ]
+            },
+            "properties": {
+                "kelurahan": "Jati Padang",
+                "kecamatan": "Pasar Minggu",
+                "kota": "Jakarta Selatan",
+                "populasi": 35600,
+                "kepadatan": 14200,
+                "luas_km2": 2.51,
+                "jumlah_kk": 10680,
+                "pria": 17800,
+                "wanita": 17800,
+                "usia_0_14": 7830,
+                "usia_15_64": 24300,
+                "usia_65_plus": 3470,
+                "tahun": 2024
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    106.7885,
+                    -6.2867
+                ]
+            },
+            "properties": {
+                "kelurahan": "Cilandak Barat",
+                "kecamatan": "Cilandak",
+                "kota": "Jakarta Selatan",
+                "populasi": 32450,
+                "kepadatan": 11900,
+                "luas_km2": 2.73,
+                "jumlah_kk": 9735,
+                "pria": 16230,
+                "wanita": 16220,
+                "usia_0_14": 6980,
+                "usia_15_64": 22100,
+                "usia_65_plus": 3370,
+                "tahun": 2024
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    106.8048,
+                    -6.2934
+                ]
+            },
+            "properties": {
+                "kelurahan": "Cilandak Timur",
+                "kecamatan": "Cilandak",
+                "kota": "Jakarta Selatan",
+                "populasi": 34800,
+                "kepadatan": 12600,
+                "luas_km2": 2.76,
+                "jumlah_kk": 10440,
+                "pria": 17400,
+                "wanita": 17400,
+                "usia_0_14": 7530,
+                "usia_15_64": 23700,
+                "usia_65_plus": 3570,
+                "tahun": 2024
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    106.7752,
+                    -6.2895
+                ]
+            },
+            "properties": {
+                "kelurahan": "Lebak Bulus",
+                "kecamatan": "Cilandak",
+                "kota": "Jakarta Selatan",
+                "populasi": 29700,
+                "kepadatan": 10800,
+                "luas_km2": 2.75,
+                "jumlah_kk": 8910,
+                "pria": 14850,
+                "wanita": 14850,
+                "usia_0_14": 6520,
+                "usia_15_64": 20200,
+                "usia_65_plus": 2980,
+                "tahun": 2024
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    106.7942,
+                    -6.3087
+                ]
+            },
+            "properties": {
+                "kelurahan": "Pondok Labu",
+                "kecamatan": "Cilandak",
+                "kota": "Jakarta Selatan",
+                "populasi": 36900,
+                "kepadatan": 13400,
+                "luas_km2": 2.75,
+                "jumlah_kk": 11070,
+                "pria": 18450,
+                "wanita": 18450,
+                "usia_0_14": 8140,
+                "usia_15_64": 25100,
+                "usia_65_plus": 3660,
+                "tahun": 2024
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    106.7731,
+                    -6.2395
+                ]
+            },
+            "properties": {
+                "kelurahan": "Kebayoran Lama Utara",
+                "kecamatan": "Kebayoran Lama",
+                "kota": "Jakarta Selatan",
+                "populasi": 39600,
+                "kepadatan": 16800,
+                "luas_km2": 2.36,
+                "jumlah_kk": 11880,
+                "pria": 19800,
+                "wanita": 19800,
+                "usia_0_14": 8710,
+                "usia_15_64": 27000,
+                "usia_65_plus": 3890,
+                "tahun": 2024
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    106.7698,
+                    -6.2487
+                ]
+            },
+            "properties": {
+                "kelurahan": "Kebayoran Lama Selatan",
+                "kecamatan": "Kebayoran Lama",
+                "kota": "Jakarta Selatan",
+                "populasi": 37200,
+                "kepadatan": 15900,
+                "luas_km2": 2.34,
+                "jumlah_kk": 11160,
+                "pria": 18600,
+                "wanita": 18600,
+                "usia_0_14": 8190,
+                "usia_15_64": 25300,
+                "usia_65_plus": 3710,
+                "tahun": 2024
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    106.7825,
+                    -6.2298
+                ]
+            },
+            "properties": {
+                "kelurahan": "Grogol Utara",
+                "kecamatan": "Kebayoran Lama",
+                "kota": "Jakarta Selatan",
+                "populasi": 35800,
+                "kepadatan": 16200,
+                "luas_km2": 2.21,
+                "jumlah_kk": 10740,
+                "pria": 17900,
+                "wanita": 17900,
+                "usia_0_14": 7880,
+                "usia_15_64": 24400,
+                "usia_65_plus": 3520,
+                "tahun": 2024
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    106.7834,
+                    -6.2543
+                ]
+            },
+            "properties": {
+                "kelurahan": "Cipulir",
+                "kecamatan": "Kebayoran Lama",
+                "kota": "Jakarta Selatan",
+                "populasi": 33500,
+                "kepadatan": 15400,
+                "luas_km2": 2.17,
+                "jumlah_kk": 10050,
+                "pria": 16750,
+                "wanita": 16750,
+                "usia_0_14": 7370,
+                "usia_15_64": 22800,
+                "usia_65_plus": 3330,
+                "tahun": 2024
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    106.8023,
+                    -6.2432
+                ]
+            },
+            "properties": {
+                "kelurahan": "Melawai",
+                "kecamatan": "Kebayoran Baru",
+                "kota": "Jakarta Selatan",
+                "populasi": 26800,
+                "kepadatan": 17200,
+                "luas_km2": 1.56,
+                "jumlah_kk": 8040,
+                "pria": 13400,
+                "wanita": 13400,
+                "usia_0_14": 4820,
+                "usia_15_64": 18900,
+                "usia_65_plus": 3080,
+                "tahun": 2024
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    106.8145,
+                    -6.2389
+                ]
+            },
+            "properties": {
+                "kelurahan": "Petogogan",
+                "kecamatan": "Kebayoran Baru",
+                "kota": "Jakarta Selatan",
+                "populasi": 24950,
+                "kepadatan": 16800,
+                "luas_km2": 1.49,
+                "jumlah_kk": 7485,
+                "pria": 12480,
+                "wanita": 12470,
+                "usia_0_14": 4490,
+                "usia_15_64": 17600,
+                "usia_65_plus": 2860,
+                "tahun": 2024
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    106.8189,
+                    -6.2576
+                ]
+            },
+            "properties": {
+                "kelurahan": "Pulo",
+                "kecamatan": "Kebayoran Baru",
+                "kota": "Jakarta Selatan",
+                "populasi": 28300,
+                "kepadatan": 15900,
+                "luas_km2": 1.78,
+                "jumlah_kk": 8490,
+                "pria": 14150,
+                "wanita": 14150,
+                "usia_0_14": 5660,
+                "usia_15_64": 19800,
+                "usia_65_plus": 2840,
+                "tahun": 2024
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    106.7934,
+                    -6.2467
+                ]
+            },
+            "properties": {
+                "kelurahan": "Kramat Pela",
+                "kecamatan": "Kebayoran Baru",
+                "kota": "Jakarta Selatan",
+                "populasi": 31200,
+                "kepadatan": 17500,
+                "luas_km2": 1.78,
+                "jumlah_kk": 9360,
+                "pria": 15600,
+                "wanita": 15600,
+                "usia_0_14": 5850,
+                "usia_15_64": 21900,
+                "usia_65_plus": 3450,
+                "tahun": 2024
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    106.8009,
+                    -6.2254
+                ]
+            },
+            "properties": {
+                "kelurahan": "Senayan",
+                "kecamatan": "Kebayoran Baru",
+                "kota": "Jakarta Selatan",
+                "populasi": 23400,
+                "kepadatan": 14600,
+                "luas_km2": 1.60,
+                "jumlah_kk": 7020,
+                "pria": 11700,
+                "wanita": 11700,
+                "usia_0_14": 4210,
+                "usia_15_64": 16500,
+                "usia_65_plus": 2690,
+                "tahun": 2024
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    106.8507,
+                    -6.2134
+                ]
+            },
+            "properties": {
+                "kelurahan": "Manggarai",
+                "kecamatan": "Tebet",
+                "kota": "Jakarta Selatan",
+                "populasi": 32800,
+                "kepadatan": 18700,
+                "luas_km2": 1.75,
+                "jumlah_kk": 9840,
+                "pria": 16400,
+                "wanita": 16400,
+                "usia_0_14": 6890,
+                "usia_15_64": 22800,
+                "usia_65_plus": 3110,
+                "tahun": 2024
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    106.8178,
+                    -6.2754
+                ]
+            },
+            "properties": {
+                "kelurahan": "Pejaten Barat",
+                "kecamatan": "Pasar Minggu",
+                "kota": "Jakarta Selatan",
+                "populasi": 39800,
+                "kepadatan": 14500,
+                "luas_km2": 2.74,
+                "jumlah_kk": 11940,
+                "pria": 19900,
+                "wanita": 19900,
+                "usia_0_14": 8760,
+                "usia_15_64": 27100,
+                "usia_65_plus": 3940,
+                "tahun": 2024
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    106.8298,
+                    -6.2812
+                ]
+            },
+            "properties": {
+                "kelurahan": "Pejaten Timur",
+                "kecamatan": "Pasar Minggu",
+                "kota": "Jakarta Selatan",
+                "populasi": 37900,
+                "kepadatan": 13900,
+                "luas_km2": 2.73,
+                "jumlah_kk": 11370,
+                "pria": 18950,
+                "wanita": 18950,
+                "usia_0_14": 8330,
+                "usia_15_64": 25800,
+                "usia_65_plus": 3770,
+                "tahun": 2024
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    106.8234,
+                    -6.2589
+                ]
+            },
+            "properties": {
+                "kelurahan": "Mampang Prapatan",
+                "kecamatan": "Mampang Prapatan",
+                "kota": "Jakarta Selatan",
+                "populasi": 34700,
+                "kepadatan": 17800,
+                "luas_km2": 1.95,
+                "jumlah_kk": 10410,
+                "pria": 17350,
+                "wanita": 17350,
+                "usia_0_14": 7290,
+                "usia_15_64": 23900,
+                "usia_65_plus": 3510,
+                "tahun": 2024
+            }
+        }
+    ]
+}
