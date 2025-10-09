@@ -16,19 +16,31 @@ import {execSync} from 'node:child_process';
 import {fileURLToPath} from 'node:url';
 import {dirname} from 'node:path';
 import {reactVirtualizedPlugin} from './react-virtualized-plugin.mjs';
-import KeplerPackage from '../../package.json' assert {type: 'json'};
+
+const require = createRequire(import.meta.url);
+const KeplerPackage = require('../../package.json');
 
 const args = process.argv;
 const LIB_DIR = resolve('../../');
 const NODE_MODULES_DIR = resolve(LIB_DIR, 'node_modules');
 const SRC_DIR = resolve(LIB_DIR, 'src');
 
-// Load environment variables from .env file
+// Load environment variables from local .env file first, then global
+dotenvConfig({path: '.env'});
 dotenvConfig({path: resolve(LIB_DIR, '.env')});
 
-const port = 8081;
-const NODE_ENV = JSON.stringify(process.env.NODE_ENV || 'production');
+// Clean environment variables to avoid Windows path issues
+const cleanEnv = {};
+Object.keys(process.env).forEach(key => {
+  if (!key.includes('(') && !key.includes(')') && !key.includes(' ')) {
+    cleanEnv[key] = process.env[key];
+  }
+});
+process.env = cleanEnv;
 
+const port = parseInt(process.env.PORT) || 3001;
+const NODE_ENV = JSON.stringify(process.env.NODE_ENV || 'production');
+  
 // Add alias to serve from kepler src, resolve libraries so there is only one copy of them
 const RESOLVE_LOCAL_ALIASES = {
   react: `${NODE_MODULES_DIR}/react`,
@@ -86,7 +98,9 @@ const config = {
     'process.env.FoursquareDomain': JSON.stringify(process.env.FoursquareDomain || ''),
     'process.env.FoursquareAPIURL': JSON.stringify(process.env.FoursquareAPIURL || ''),
     'process.env.FoursquareUserMapsURL': JSON.stringify(process.env.FoursquareUserMapsURL || ''),
-    'process.env.NODE_DEBUG': JSON.stringify(false)
+    'process.env.NODE_DEBUG': JSON.stringify(false),
+    // Explicitly define global to avoid Windows env var issues
+    global: 'globalThis'
   },
   plugins: [
     // Custom plugin to fix react-virtualized missing export

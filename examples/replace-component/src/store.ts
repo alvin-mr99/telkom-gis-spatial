@@ -12,7 +12,16 @@ export interface RootState {
 }
 
 const rootReducer = combineReducers({
-  keplerGl: keplerGlReducer,
+  keplerGl: keplerGlReducer.initialState({
+    uiState: {
+      currentModal: null,
+      readOnly: false,
+      activeSidePanel: 'layer'
+    },
+    mapStyle: {
+      styleType: 'voyager'
+    }
+  }),
   app: appReducer
 });
 
