@@ -44,12 +44,17 @@ export const DEFAULT_FEATURE_FLAGS = {
 };
 
 export const CLOUD_PROVIDERS_CONFIGURATION = {
-  MAPBOX_TOKEN: process.env.MapboxAccessToken, // eslint-disable-line
-  DROPBOX_CLIENT_ID: process.env.DropboxClientId, // eslint-disable-line
-  EXPORT_MAPBOX_TOKEN: process.env.MapboxExportToken, // eslint-disable-line
-  CARTO_CLIENT_ID: process.env.CartoClientId, // eslint-disable-line
-  FOURSQUARE_CLIENT_ID: process.env.FoursquareClientId, // eslint-disable-line
-  FOURSQUARE_DOMAIN: process.env.FoursquareDomain, // eslint-disable-line
-  FOURSQUARE_API_URL: process.env.FoursquareAPIURL, // eslint-disable-line
-  FOURSQUARE_USER_MAPS_URL: process.env.FoursquareUserMapsURL // eslint-disable-line
+  // Use public MapBox token if not provided
+  MAPBOX_TOKEN: process.env.MapboxAccessToken || 'pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw',
+  DROPBOX_CLIENT_ID: process.env.DropboxClientId || '',
+  MAPBOX_EXPORT_TOKEN: process.env.MapboxExportToken || '',
+  CARTO_CLIENT_ID: process.env.CartoClientId || '',
+  CARTO_API_URL: process.env.CartoApiUrl || 'https://gcp-us-east1.api.carto.com',
+  FOURSQUARE_CLIENT_ID: process.env.FoursquareClientId || '',
+  FOURSQUARE_DOMAIN: process.env.FoursquareDomain || '',
+  FOURSQUARE_API_URL: process.env.FoursquareAPIURL || '',
+  FOURSQUARE_USER_MAPS_URL: process.env.FoursquareUserMapsURL || ''
 };
+
+// Set Carto as default cloud provider
+export const DEFAULT_CLOUD_PROVIDER = 'carto';

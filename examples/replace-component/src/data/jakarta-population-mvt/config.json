@@ -140,7 +140,7 @@
                 "building": true,
                 "water": true,
                 "land": true,
-                "3d building": false
+                "3d building": true
             },
             "threeDBuildingColor": [
                 9.665468314072013,
@@ -151,7 +151,7 @@
                 "custom": {
                     "accessToken": null,
                     "custom": true,
-                    "icon": "https://api.maptiler.com/maps/voyager/static/0,0,1/30x30.png?key=YOUR_MAPTILER_KEY",
+                    "icon": "https://api.maptiler.com/maps/voyager/static/0,0,1/30x30.png?key=fTJJzVpdrOiuvPhQVFv7",
                     "id": "custom",
                     "label": "Jakarta Population Voyager",
                     "url": "http://localhost:8080/styles/jakarta-population/style.json"

@@ -5,10 +5,9 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {Dispatch} from 'redux';
 import AutoSizer from 'react-virtualized/dist/commonjs/AutoSizer';
-import {addDataToMap, wrapTo} from '@kepler.gl/actions';
+import {addDataToMap, wrapTo, updateMap} from '@kepler.gl/actions';
 import KeplerGl from '@kepler.gl/components';
 import {RootState} from './types';
-import {jakartaSampleData, jakartaConfig} from './data/sample-data';
 
 interface AppProps {
   dispatch: Dispatch;
@@ -30,7 +29,139 @@ class App extends Component<AppProps, AppState> {
   }
 
   componentDidMount() {
-    // Load Jakarta sample data with Voyager map style
+    // Load konfigurasi dari config.json yang sudah ada dengan perbaikan tipe data
+    const jakartaMVTConfig = {
+      version: 'v1' as const,
+      config: {
+        visState: {
+          filters: [],
+          layers: [
+            {
+              id: 'jakarta-population-mvt',
+              type: 'vectorTile',
+              config: {
+                dataId: 'mvt_population_dataset_id',
+                label: 'Jakarta Population MVT',
+                color: [248, 149, 112] as [number, number, number],
+                highlightColor: [252, 242, 26, 255] as [number, number, number, number],
+                columns: {},
+                isVisible: true,
+                visConfig: {
+                  strokeColor: null,
+                  strokeOpacity: 0.8,
+                  radius: 8,
+                  radiusUnits: true,
+                  enable3d: false,
+                  stroked: true,
+                  transition: false,
+                  heightRange: [0, 500] as [number, number],
+                  elevationScale: 5,
+                  opacity: 0.85,
+                  colorRange: {
+                    name: 'Jakarta Population',
+                    type: 'custom',
+                    category: 'Custom',
+                    colors: [
+                      '#0198BD',
+                      '#42C1BC',
+                      '#9CE3B1',
+                      '#F5B272',
+                      '#EB7053',
+                      '#D50255'
+                    ]
+                  }
+                }
+              },
+              visualChannels: {
+                colorField: {
+                  name: 'populasi',
+                  type: 'real'
+                },
+                colorScale: 'quantile',
+                sizeField: {
+                  name: 'populasi',
+                  type: 'real'
+                },
+                sizeScale: 'sqrt'
+              }
+            }
+          ],
+          interactionConfig: {
+            tooltip: {
+              fieldsToShow: {
+                'mvt_population_dataset_id': [
+                  {name: 'kelurahan', format: null},
+                  {name: 'kecamatan', format: null},
+                  {name: 'kota', format: null},
+                  {name: 'populasi', format: null},
+                  {name: 'kepadatan', format: null},
+                  {name: 'luas_km2', format: null},
+                  {name: 'jumlah_kk', format: null}
+                ]
+              },
+              enabled: true,
+              compareMode: false,
+              compareType: 'absolute'
+            },
+            brush: {
+              size: 0.5,
+              enabled: false
+            },
+            geocoder: {
+              enabled: false
+            },
+            coordinate: {
+              enabled: false
+            }
+          },
+          layerBlending: 'normal',
+          splitMaps: [],
+          animationConfig: {
+            currentTime: null,
+            speed: 1
+          }
+        },
+        mapState: {
+          bearing: 0,
+          dragRotate: false,
+          latitude: -6.2331,
+          longitude: 106.8341,
+          pitch: 0,
+          zoom: 11,
+          isSplit: false
+        },
+        mapStyle: {
+          styleType: 'custom',
+          topLayerGroups: {},
+          visibleLayerGroups: {
+            label: true,
+            road: true,
+            border: false,
+            building: true,
+            water: true,
+            land: true,
+            '3d building': false
+          },
+          threeDBuildingColor: [9.665468314072013, 17.18305478057247, 31.1442867897876] as [number, number, number],
+          mapStyles: {
+            custom: {
+              accessToken: null,
+              custom: true,
+              icon: 'https://api.maptiler.com/maps/voyager/static/0,0,1/30x30.png?key=fTJJzVpdrOiuvPhQVFv7',
+              id: 'custom',
+              label: 'Jakarta Population Voyager',
+              url: 'http://localhost:8080/styles/jakarta-population/style.json'
+            }
+          }
+        },
+        uiState: {
+          readOnly: false,
+          currentModal: null
+        }
+      }
+    };
+
+    // Load MVT data dengan format yang benar untuk vector tiles
     this.props.dispatch(
       wrapTo(
         'map',
@@ -38,35 +169,40 @@ class App extends Component<AppProps, AppState> {
           datasets: [
             {
               info: {
-                label: 'Jakarta Points of Interest',
-                id: 'jakarta_poi'
+                label: 'Jakarta Population MVT',
+                id: 'mvt_population_dataset_id'
               },
               data: {
-                fields: [
-                  {name: 'id', type: 'integer'},
-                  {name: 'name', type: 'string'},
-                  {name: 'category', type: 'string'},
-                  {name: 'latitude', type: 'real'},
-                  {name: 'longitude', type: 'real'},
-                  {name: 'rating', type: 'real'},
-                  {name: 'description', type: 'string'}
-                ],
-                rows: jakartaSampleData.map(item => [
-                  item.id,
-                  item.name,
-                  item.category,
-                  item.latitude,
-                  item.longitude,
-                  item.rating,
-                  item.description
-                ])
+                // Untuk MVT, kita menggunakan format fields dan rows kosong
+                // karena data akan diambil langsung dari tile server
+                fields: [],
+                rows: [],
+                // Metadata MVT untuk kepler.gl
+                metadata: {
+                  url: 'http://localhost:8080/data/jakarta-population/{z}/{x}/{y}.pbf',
+                  layerName: 'jakarta-population'
+                }
               }
             }
           ],
-          config: jakartaConfig
+          config: jakartaMVTConfig
         })
       )
     );
+
+    // Set initial viewport to Jakarta
+    setTimeout(() => {
+      this.props.dispatch(
+        wrapTo(
+          'map',
+          updateMap({
+            latitude: -6.2331,
+            longitude: 106.8341,
+            zoom: 11
+          })
+        )
+      );
+    }, 1000);
   }
 
   render() {
