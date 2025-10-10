@@ -112,10 +112,16 @@ const config = {
     }),
     copyPlugin({
       resolveFrom: 'cwd',
-      assets: {
-        from: ['index.html'],
-        to: ['dist/index.html']
-      }
+      assets: [
+        {
+          from: ['index.html'],
+          to: ['dist/index.html']
+        },
+        {
+          from: ['src/styles/light-theme.css'],
+          to: ['dist/src/styles/light-theme.css']
+        }
+      ]
     })
   ]
 };
