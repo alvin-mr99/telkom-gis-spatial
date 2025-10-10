@@ -1,167 +1,31 @@
 {
-    "config": {
-        "visState": {
-            "filters": [],
-            "layers": [
-                {
-                    "id": "evkwpkh",
-                    "type": "vectorTile",
-                    "config": {
-                        "dataId": "mvt_population_dataset_id",
-                        "label": "Jakarta Population MVT",
-                        "color": [
-                            248,
-                            149,
-                            112
-                        ],
-                        "highlightColor": [
-                            252,
-                            242,
-                            26,
-                            255
-                        ],
-                        "columns": {},
-                        "isVisible": true,
-                        "visConfig": {
-                            "strokeColor": null,
-                            "strokeOpacity": 0.8,
-                            "radius": 8,
-                            "radiusUnits": true,
-                            "enable3d": false,
-                            "stroked": true,
-                            "transition": false,
-                            "heightRange": [
-                                0,
-                                500
-                            ],
-                            "elevationScale": 5,
-                            "opacity": 0.85,
-                            "colorRange": {
-                                "name": "Jakarta Population",
-                                "type": "custom",
-                                "category": "Custom",
-                                "colors": [
-                                    "#0198BD",
-                                    "#42C1BC",
-                                    "#9CE3B1",
-                                    "#F5B272",
-                                    "#EB7053",
-                                    "#D50255"
-                                ]
-                            }
-                        }
-                    },
-                    "visualChannels": {
-                        "colorField": {
-                            "name": "populasi",
-                            "type": "real"
-                        },
-                        "colorScale": "custom",
-                        "sizeField": {
-                            "name": "populasi",
-                            "type": "real"
-                        },
-                        "sizeScale": "sqrt"
-                    }
-                }
-            ],
-            "interactionConfig": {
-                "tooltip": {
-                    "fieldsToShow": {
-                        "mvt_population_dataset_id": [
-                            {
-                                "name": "kelurahan",
-                                "format": null
-                            },
-                            {
-                                "name": "kecamatan",
-                                "format": null
-                            },
-                            {
-                                "name": "kota",
-                                "format": null
-                            },
-                            {
-                                "name": "populasi",
-                                "format": null
-                            },
-                            {
-                                "name": "kepadatan",
-                                "format": null
-                            },
-                            {
-                                "name": "luas_km2",
-                                "format": null
-                            },
-                            {
-                                "name": "jumlah_kk",
-                                "format": null
-                            }
-                        ]
-                    },
-                    "enabled": true,
-                    "compareMode": false,
-                    "compareType": "absolute"
-                },
-                "brush": {
-                    "size": 0.5,
-                    "enabled": false
-                },
-                "geocoder": {
-                    "enabled": false
-                },
-                "coordinate": {
-                    "enabled": false
-                }
-            },
-            "layerBlending": "normal",
-            "splitMaps": [],
-            "animationConfig": {
-                "currentTime": null,
-                "speed": 1
-            }
-        },
-        "mapState": {
-            "bearing": 0,
-            "dragRotate": false,
-            "latitude": -6.2331,
-            "longitude": 106.8341,
-            "pitch": 0,
-            "zoom": 11,
-            "isSplit": false
-        },
-        "mapStyle": {
-            "styleType": "custom",
-            "topLayerGroups": {},
-            "visibleLayerGroups": {
-                "label": true,
-                "road": true,
-                "border": false,
-                "building": true,
-                "water": true,
-                "land": true,
-                "3d building": true
-            },
-            "threeDBuildingColor": [
-                9.665468314072013,
-                17.18305478057247,
-                31.1442867897876
-            ],
-            "mapStyles": {
-                "custom": {
-                    "accessToken": null,
-                    "custom": true,
-                    "icon": "https://api.maptiler.com/maps/voyager/static/0,0,1/30x30.png?key=fTJJzVpdrOiuvPhQVFv7",
-                    "id": "custom",
-                    "label": "Jakarta Population Voyager",
-                    "url": "http://localhost:8080/styles/jakarta-population/style.json"
-                }
-            }
-        },
-        "uiState": {
-            "readOnly": false,
-            "currentModal": null
+  "version": "v1",
+  "config": {
+    "visState": {
+      "filters": [],
+      "layers": [],
+      "interactionConfig": {
+        "tooltip": {
+          "enabled": true,
+          "fieldsToShow": {}
         }
+      }
     },
-    "version": "v1"
+    "mapState": {
+      "latitude": -6.2331,
+      "longitude": 106.8341,
+      "zoom": 11
+    },
+    "mapStyle": {
+      "styleType": "custom",
+      "mapStyles": {
+        "custom": {
+          "custom": true,
+          "id": "jakarta_population",
+          "label": "Jakarta Population Voyager",
+          "url": "http://localhost:8080/styles/jakarta-population/style.json"
+        }
+      }
+    }
+  }
 }

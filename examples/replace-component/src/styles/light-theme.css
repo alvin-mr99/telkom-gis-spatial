@@ -106,7 +106,7 @@ body {
    ======================================================= */
 .kepler-gl {
   font-family: var(--font-family-primary) !important;
-  background: var(--bg-secondary);
+  /* background: var(--bg-secondary); */
 }
 
 .kepler-gl .keplergl-top-bar {
@@ -128,486 +128,259 @@ body {
 }
 
 /* =======================================================
-   LEFT SIDE PANEL STYLING
+   SIDEBAR PANEL PUTIH - HANYA BACKGROUND CONTAINER
    ======================================================= */
+
+/* Sidebar container - HANYA background putih */
 .kepler-gl .side-panel--container {
-  background: linear-gradient(135deg, var(--white) 0%, var(--gray-50) 100%) !important;
-  border-right: 1px solid var(--border-light) !important;
-  box-shadow: var(--shadow-lg) !important;
-  backdrop-filter: blur(20px) !important;
-  transform: none !important;
-  height: 100% !important;
-  min-width: 360px !important;
+  background: #ffffff !important;
+  backdrop-filter: none !important;
+  border-right: 1px solid #e5e7eb !important;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
+  min-width: 380px !important;
   max-width: 420px !important;
+  border-radius: 0 !important;
+  overflow: hidden !important;
 }
 
+/* Header - putih bersih */
 .kepler-gl .side-panel__header {
-  background: linear-gradient(135deg, var(--white) 0%, var(--gray-50) 100%) !important;
-  border-bottom: 1px solid var(--border-light) !important;
-  padding: var(--space-6) var(--space-5) !important;
-  backdrop-filter: blur(10px) !important;
-  position: sticky !important;
-  top: 0 !important;
-  z-index: 100 !important;
-}
-
-.kepler-gl .side-panel__tab {
-  background: transparent !important;
-  border: 2px solid transparent !important;
-  border-radius: var(--radius-lg) !important;
-  color: var(--text-primary) !important;
-  font-weight: 500 !important;
-  font-size: 14px !important;
-  margin: 0 var(--space-1) !important;
-  padding: var(--space-3) var(--space-4) !important;
-  transition: all var(--transition-normal) !important;
+  background: #ffffff !important;
+  border-bottom: 1px solid #e5e7eb !important;
+  padding: 20px !important;
   position: relative !important;
-    overflow: hidden !important;
 }
 
-.kepler-gl .side-panel__tab::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(0, 123, 255, 0.1), transparent);
-  transition: left 0.5s;
+/* Content area - putih bersih */
+.kepler-gl .side-panel__content {
+  background: #ffffff !important;
+  padding: 20px !important;
+  color: #374151 !important;
+  overflow-y: auto !important;
+  scrollbar-width: thin !important;
+  scrollbar-color: rgba(148, 163, 184, 0.3) transparent !important;
+}
+
+/* Panel individual - putih bersih */
+.kepler-gl .side-panel__panel {
+  background: #ffffff !important;
+  border: 1px solid #e5e7eb !important;
+  border-radius: 8px !important;
+  margin: 8px 12px !important;
+  overflow: hidden !important;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1) !important;
+  transition: all 0.25s ease !important;
+}
+
+.kepler-gl .side-panel__panel:hover {
+  border-color: rgba(59, 130, 246, 0.3) !important;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Panel header - abu-abu terang untuk kontras */
+.kepler-gl .side-panel__panel-header {
+  background: #f9fafb !important;
+  border-bottom: 1px solid #e5e7eb !important;
+  color: #374151 !important;
+  font-weight: 600 !important;
+  font-size: 14px !important;
+  padding: 16px 20px !important;
+}
+
+/* =======================================================
+   PERTAHANKAN BUTTON STYLING YANG SUDAH BAGUS
+   ======================================================= */
+
+/* JANGAN UBAH - Tab styling tetap seperti sekarang */
+.kepler-gl .side-panel__tab {
+  /* Pertahankan styling yang sudah ada */
+  background: rgba(248, 250, 252, 0.6) !important;
+  border: 1px solid rgba(226, 232, 240, 0.8) !important;
+  border-radius: 10px !important;
+  color: #64748b !important;
+  font-weight: 500 !important;
+  font-size: 13px !important;
+  margin: 0 4px !important;
+  padding: 12px 16px !important;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  min-width: 60px !important;
+  min-height: 60px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  flex-direction: column !important;
+  gap: 6px !important;
 }
 
 .kepler-gl .side-panel__tab:hover {
-  background: var(--primary-blue-light) !important;
-  border-color: var(--primary-blue) !important;
-  color: var(--primary-blue) !important;
-  transform: translateY(-2px) !important;
-  box-shadow: var(--shadow-md) !important;
-}
-
-.kepler-gl .side-panel__tab:hover::before {
-  left: 100%;
+  background: rgba(239, 246, 255, 0.8) !important;
+  border-color: rgba(59, 130, 246, 0.3) !important;
+  color: #3b82f6 !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.15) !important;
 }
 
 .kepler-gl .side-panel__tab.active {
-  background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-blue-hover) 100%) !important;
-  border-color: var(--primary-blue) !important;
-  color: var(--white) !important;
-  box-shadow: var(--shadow-md) !important;
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%) !important;
+  border-color: #3b82f6 !important;
+  color: #ffffff !important;
   font-weight: 600 !important;
+  box-shadow: 0 6px 16px rgba(59, 130, 246, 0.25) !important;
+  transform: none !important;
 }
 
-.kepler-gl .side-panel__content {
-  background: var(--white) !important;
-  padding: var(--space-5) !important;
-  overflow-y: auto !important;
-}
-
-/* =======================================================
-   PANEL SECTIONS STYLING
-   ======================================================= */
-.kepler-gl .side-panel__panel {
-  background: var(--white) !important;
-  border-radius: var(--radius-lg) !important;
-  margin-bottom: var(--space-4) !important;
-  overflow: hidden !important;
-  box-shadow: var(--shadow-sm) !important;
-  border: 1px solid var(--border-light) !important;
-}
-
-.kepler-gl .side-panel__panel-header {
-  background: linear-gradient(135deg, var(--gray-50) 0%, var(--gray-100) 100%) !important;
-  border-bottom: 1px solid var(--border-light) !important;
-  color: var(--text-primary) !important;
-  font-weight: 600 !important;
-  font-size: 15px !important;
-  padding: var(--space-4) var(--space-5) !important;
-  display: flex !important;
-  align-items: center !important;
-  gap: var(--space-2) !important;
-}
-
-.kepler-gl .side-panel__panel-content {
-  padding: var(--space-5) !important;
-  background: var(--white) !important;
-}
-
-/* =======================================================
-   DATASET PANEL STYLING
-   ======================================================= */
-.kepler-gl .dataset-section {
-  margin-bottom: var(--space-6) !important;
-}
-
-.kepler-gl .dataset-title {
-  color: var(--text-primary) !important;
-  font-weight: 600 !important;
-  font-size: 16px !important;
-  margin-bottom: var(--space-4) !important;
-  display: flex !important;
-  align-items: center !important;
-  gap: var(--space-2) !important;
-}
-
-.kepler-gl .dataset-title::before {
-  content: '📊';
-  font-size: 18px;
-}
-
-/* Add Data Button */
+/* JANGAN UBAH - Button styling tetap seperti sekarang */
 .kepler-gl .add-data-button,
-.kepler-gl button[data-tip*="Add"],
-.kepler-gl .side-panel__panel-header button {
-  background: linear-gradient(135deg, var(--accent-green) 0%, var(--accent-green-hover) 100%) !important;
+.kepler-gl button[data-tip*="Add"] {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
+  color: #ffffff;
   border: none !important;
-  border-radius: var(--radius-md) !important;
-  color: var(--white) !important;
+  border-radius: 10px !important;
+  padding: 12px 18px !important;
   font-weight: 600 !important;
-  font-size: 14px !important;
-  padding: var(--space-3) var(--space-4) !important;
-  transition: all var(--transition-normal) !important;
-  box-shadow: var(--shadow-sm) !important;
+  font-size: 13px !important;
+  box-shadow: 0 3px 10px rgba(16, 185, 129, 0.2) !important;
+  transition: all 0.25s ease !important;
   cursor: pointer !important;
   display: flex !important;
   align-items: center !important;
-  gap: var(--space-2) !important;
+  gap: 8px !important;
 }
 
 .kepler-gl .add-data-button:hover,
 .kepler-gl button[data-tip*="Add"]:hover {
-  background: linear-gradient(135deg, var(--accent-green-hover) 0%, #155724 100%) !important;
-  transform: translateY(-2px) !important;
-  box-shadow: var(--shadow-md) !important;
+  background: linear-gradient(135deg, #059669 0%, #047857 100%) !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 6px 16px rgba(16, 185, 129, 0.3) !important;
 }
 
-/* =======================================================
-   LAYER PANEL STYLING
-   ======================================================= */
-.kepler-gl .layer-panel {
-  background: var(--white) !important;
-  border-radius: var(--radius-lg) !important;
-  margin-bottom: var(--space-4) !important;
-  box-shadow: var(--shadow-sm) !important;
-  border: 1px solid var(--border-light) !important;
-  overflow: hidden !important;
-}
-
-.kepler-gl .layer-panel__header {
-  background: linear-gradient(135deg, var(--gray-50) 0%, var(--gray-100) 100%) !important;
-  color: var(--text-primary) !important;
-  font-weight: 600 !important;
-  padding: var(--space-4) var(--space-5) !important;
-  border-bottom: 1px solid var(--border-light) !important;
-}
-
-.kepler-gl .layer-panel__config {
-  padding: var(--space-5) !important;
-  background: var(--white) !important;
-}
-
-/* Add Layer Button */
 .kepler-gl .add-layer-button,
 .kepler-gl button[data-tip*="layer"] {
-  background: linear-gradient(135deg, var(--accent-cyan) 0%, var(--accent-cyan-hover) 100%) !important;
+  background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%) !important;
+  color: #ffffff !important;
   border: none !important;
-  border-radius: var(--radius-md) !important;
-  color: var(--white) !important;
+  border-radius: 10px !important;
+  padding: 12px 18px !important;
   font-weight: 600 !important;
-  font-size: 14px !important;
-  padding: var(--space-3) var(--space-4) !important;
-  transition: all var(--transition-normal) !important;
-  box-shadow: var(--shadow-sm) !important;
-  cursor: pointer !important;
-  display: flex !important;
-  align-items: center !important;
-  gap: var(--space-2) !important;
+  font-size: 13px !important;
+  box-shadow: 0 3px 10px rgba(139, 92, 246, 0.2) !important;
+  transition: all 0.25s ease !important;
 }
 
 .kepler-gl .add-layer-button:hover {
-  background: linear-gradient(135deg, var(--accent-cyan-hover) 0%, #0f6674 100%) !important;
-  transform: translateY(-2px) !important;
-  box-shadow: var(--shadow-md) !important;
+  background: linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%) !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 6px 16px rgba(139, 92, 246, 0.3) !important;
+}
+
+/* JANGAN UBAH - Layer panel styling tetap seperti sekarang */
+.kepler-gl .layer-panel {
+  background: #ffffff !important;
+  border: 1px solid rgba(226, 232, 240, 0.5) !important;
+  border-radius: 12px !important;
+  margin-bottom: 12px !important;
+  overflow: hidden !important;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04) !important;
+  transition: all 0.25s ease !important;
+}
+
+.kepler-gl .layer-panel:hover {
+  border-color: rgba(59, 130, 246, 0.2) !important;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08) !important;
+}
+
+.kepler-gl .layer-panel__header {
+  background: #f9fafb !important;
+  color: #374151 !important;
+  font-weight: 600 !important;
+  font-size: 14px !important;
+  padding: 16px 20px !important;
+  border-bottom: 1px solid rgba(226, 232, 240, 0.5) !important;
+}
+
+.kepler-gl .layer-panel__config {
+  padding: 20px !important;
+  background: #ffffff !important;
 }
 
 /* =======================================================
-   FORM ELEMENTS STYLING
+   FORM ELEMENTS - PERTAHANKAN STYLING YANG BAGUS
    ======================================================= */
+
+/* JANGAN UBAH - Form element styling tetap seperti sekarang */
 .kepler-gl input[type="text"],
 .kepler-gl input[type="number"],
-.kepler-gl input[type="email"],
-.kepler-gl input[type="password"],
-.kepler-gl textarea,
-.kepler-gl select {
-  background: var(--white) !important;
-  border: 2px solid var(--border-light) !important;
-  border-radius: var(--radius-md) !important;
-  color: var(--text-primary) !important;
-  font-family: var(--font-family-primary) !important;
-  font-size: 14px !important;
-  padding: var(--space-3) var(--space-4) !important;
-  transition: all var(--transition-normal) !important;
-  width: 100% !important;
+.kepler-gl select,
+.kepler-gl textarea {
+  background: rgba(255, 255, 255, 0.8) !important;
+  border: 1px solid rgba(209, 213, 219, 0.6) !important;
+  border-radius: 8px !important;
+  color: #374151 !important;
+  font-size: 13px !important;
+  padding: 10px 12px !important;
+  transition: all 0.25s ease !important;
 }
 
-.kepler-gl input[type="text"]:focus,
-.kepler-gl input[type="number"]:focus,
-.kepler-gl input[type="email"]:focus,
-.kepler-gl input[type="password"]:focus,
-.kepler-gl textarea:focus,
-.kepler-gl select:focus {
-  border-color: var(--primary-blue) !important;
-  box-shadow: 0 0 0 3px var(--primary-blue-light) !important;
+.kepler-gl input:focus,
+.kepler-gl select:focus,
+.kepler-gl textarea:focus {
+  border-color: rgba(59, 130, 246, 0.5) !important;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1) !important;
   outline: none !important;
-}
-
-.kepler-gl input::placeholder,
-.kepler-gl textarea::placeholder {
-  color: var(--text-muted) !important;
-  font-style: italic !important;
-}
-
-/* Dropdown Styling */
-.kepler-gl .item-selector .item-selector__dropdown {
-  background: var(--white) !important;
-  border: 2px solid var(--border-light) !important;
-  border-radius: var(--radius-md) !important;
-  box-shadow: var(--shadow-lg) !important;
-}
-
-.kepler-gl .item-selector .item-selector__dropdown .list__item {
-  background: var(--white) !important;
-  color: var(--text-primary) !important;
-  padding: var(--space-3) var(--space-4) !important;
-  transition: all var(--transition-fast) !important;
-}
-
-.kepler-gl .item-selector .item-selector__dropdown .list__item:hover {
-  background: var(--primary-blue-light) !important;
-  color: var(--primary-blue) !important;
+  background: rgba(255, 255, 255, 0.95) !important;
 }
 
 /* =======================================================
-   BUTTON STYLING SYSTEM
+   SCROLLBAR - MINIMAL STYLING
    ======================================================= */
-.kepler-gl button,
-.kepler-gl .button {
-  border-radius: var(--radius-md) !important;
-  font-family: var(--font-family-primary) !important;
-  font-weight: 500 !important;
-  font-size: 14px !important;
-  padding: var(--space-3) var(--space-4) !important;
-  transition: all var(--transition-normal) !important;
-  cursor: pointer !important;
-  border: none !important;
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  gap: var(--space-2) !important;
-  text-decoration: none !important;
-  position: relative !important;
-  overflow: hidden !important;
+
+.kepler-gl .side-panel__content::-webkit-scrollbar {
+  width: 4px;
 }
 
-/* Primary Buttons */
-.kepler-gl .button--primary,
-.kepler-gl .primary-button {
-  background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-blue-hover) 100%) !important;
-  color: var(--white) !important;
-  box-shadow: var(--shadow-sm) !important;
+.kepler-gl .side-panel__content::-webkit-scrollbar-track {
+  background: transparent;
 }
 
-.kepler-gl .button--primary:hover,
-.kepler-gl .primary-button:hover {
-  background: linear-gradient(135deg, var(--primary-blue-hover) 0%, #004085 100%) !important;
-  transform: translateY(-2px) !important;
-  box-shadow: var(--shadow-md) !important;
+.kepler-gl .side-panel__content::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.3);
+  border-radius: 2px;
 }
 
-/* Secondary Buttons */
-.kepler-gl .button--secondary,
-.kepler-gl .secondary-button {
-  background: var(--white) !important;
-  color: var(--text-primary) !important;
-  border: 2px solid var(--border-light) !important;
-}
-
-.kepler-gl .button--secondary:hover,
-.kepler-gl .secondary-button:hover {
-  background: var(--gray-50) !important;
-  border-color: var(--primary-blue) !important;
-  color: var(--primary-blue) !important;
-  transform: translateY(-1px) !important;
-}
-
-/* Danger Buttons */
-.kepler-gl .button--delete,
-.kepler-gl .delete-button {
-  background: linear-gradient(135deg, var(--secondary-red) 0%, var(--secondary-red-hover) 100%) !important;
-  color: var(--white) !important;
-  box-shadow: var(--shadow-sm) !important;
-}
-
-.kepler-gl .button--delete:hover,
-.kepler-gl .delete-button:hover {
-  background: linear-gradient(135deg, var(--secondary-red-hover) 0%, #a71e2a 100%) !important;
-  transform: translateY(-2px) !important;
-  box-shadow: var(--shadow-md) !important;
+.kepler-gl .side-panel__content::-webkit-scrollbar-thumb:hover {
+  background: rgba(148, 163, 184, 0.5);
 }
 
 /* =======================================================
-   LAYER BLENDING CONTROLS
+   TEXT DI SIDEBAR - WARNA YANG READABLE
    ======================================================= */
-.kepler-gl .layer-blending__selector {
-  background: var(--white) !important;
-  border: 2px solid var(--border-light) !important;
-  border-radius: var(--radius-md) !important;
-  padding: var(--space-3) var(--space-4) !important;
-  font-family: var(--font-family-primary) !important;
-  color: var(--text-primary) !important;
-  transition: all var(--transition-normal) !important;
+
+.kepler-gl .side-panel__content label,
+.kepler-gl .side-panel__content span,
+.kepler-gl .side-panel__content p,
+.kepler-gl .side-panel__content div {
+  color: #374151 !important;
 }
 
-.kepler-gl .layer-blending__selector:focus {
-  border-color: var(--primary-blue) !important;
-  box-shadow: 0 0 0 3px var(--primary-blue-light) !important;
-  outline: none !important;
+.kepler-gl .side-panel__content h3,
+.kepler-gl .side-panel__content h4,
+.kepler-gl .side-panel__content .section-title {
+  color: #1f2937 !important;
+  font-weight: 600 !important;
 }
 
 /* =======================================================
-   RIGHT SIDE PANEL (MAP CONTROLS)
+   FIELD GROUPS - BACKGROUND PUTIH SUBTLE
    ======================================================= */
-.kepler-gl .map-control-panel {
-  background: var(--bg-overlay) !important;
-  backdrop-filter: blur(20px) !important;
-  border: 1px solid var(--border-light) !important;
-  border-radius: var(--radius-lg) !important;
-  box-shadow: var(--shadow-lg) !important;
-  padding: var(--space-4) !important;
-  margin: var(--space-4) !important;
-}
 
-.kepler-gl .map-control-button {
-  background: var(--white) !important;
-  border: 2px solid var(--border-light) !important;
-  border-radius: var(--radius-md) !important;
-  color: var(--text-primary) !important;
-  font-size: 16px !important;
-  height: 40px !important;
-  width: 40px !important;
-  margin: var(--space-1) 0 !important;
-  transition: all var(--transition-normal) !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  cursor: pointer !important;
-}
-
-.kepler-gl .map-control-button:hover {
-  background: var(--primary-blue-light) !important;
-  border-color: var(--primary-blue) !important;
-  color: var(--primary-blue) !important;
-  transform: scale(1.05) !important;
-  box-shadow: var(--shadow-md) !important;
-}
-
-.kepler-gl .map-control-button.active {
-  background: var(--primary-blue) !important;
-  border-color: var(--primary-blue) !important;
-  color: var(--white) !important;
-  box-shadow: var(--shadow-md) !important;
-}
-
-/* =======================================================
-   TOOLTIP STYLING
-   ======================================================= */
-.kepler-gl .tooltip {
-  background: var(--gray-900) !important;
-  border-radius: var(--radius-md) !important;
-  color: var(--white) !important;
-  font-family: var(--font-family-primary) !important;
-  font-size: 12px !important;
-  font-weight: 500 !important;
-  padding: var(--space-2) var(--space-3) !important;
-  box-shadow: var(--shadow-lg) !important;
-  backdrop-filter: blur(10px) !important;
-}
-
-/* =======================================================
-   MODAL STYLING
-   ======================================================= */
-.kepler-gl .modal-dialog {
-  background: var(--white) !important;
-  border-radius: var(--radius-xl) !important;
-  box-shadow: var(--shadow-xl) !important;
-  border: 1px solid var(--border-light) !important;
-  backdrop-filter: blur(20px) !important;
-}
-
-.kepler-gl .modal-header {
-  background: linear-gradient(135deg, var(--gray-50) 0%, var(--gray-100) 100%) !important;
-  border-bottom: 1px solid var(--border-light) !important;
-  padding: var(--space-6) !important;
-  border-radius: var(--radius-xl) var(--radius-xl) 0 0 !important;
-}
-
-.kepler-gl .modal-title {
-  color: var(--text-primary) !important;
-  font-family: var(--font-family-primary) !important;
-  font-weight: 700 !important;
-  font-size: 18px !important;
-  margin: 0 !important;
-}
-
-.kepler-gl .modal-body {
-  padding: var(--space-6) !important;
-  background: var(--white) !important;
-}
-
-.kepler-gl .modal-footer {
-  background: var(--gray-50) !important;
-  border-top: 1px solid var(--border-light) !important;
-  padding: var(--space-5) var(--space-6) !important;
-  border-radius: 0 0 var(--radius-xl) var(--radius-xl) !important;
-  display: flex !important;
-  gap: var(--space-3) !important;
-  justify-content: flex-end !important;
-}
-
-/* =======================================================
-   LOADING STATES
-   ======================================================= */
-.kepler-gl .loading-spinner {
-  border: 3px solid var(--border-light) !important;
-  border-top: 3px solid var(--primary-blue) !important;
-  border-radius: 50% !important;
-  animation: spin 1s linear infinite !important;
-}
-
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
-/* =======================================================
-   SCROLLBAR STYLING
-   ======================================================= */
-.kepler-gl ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
-
-.kepler-gl ::-webkit-scrollbar-track {
-  background: var(--gray-100);
-  border-radius: var(--radius-sm);
-}
-
-.kepler-gl ::-webkit-scrollbar-thumb {
-  background: var(--gray-400);
-  border-radius: var(--radius-sm);
-  transition: background var(--transition-normal);
-}
-
-.kepler-gl ::-webkit-scrollbar-thumb:hover {
-  background: var(--gray-500);
+.kepler-gl .side-panel__content .field-group,
+.kepler-gl .side-panel__content .form-group,
+.kepler-gl .side-panel__content .config-group {
+  background: #ffffff !important;
+  border: 1px solid #f3f4f6 !important;
+  border-radius: 6px !important;
+  padding: 16px !important;
+  margin: 8px 0 !important;
 }
 
 /* =======================================================
@@ -730,7 +503,7 @@ body {
   background: var(--primary-blue-light) !important;
   border-color: var(--primary-blue) !important;
   color: var(--primary-blue) !important;
-  transform: scale(1.08) translateY(-2px) !important;
+  transform: scale(1.05) !important;
   box-shadow: 0 12px 30px rgba(0, 123, 255, 0.25) !important;
 }
 
@@ -846,926 +619,475 @@ body {
 }
 
 /* =======================================================
-   RESPONSIVE ADJUSTMENTS
+   DROPDOWN FIXES - FORCE WHITE BACKGROUND
    ======================================================= */
 
-@media (max-width: 1024px) {
-  .kepler-gl .map-control .map-control-button {
-    height: 52px !important;
-    width: 52px !important;
-  }
-  
-  .kepler-gl .map-control .map-control-button svg {
-    width: 28px !important;
-    height: 28px !important;
-  }
-  
-  .kepler-gl .map-draw-controls .map-control-button {
-    height: 48px !important;
-    width: 48px !important;
-  }
-  
-  .kepler-gl .map-draw-controls .map-control-button svg {
-    width: 22px !important;
-    height: 22px !important;
-  }
+/* Force semua dropdown di sidebar jadi putih */
+.kepler-gl .side-panel__content .dropdown,
+.kepler-gl .side-panel__content .dropdown-select,
+.kepler-gl .side-panel__content .styled-dropdown,
+.kepler-gl .side-panel__content .item-selector,
+.kepler-gl .side-panel__content .field-selector,
+.kepler-gl .side-panel__content .map-style-selector,
+.kepler-gl .side-panel__content .base-map-selector {
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+  border: 1px solid #d1d5db !important;
+  border-radius: 6px !important;
+  color: #374151 !important;
 }
 
-@media (max-width: 768px) {
-  .kepler-gl .map-control,
-  .kepler-gl .map-draw-controls,
-  .kepler-gl .locale-selector {
-    right: 16px !important;
-  }
-  
-  .kepler-gl .map-control .map-control-button {
-    height: 48px !important;
-    width: 48px !important;
-  }
-  
-  .kepler-gl .map-control .map-control-button svg {
-    width: 24px !important;
-    height: 24px !important;
-  }
+/* Dropdown control/button */
+.kepler-gl .side-panel__content .dropdown__control,
+.kepler-gl .side-panel__content .dropdown-select__control,
+.kepler-gl .side-panel__content .styled-dropdown__control,
+.kepler-gl .side-panel__content .item-selector__dropdown,
+.kepler-gl .side-panel__content .field-selector__dropdown {
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+  border: 1px solid #d1d5db !important;
+  border-radius: 6px !important;
+  color: #374151 !important;
+  min-height: 40px !important;
+  padding: 8px 12px !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
+}
+
+.kepler-gl .side-panel__content .dropdown__control:hover,
+.kepler-gl .side-panel__content .dropdown-select__control:hover,
+.kepler-gl .side-panel__content .styled-dropdown__control:hover {
+  border-color: #3b82f6 !important;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1) !important;
+}
+
+/* Dropdown value text */
+.kepler-gl .side-panel__content .dropdown__single-value,
+.kepler-gl .side-panel__content .dropdown-select__single-value,
+.kepler-gl .side-panel__content .styled-dropdown__single-value,
+.kepler-gl .side-panel__content .dropdown__placeholder,
+.kepler-gl .side-panel__content .dropdown-select__placeholder,
+.kepler-gl .side-panel__content .styled-dropdown__placeholder {
+  color: #374151 !important;
+  font-size: 13px !important;
+}
+
+/* Dropdown indicator (arrow) */
+.kepler-gl .side-panel__content .dropdown__indicator,
+.kepler-gl .side-panel__content .dropdown-select__indicator,
+.kepler-gl .side-panel__content .styled-dropdown__indicator,
+.kepler-gl .side-panel__content .dropdown__dropdown-indicator,
+.kepler-gl .side-panel__content .dropdown-select__dropdown-indicator {
+  color: #6b7280 !important;
+}
+
+/* Dropdown menu (options list) */
+.kepler-gl .side-panel__content .dropdown__menu,
+.kepler-gl .side-panel__content .dropdown-select__menu,
+.kepler-gl .side-panel__content .styled-dropdown__menu {
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+  border: 1px solid #d1d5db !important;
+  border-radius: 6px !important;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
+  z-index: 1000 !important;
+  margin-top: 4px !important;
+}
+
+/* Dropdown options */
+.kepler-gl .side-panel__content .dropdown__option,
+.kepler-gl .side-panel__content .dropdown-select__option,
+.kepler-gl .side-panel__content .styled-dropdown__option {
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+  color: #374151 !important;
+  padding: 10px 12px !important;
+  border-bottom: 1px solid #f3f4f6 !important;
+  cursor: pointer !important;
+  font-size: 13px !important;
+  transition: all 0.2s ease !important;
+}
+
+.kepler-gl .side-panel__content .dropdown__option:hover,
+.kepler-gl .side-panel__content .dropdown-select__option:hover,
+.kepler-gl .side-panel__content .styled-dropdown__option:hover,
+.kepler-gl .side-panel__content .dropdown__option--is-focused,
+.kepler-gl .side-panel__content .dropdown-select__option--is-focused,
+.kepler-gl .side-panel__content .styled-dropdown__option--is-focused {
+  background: #f9fafb !important;
+  background-color: #f9fafb !important;
+  color: #374151 !important;
+}
+
+.kepler-gl .side-panel__content .dropdown__option--is-selected,
+.kepler-gl .side-panel__content .dropdown-select__option--is-selected,
+.kepler-gl .side-panel__content .styled-dropdown__option--is-selected {
+  background: #eff6ff !important;
+  background-color: #eff6ff !important;
+  color: #1d4ed8 !important;
+  font-weight: 500 !important;
 }
 
 /* =======================================================
-   ENHANCED BLUE UI ELEMENTS
+   MAP STYLE DROPDOWN KHUSUS
    ======================================================= */
 
-/* Side panel header and close button */
-.kepler-gl .side-panel__header {
-  background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-blue-hover) 100%) !important;
-  color: var(--white) !important;
-  padding: 20px !important;
-  border-radius: 16px 16px 0 0 !important;
-  box-shadow: 0 4px 15px rgba(0, 123, 255, 0.2) !important;
-}
-
-.kepler-gl .side-panel__header .side-panel__close {
-  color: var(--white) !important;
-  font-size: 28px !important;
-  font-weight: 300 !important;
-  width: 40px !important;
-  height: 40px !important;
-  border-radius: 12px !important;
+/* Map style item container - yang berbentuk kotak dengan preview */
+.kepler-gl .side-panel__content .map-style-item,
+.kepler-gl .side-panel__content .base-map-item,
+.kepler-gl .side-panel__content .layer-style-item {
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+  border: 1px solid #e5e7eb !important;
+  border-radius: 6px !important;
+  padding: 8px !important;
+  margin: 4px 0 !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
   display: flex !important;
   align-items: center !important;
-  justify-content: center !important;
-  transition: all 0.3s ease !important;
+  gap: 12px !important;
 }
 
-.kepler-gl .side-panel__header .side-panel__close:hover {
-  background: rgba(255, 255, 255, 0.2) !important;
-  transform: rotate(90deg) scale(1.1) !important;
+.kepler-gl .side-panel__content .map-style-item:hover,
+.kepler-gl .side-panel__content .base-map-item:hover,
+.kepler-gl .side-panel__content .layer-style-item:hover {
+  border-color: #3b82f6 !important;
+  background: #f9fafb !important;
+  background-color: #f9fafb !important;
 }
 
-/* Blue action buttons */
-.kepler-gl button[class*="primary"],
-.kepler-gl .primary-button,
-.kepler-gl .blue-button {
-  background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-blue-hover) 100%) !important;
-  border: 2px solid var(--primary-blue) !important;
-  color: var(--white) !important;
-  border-radius: 12px !important;
-  padding: 14px 24px !important;
-  font-weight: 600 !important;
-  font-size: 14px !important;
-  letter-spacing: 0.5px !important;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
-  box-shadow: 0 6px 20px rgba(0, 123, 255, 0.25) !important;
-  cursor: pointer !important;
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  gap: 8px !important;
-  min-height: 44px !important;
+.kepler-gl .side-panel__content .map-style-item.selected,
+.kepler-gl .side-panel__content .base-map-item.selected,
+.kepler-gl .side-panel__content .layer-style-item.selected {
+  border-color: #3b82f6 !important;
+  background: #eff6ff !important;
+  background-color: #eff6ff !important;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2) !important;
 }
 
-.kepler-gl button[class*="primary"]:hover,
-.kepler-gl .primary-button:hover,
-.kepler-gl .blue-button:hover {
-  background: linear-gradient(135deg, var(--primary-blue-hover) 0%, #0056d6 100%) !important;
-  transform: translateY(-2px) scale(1.02) !important;
-  box-shadow: 0 12px 30px rgba(0, 123, 255, 0.35) !important;
+/* Map style preview image */
+.kepler-gl .side-panel__content .map-style-item img,
+.kepler-gl .side-panel__content .base-map-item img,
+.kepler-gl .side-panel__content .layer-style-item img {
+  border-radius: 4px !important;
+  border: 1px solid #e5e7eb !important;
+  width: 48px !important;
+  height: 36px !important;
+  object-fit: cover !important;
 }
 
-/* Blue icons in the interface */
-.kepler-gl .icon,
-.kepler-gl svg[fill*="blue"],
-.kepler-gl svg[stroke*="blue"] {
-  color: var(--primary-blue) !important;
-  fill: var(--primary-blue) !important;
-  stroke: var(--primary-blue) !important;
-  width: 24px !important;
-  height: 24px !important;
-  stroke-width: 2.5 !important;
-}
-
-/* Layer management icons */
-.kepler-gl .layer-panel .layer-config__header svg,
-.kepler-gl .layer-panel .layer-configurator svg {
-  width: 22px !important;
-  height: 22px !important;
-  color: var(--primary-blue) !important;
-  stroke-width: 2.5 !important;
-}
-
-/* Filter panel icons */
-.kepler-gl .filter-panel svg,
-.kepler-gl .filter-panel .filter-config svg {
-  width: 20px !important;
-  height: 20px !important;
-  color: var(--primary-blue) !important;
-  stroke-width: 2.5 !important;
-}
-
-/* Data table icons */
-.kepler-gl .data-table svg,
-.kepler-gl .table-header svg {
-  width: 18px !important;
-  height: 18px !important;
-  color: var(--primary-blue) !important;
-  stroke-width: 2.5 !important;
-}
-
-/* Modal and dialog blue elements */
-.kepler-gl .modal-dialog-header {
-  background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-blue-hover) 100%) !important;
-  color: var(--white) !important;
-  padding: 20px 24px !important;
-  border-radius: 16px 16px 0 0 !important;
-}
-
-.kepler-gl .modal-dialog-header h3,
-.kepler-gl .modal-dialog-header .modal-title {
-  color: var(--white) !important;
-  font-size: 18px !important;
-  font-weight: 600 !important;
-  margin: 0 !important;
-}
-
-/* Toggle switches and checkboxes */
-.kepler-gl .toggle-switch.checked,
-.kepler-gl .checkbox:checked {
-  background: var(--primary-blue) !important;
-  border-color: var(--primary-blue) !important;
-}
-
-.kepler-gl .toggle-switch.checked::after {
-  background: var(--white) !important;
-}
-
-/* Progress bars and sliders */
-.kepler-gl .progress-bar-fill,
-.kepler-gl .slider-track-fill {
-  background: linear-gradient(90deg, var(--primary-blue) 0%, var(--primary-blue-hover) 100%) !important;
-}
-
-.kepler-gl .slider-handle {
-  background: var(--primary-blue) !important;
-  border: 3px solid var(--white) !important;
-  box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3) !important;
-}
-
-/* Tags and badges */
-.kepler-gl .tag,
-.kepler-gl .badge,
-.kepler-gl .chip {
-  background: var(--primary-blue-light) !important;
-  color: var(--primary-blue) !important;
-  border: 1px solid var(--primary-blue) !important;
-  border-radius: 20px !important;
-  padding: 6px 12px !important;
-  font-size: 12px !important;
+/* Map style text */
+.kepler-gl .side-panel__content .map-style-item span,
+.kepler-gl .side-panel__content .base-map-item span,
+.kepler-gl .side-panel__content .layer-style-item span {
+  color: #374151 !important;
+  font-size: 13px !important;
   font-weight: 500 !important;
 }
 
-/* Active states for tabs and navigation */
-.kepler-gl .tab.active,
-.kepler-gl .nav-item.active {
-  color: var(--primary-blue) !important;
-  border-bottom-color: var(--primary-blue) !important;
-  background: var(--primary-blue-light) !important;
-}
-
-/* Blue accent borders and highlights */
-.kepler-gl .highlight-blue,
-.kepler-gl .border-blue {
-  border-color: var(--primary-blue) !important;
-  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.2) !important;
-}
-
 /* =======================================================
-   FIX BLACK BACKGROUND ISSUES - COMPREHENSIVE OVERRIDES
+   FORCE OVERRIDE UNTUK ELEMEN GELAP YANG MEMBANDEL
    ======================================================= */
 
-/* Force all dropdown and select elements to use light theme */
-.kepler-gl select,
-.kepler-gl .item-selector,
-.kepler-gl .item-selector__dropdown,
-.kepler-gl .dropdown,
-.kepler-gl .dropdown-select,
-.kepler-gl .layer-blending__selector,
-.kepler-gl .map-overlay-blending__selector {
-  background: var(--white) !important;
-  background-color: var(--white) !important;
-  color: var(--text-primary) !important;
-  border: 1px solid var(--border-light) !important;
-  border-radius: var(--radius-md) !important;
-  padding: 8px 12px !important;
-  font-family: var(--font-family-primary) !important;
-  font-size: 14px !important;
-  appearance: none !important;
-  -webkit-appearance: none !important;
-  -moz-appearance: none !important;
+/* Nuclear option untuk elemen yang masih gelap */
+.kepler-gl .side-panel__content [style*="background-color: rgb(47, 52, 64)"],
+.kepler-gl .side-panel__content [style*="background-color: rgb(59, 65, 82)"],
+.kepler-gl .side-panel__content [style*="background-color: #2f3440"],
+.kepler-gl .side-panel__content [style*="background-color: #3b4152"],
+.kepler-gl .side-panel__content [style*="background: rgb(47, 52, 64)"],
+.kepler-gl .side-panel__content [style*="background: rgb(59, 65, 82)"],
+.kepler-gl .side-panel__content [style*="background: #2f3440"],
+.kepler-gl .side-panel__content [style*="background: #3b4152"] {
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+  color: #374151 !important;
 }
 
-/* Force all option elements to use light theme */
-.kepler-gl select option,
-.kepler-gl option,
-.kepler-gl .list__item,
-.kepler-gl .dropdown-item {
-  background: var(--white) !important;
-  background-color: var(--white) !important;
-  color: var(--text-primary) !important;
+/* Force white untuk semua child elements di dalam sidebar */
+.kepler-gl .side-panel__content div[style*="background"],
+.kepler-gl .side-panel__content span[style*="background"],
+.kepler-gl .side-panel__content button[style*="background"] {
+  background-color: #ffffff !important;
+  color: #374151 !important;
 }
 
-/* Override any dark styling on focus */
-.kepler-gl select:focus,
-.kepler-gl .item-selector:focus,
-.kepler-gl .dropdown:focus {
-  background: var(--white) !important;
-  background-color: var(--white) !important;
-  color: var(--text-primary) !important;
-  border-color: var(--primary-blue) !important;
-  outline: none !important;
-  box-shadow: 0 0 0 2px var(--primary-blue-light) !important;
-}
-
-/* Fix hover states */
-.kepler-gl select:hover,
-.kepler-gl .item-selector:hover,
-.kepler-gl .dropdown:hover {
-  background: var(--bg-secondary) !important;
-  background-color: var(--bg-secondary) !important;
-  color: var(--text-primary) !important;
-}
-
-/* Force all form elements to light theme */
-.kepler-gl input,
-.kepler-gl textarea,
-.kepler-gl .input-field,
-.kepler-gl .text-input {
-  background: var(--white) !important;
-  background-color: var(--white) !important;
-  color: var(--text-primary) !important;
-  border: 1px solid var(--border-light) !important;
-}
-
-/* Override any remaining dark elements */
-.kepler-gl *[style*="background: black"],
-.kepler-gl *[style*="background-color: black"],
-.kepler-gl *[style*="background: #000"],
-.kepler-gl *[style*="background-color: #000"] {
-  background: var(--white) !important;
-  background-color: var(--white) !important;
-  color: var(--text-primary) !important;
-}
-
-/* Specific fixes for Kepler.gl components */
-.kepler-gl .side-panel select,
-.kepler-gl .layer-panel select,
-.kepler-gl .filter-panel select,
-.kepler-gl .interaction-panel select {
-  background: var(--white) !important;
-  background-color: var(--white) !important;
-  color: var(--text-primary) !important;
-  border: 1px solid var(--border-light) !important;
-}
-
-/* Fix any nested dark elements */
-.kepler-gl .side-panel *,
-.kepler-gl .layer-panel *,
-.kepler-gl .filter-panel *,
-.kepler-gl .interaction-panel * {
-  color: var(--text-primary) !important;
-}
-
-/* Ensure dropdowns and selects have proper styling */
-.kepler-gl .layer-blending select,
-.kepler-gl .map-overlay-blending select {
-  background: var(--white) !important;
-  background-color: var(--white) !important;
-  color: var(--text-primary) !important;
-  border: 1px solid var(--border-light) !important;
-  border-radius: var(--radius-md) !important;
-  padding: 8px 12px !important;
-}
-
-/* =======================================================
-   COMPREHENSIVE PANEL AND LAYER LIGHT MODE FIXES
-   ======================================================= */
-
-/* Fix all panel containers to light theme */
-.kepler-gl .layer-panel,
-.kepler-gl .layer-panel__content,
-.kepler-gl .layer-panel__header,
-.kepler-gl .layer-configurator,
-.kepler-gl .layer-config,
-.kepler-gl .layer-config__content,
-.kepler-gl .layer-config__header,
-.kepler-gl .layer-type-selector,
-.kepler-gl .layer-type-option {
-  background: var(--white) !important;
-  background-color: var(--white) !important;
-  color: var(--text-primary) !important;
-}
-
-/* Fix filter panels */
-.kepler-gl .filter-panel,
-.kepler-gl .filter-panel__content,
-.kepler-gl .filter-panel__header,
-.kepler-gl .filter-manager,
-.kepler-gl .filter-config,
-.kepler-gl .filter-config__content {
-  background: var(--white) !important;
-  background-color: var(--white) !important;
-  color: var(--text-primary) !important;
-}
-
-/* Fix interaction panels */
-.kepler-gl .interaction-panel,
-.kepler-gl .interaction-panel__content,
-.kepler-gl .interaction-panel__header,
-.kepler-gl .interaction-config,
-.kepler-gl .tooltip-config,
-.kepler-gl .brush-config,
-.kepler-gl .geocoder-panel,
-.kepler-gl .coordinate-panel {
-  background: var(--white) !important;
-  background-color: var(--white) !important;
-  color: var(--text-primary) !important;
-}
-
-/* Fix map manager panels */
-.kepler-gl .map-manager,
-.kepler-gl .map-manager__panel,
-.kepler-gl .map-style-panel,
-.kepler-gl .map-style-selector {
-  background: var(--white) !important;
-  background-color: var(--white) !important;
-  color: var(--text-primary) !important;
-}
-
-/* Fix side panel sections */
-.kepler-gl .side-panel__section,
-.kepler-gl .side-panel__section-header,
-.kepler-gl .side-panel__section-content,
-.kepler-gl .panel-section,
-.kepler-gl .panel-header,
-.kepler-gl .panel-content,
-.kepler-gl .panel-body {
-  background: var(--white) !important;
-  background-color: var(--white) !important;
-  color: var(--text-primary) !important;
-  border: none !important;
-}
-
-/* Fix any cards or containers */
-.kepler-gl .layer-card,
-.kepler-gl .filter-card,
-.kepler-gl .config-card,
-.kepler-gl .data-table-container,
-.kepler-gl .data-container {
-  background: var(--white) !important;
-  background-color: var(--white) !important;
-  color: var(--text-primary) !important;
-  border: 1px solid var(--border-light) !important;
-  border-radius: var(--radius-md) !important;
-}
-
-/* Fix titles and labels in panels */
-.kepler-gl .panel-title,
-.kepler-gl .section-title,
-.kepler-gl .layer-title,
-.kepler-gl .filter-title,
-.kepler-gl .config-title,
-.kepler-gl .field-header,
-.kepler-gl .field-label,
-.kepler-gl .layer-config__title,
-.kepler-gl .filter-config__title {
-  color: var(--text-primary) !important;
-  font-weight: 600 !important;
-  background: transparent !important;
-}
-
-/* Fix any buttons in panels */
-.kepler-gl .panel-header-action,
-.kepler-gl .layer-panel-header__action,
-.kepler-gl .filter-panel-header__action,
-.kepler-gl .config-button,
-.kepler-gl .panel-button {
-  background: var(--white) !important;
-  color: var(--primary-blue) !important;
-  border: 1px solid var(--border-light) !important;
-  border-radius: var(--radius-sm) !important;
-}
-
-/* Fix toggles and switches */
-.kepler-gl .switch,
-.kepler-gl .toggle,
-.kepler-gl .checkbox,
-.kepler-gl .radio {
-  background: var(--white) !important;
-  border: 1px solid var(--border-light) !important;
-}
-
-/* Fix specific layer type options */
-.kepler-gl .layer-type-option__label,
-.kepler-gl .layer-type-option__icon {
-  color: var(--text-primary) !important;
-}
-
-/* Fix any remaining dark backgrounds with higher specificity */
-.kepler-gl div[style*="background"],
-.kepler-gl section[style*="background"],
-.kepler-gl article[style*="background"] {
-  background: var(--white) !important;
-  color: var(--text-primary) !important;
-}
-
-/* =======================================================
-   BASE MAP PANEL SPECIFIC FIXES
-   ======================================================= */
-
-/* Fix Map Style selector */
-.kepler-gl .map-style-panel,
-.kepler-gl .map-style-panel__content,
-.kepler-gl .map-style-selector,
-.kepler-gl .map-style-selector__content,
-.kepler-gl .map-style-selector__dropdown {
-  background: var(--white) !important;
-  background-color: var(--white) !important;
-  color: var(--text-primary) !important;
-  border: 1px solid var(--border-light) !important;
-  border-radius: var(--radius-md) !important;
-}
-
-/* Fix Map Layers panel */
-.kepler-gl .map-layers-panel,
-.kepler-gl .map-layers-panel__content,
-.kepler-gl .map-layer-selector,
-.kepler-gl .map-layer-group,
-.kepler-gl .map-layer-item,
-.kepler-gl .layer-group,
-.kepler-gl .layer-group__header,
-.kepler-gl .layer-group__content {
-  background: var(--white) !important;
-  background-color: var(--white) !important;
-  color: var(--text-primary) !important;
-}
-
-/* Fix specific map layer controls */
-.kepler-gl .map-layer-control,
-.kepler-gl .layer-visibility-toggle,
-.kepler-gl .layer-opacity-slider,
-.kepler-gl .layer-config-group {
-  background: var(--white) !important;
-  background-color: var(--white) !important;
-  color: var(--text-primary) !important;
-}
-
-/* Fix base map specific elements */
-.kepler-gl .base-map-panel,
-.kepler-gl .base-map-selector,
-.kepler-gl .map-style-option,
-.kepler-gl .map-style-item {
-  background: var(--white) !important;
-  background-color: var(--white) !important;
-  color: var(--text-primary) !important;
-  border: 1px solid var(--border-light) !important;
-}
-
-/* Fix Voyager dropdown and similar selectors */
-.kepler-gl .style-selector,
-.kepler-gl .style-selector__dropdown,
-.kepler-gl .style-option,
-.kepler-gl .style-item {
-  background: var(--white) !important;
-  background-color: var(--white) !important;
-  color: var(--text-primary) !important;
-  border: 1px solid var(--border-light) !important;
-  border-radius: var(--radius-md) !important;
-}
-
-/* Fix layer visibility and controls */
-.kepler-gl .layer-item,
-.kepler-gl .layer-item__content,
-.kepler-gl .layer-item__header,
-.kepler-gl .layer-visibility,
-.kepler-gl .layer-visibility__toggle {
-  background: var(--white) !important;
-  background-color: var(--white) !important;
-  color: var(--text-primary) !important;
-}
-
-/* Fix any remaining dropdowns in base map */
-.kepler-gl .base-map-panel select,
-.kepler-gl .map-style-panel select,
-.kepler-gl .map-layers-panel select {
-  background: var(--white) !important;
-  background-color: var(--white) !important;
-  color: var(--text-primary) !important;
-  border: 1px solid var(--border-light) !important;
-  border-radius: var(--radius-md) !important;
-  padding: 8px 12px !important;
-}
-
-/* Force override for any inline styles */
-.kepler-gl [style*="background-color: rgb(55, 63, 81)"],
-.kepler-gl [style*="background-color: rgb(47, 53, 66)"],
-.kepler-gl [style*="background-color: #373f51"],
-.kepler-gl [style*="background-color: #2f3542"],
-.kepler-gl [style*="background: rgb(55, 63, 81)"],
-.kepler-gl [style*="background: rgb(47, 53, 66)"],
-.kepler-gl [style*="background: #373f51"],
-.kepler-gl [style*="background: #2f3542"] {
-  background: var(--white) !important;
-  background-color: var(--white) !important;
-  color: var(--text-primary) !important;
-}
-
-/* =======================================================
-   ULTIMATE LIGHT MODE FORCE OVERRIDE
-   ======================================================= */
-
-/* Re-apply specific styling for buttons and interactive elements */
-.kepler-gl button,
-.kepler-gl .button,
-.kepler-gl .btn {
-  background: var(--primary-blue) !important;
-  color: var(--white) !important;
-  border: none !important;
-  border-radius: var(--radius-md) !important;
-  padding: var(--space-3) var(--space-4) !important;
-  font-weight: 500 !important;
-  cursor: pointer !important;
-  transition: all var(--transition-normal) !important;
-}
-
-.kepler-gl button:hover,
-.kepler-gl .button:hover,
-.kepler-gl .btn:hover {
-  background: var(--primary-blue-hover) !important;
-  transform: translateY(-1px) !important;
-}
-
-/* Re-apply styling for Add buttons */
-.kepler-gl .add-data-button,
-.kepler-gl .add-layer-button,
-.kepler-gl .add-filter-button,
-.kepler-gl .add-map-style-button {
-  background: var(--accent-green) !important;
-  color: var(--white) !important;
-}
-
-.kepler-gl .add-data-button:hover,
-.kepler-gl .add-layer-button:hover,
-.kepler-gl .add-filter-button:hover,
-.kepler-gl .add-map-style-button:hover {
-  background: var(--accent-green-hover) !important;
-}
-
-/* Re-apply borders for containers */
-.kepler-gl .side-panel--container,
-.kepler-gl .panel,
-.kepler-gl .card,
-.kepler-gl .section {
-  border: 1px solid var(--border-light) !important;
-  border-radius: var(--radius-lg) !important;
-  box-shadow: var(--shadow-sm) !important;
-}
-
-/* Re-apply input styling */
-.kepler-gl input,
-.kepler-gl select,
-.kepler-gl textarea {
-  background: var(--white) !important;
-  color: var(--text-primary) !important;
-  border: 1px solid var(--border-light) !important;
-  border-radius: var(--radius-md) !important;
-  padding: var(--space-2) var(--space-3) !important;
-}
-
-/* Re-apply focus states */
-.kepler-gl input:focus,
-.kepler-gl select:focus,
-.kepler-gl textarea:focus {
-  border-color: var(--primary-blue) !important;
-  box-shadow: 0 0 0 2px var(--primary-blue-light) !important;
-  outline: none !important;
-}
-
-/* Re-apply header styling */
-.kepler-gl .side-panel__header {
-  background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-blue-hover) 100%) !important;
-  color: var(--white) !important;
-  padding: var(--space-5) !important;
-  border-radius: var(--radius-lg) var(--radius-lg) 0 0 !important;
-}
-
-/* Re-apply specific dark elements that should stay dark */
-.kepler-gl .map-container,
-.kepler-gl .map-view,
-.kepler-gl .mapboxgl-map {
-  background: #f0f0f0 !important;
-}
-
-/* Ensure icons stay visible */
-.kepler-gl svg,
-.kepler-gl .icon {
-  fill: currentColor !important;
+/* Specific override untuk element yang menggunakan inline styles */
+.kepler-gl .side-panel__content * {
+  background-color: transparent !important;
   color: inherit !important;
 }
 
-/* =======================================================
-   SIDE PANEL TAB STYLING - WHITE BACKGROUND & BLACK ICONS
-   ======================================================= */
-
-/* Force the main side panel header background to white */
-.kepler-gl .side-panel__header,
-.kepler-gl .side-panel-header,
-.kepler-gl .side-panel__top {
-  background: var(--white) !important;
-  background-color: var(--white) !important;
-  border-bottom: 1px solid var(--border-light) !important;
-}
-
-/* Style the tab container with white background */
-.kepler-gl .side-panel__tab,
-.kepler-gl .side-panel-tab,
-.kepler-gl [class*="side-panel"] [class*="tab"],
-.kepler-gl .side-bar__inner {
-  background: var(--white) !important;
-  background-color: var(--white) !important;
-  border: 1px solid var(--border-light) !important;
-  border-radius: var(--radius-md) !important;
-  padding: var(--space-4) !important;
-  margin: var(--space-2) !important;
-  min-width: 60px !important;
-  min-height: 60px !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-}
-
-/* Make all icons in tabs black and larger for visibility */
-.kepler-gl .side-panel__tab svg,
-.kepler-gl .side-panel-tab svg,
-.kepler-gl [class*="side-panel"] [class*="tab"] svg,
-.kepler-gl .side-panel__tab .icon,
-.kepler-gl .side-panel-tab .icon,
-.kepler-gl [class*="side-panel"] [class*="tab"] .icon,
-.kepler-gl .side-bar__inner svg {
-  fill: #000000 !important;
-  color: #000000 !important;
-  stroke: #000000 !important;
-  width: 25px !important;
-  height: 25px !important;
-  font-size: 25px !important;
- 
-}
-
-/* Target all SVG paths in tabs and make them larger */
-.kepler-gl .side-panel__tab svg path,
-.kepler-gl .side-panel-tab svg path,
-.kepler-gl [class*="side-panel"] [class*="tab"] svg path,
-.kepler-gl .side-bar__inner svg path {
-  fill: #000000 !important;
-  stroke: #000000 !important;
-  stroke-width: 2px !important;
-}
-
-/* Ensure side panel content has white background */
-.kepler-gl .side-panel__content,
-.kepler-gl .side-panel-content,
-.kepler-gl .side-panel__body {
-  background: var(--white) !important;
-  background-color: var(--white) !important;
-}
-
-/* Make all icons in side panel content black */
-.kepler-gl .side-panel__content svg,
-.kepler-gl .side-panel-content svg,
-.kepler-gl .side-panel__body svg,
-.kepler-gl .side-panel__content .icon,
-.kepler-gl .side-panel-content .icon,
-.kepler-gl .side-panel__body .icon {
-  fill: #000000 !important;
-  color: #000000 !important;
-  stroke: #000000 !important;
-}
-
-/* Target all SVG paths in side panel content */
-.kepler-gl .side-panel__content svg path,
-.kepler-gl .side-panel-content svg path,
-.kepler-gl .side-panel__body svg path {
-  fill: #000000 !important;
-  stroke: #000000 !important;
-}
-
-/* Exception: Keep button icons with their proper colors */
-.kepler-gl .side-panel button svg,
-.kepler-gl .side-panel button svg path {
-  fill: currentColor !important;
-  stroke: currentColor !important;
-  color: currentColor !important;
+.kepler-gl .side-panel__content > *,
+.kepler-gl .side-panel__content .side-panel__panel > *,
+.kepler-gl .side-panel__content .side-panel__panel-content > * {
+  background-color: #ffffff !important;
+  color: #374151 !important;
 }
 
 /* =======================================================
-   FORCE WHITE BACKGROUND FOR ENTIRE HEADER SECTION
+   LAYER BLENDING & MAP OVERLAY SPECIFIC FIXES
    ======================================================= */
 
-/* Force all header-related elements to white background */
-.kepler-gl .side-panel__header,
-.kepler-gl .side-panel-header,
-.kepler-gl .side-panel__top,
-.kepler-gl .side-bar,
-.kepler-gl .side-bar__inner,
-.kepler-gl .side-bar__close,
-.kepler-gl [class*="side-panel-header"],
-.kepler-gl [class*="side-bar"] {
-  background: var(--white) !important;
-  background-color: var(--white) !important;
+/* Layer Blending section */
+.kepler-gl .side-panel__content .layer-blending-selector,
+.kepler-gl .side-panel__content .layer-blending,
+.kepler-gl .side-panel__content [class*="layerBlending"],
+.kepler-gl .side-panel__content [class*="LayerBlending"] {
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+  color: #374151 !important;
+  border: 1px solid #e5e7eb !important;
+  border-radius: 6px !important;
+  padding: 12px !important;
+  margin: 8px 0 !important;
 }
 
-/* Override any dark styling on the tab container */
-.kepler-gl div[class*="side-panel"][class*="header"],
-.kepler-gl div[class*="side-bar"] {
-  background: var(--white) !important;
-  background-color: var(--white) !important;
+/* Map Overlay Blending section */
+.kepler-gl .side-panel__content .map-overlay-blending,
+.kepler-gl .side-panel__content .overlay-blending,
+.kepler-gl .side-panel__content [class*="mapBlending"],
+.kepler-gl .side-panel__content [class*="MapBlending"] {
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+  color: #374151 !important;
+  border: 1px solid #e5e7eb !important;
+  border-radius: 6px !important;
+  padding: 12px !important;
+  margin: 8px 0 !important;
 }
 
-/* Make icons in header area larger and black */
-.kepler-gl .side-panel__header svg,
-.kepler-gl .side-bar svg,
-.kepler-gl .side-bar__inner svg {
-  width: 24px !important;
-  height: 24px !important;
-  fill: #000000 !important;
-  color: #000000 !important;
-  stroke: #000000 !important;
-}
-
-/* Ensure all paths in header icons are black and visible */
-.kepler-gl .side-panel__header svg path,
-.kepler-gl .side-bar svg path,
-.kepler-gl .side-bar__inner svg path {
-  fill: #000000 !important;
-  stroke: #000000 !important;
-  stroke-width: 2px !important;
-}
-
-/* =======================================================
-   DROPDOWN MENU AND CONTENT VISIBILITY FIXES
-   ======================================================= */
-
-/* Fix dropdown menus and their content visibility */
-.kepler-gl .dropdown,
-.kepler-gl .dropdown-menu,
-.kepler-gl .item-selector__dropdown,
-.kepler-gl .layer-blending__selector,
-.kepler-gl .map-overlay-blending__selector {
-  background: var(--white) !important;
-  background-color: var(--white) !important;
-  color: var(--text-primary) !important;
-  border: 1px solid var(--border-light) !important;
-  border-radius: var(--radius-md) !important;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
-  z-index: 9999 !important;
-  position: relative !important;
+/* Text labels di blending sections */
+.kepler-gl .side-panel__content .layer-blending label,
+.kepler-gl .side-panel__content .map-overlay-blending label,
+.kepler-gl .side-panel__content [class*="blending"] label {
+  color: #374151 !important;
+  font-weight: 600 !important;
+  font-size: 14px !important;
+  margin-bottom: 8px !important;
   display: block !important;
-  visibility: visible !important;
-  opacity: 1 !important;
 }
 
-/* Fix dropdown items */
-.kepler-gl .dropdown-item,
-.kepler-gl .list__item,
-.kepler-gl .item-selector__dropdown .list__item,
-.kepler-gl select option {
-  background: var(--white) !important;
-  background-color: var(--white) !important;
-  color: var(--text-primary) !important;
+/* Dropdown di dalam blending sections */
+.kepler-gl .side-panel__content .layer-blending select,
+.kepler-gl .side-panel__content .map-overlay-blending select,
+.kepler-gl .side-panel__content [class*="blending"] select {
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+  color: #374151 !important;
+  border: 1px solid #d1d5db !important;
+  border-radius: 6px !important;
   padding: 8px 12px !important;
-  border: none !important;
-  display: block !important;
   width: 100% !important;
-  text-align: left !important;
+  font-size: 13px !important;
+}
+
+/* =======================================================
+   SELECT ELEMENT SPECIFIC FIXES
+   ======================================================= */
+
+/* Native select elements */
+.kepler-gl .side-panel__content select {
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+  color: #374151 !important;
+  border: 1px solid #d1d5db !important;
+  border-radius: 6px !important;
+  padding: 8px 12px !important;
+  font-size: 13px !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
+  
+  /* Remove default select styling */
+  -webkit-appearance: none !important;
+  -moz-appearance: none !important;
+  appearance: none !important;
+  
+  /* Add custom arrow */
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e") !important;
+  background-position: right 8px center !important;
+  background-repeat: no-repeat !important;
+  background-size: 16px !important;
+  padding-right: 40px !important;
+}
+
+.kepler-gl .side-panel__content select:focus {
+  border-color: #3b82f6 !important;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1) !important;
+  outline: none !important;
+}
+
+/* Select option elements */
+.kepler-gl .side-panel__content select option {
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+  color: #374151 !important;
+  padding: 8px 12px !important;
+}
+
+/* =======================================================
+   NUCLEAR FIX - PAKSA SEMUA JADI PUTIH
+   ======================================================= */
+
+/* Force SEMUA elemen di dalam sidebar content jadi putih */
+.kepler-gl .side-panel__content *:not(svg):not(path):not(circle):not(rect):not(line):not(polyline):not(polygon) {
+  background-color: white !important;
+}
+
+/* Khusus untuk container utama */
+.kepler-gl .side-panel__content > div,
+.kepler-gl .side-panel__content > section,
+.kepler-gl .side-panel__content .panel-content,
+.kepler-gl .side-panel__content .layer-blending,
+.kepler-gl .side-panel__content .map-overlay-blending,
+.kepler-gl .side-panel__content [class*="blending"],
+.kepler-gl .side-panel__content [class*="Blending"] {
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+}
+
+/* Dropdown yang membandel - paksa inline style */
+.kepler-gl .side-panel__content select[style],
+.kepler-gl .side-panel__content div[style*="background"] select,
+.kepler-gl .side-panel__content [style*="background-color"] {
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+  color: #374151 !important;
+}
+
+/* Khusus untuk dropdown yang ada di Layer Blending */
+.kepler-gl .side-panel__content .layer-blending select[style],
+.kepler-gl .side-panel__content [class*="blending"] select[style] {
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+  border: 1px solid #d1d5db !important;
+  color: #374151 !important;
+}
+
+/* Override untuk semua div yang punya inline background dark */
+.kepler-gl .side-panel__content div[style*="background-color: rgb(47"],
+.kepler-gl .side-panel__content div[style*="background-color: rgb(59"],
+.kepler-gl .side-panel__content div[style*="background-color: rgb(29"],
+.kepler-gl .side-panel__content div[style*="background-color: #2f"],
+.kepler-gl .side-panel__content div[style*="background-color: #3b"],
+.kepler-gl .side-panel__content div[style*="background-color: #1d"],
+.kepler-gl .side-panel__content div[style*="rgb(47, 52, 64)"],
+.kepler-gl .side-panel__content div[style*="rgb(59, 65, 82)"],
+.kepler-gl .side-panel__content div[style*="rgb(29, 34, 47)"] {
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+}
+
+/* Text di dalam elemen gelap harus tetap readable */
+.kepler-gl .side-panel__content div[style*="background-color"] *,
+.kepler-gl .side-panel__content [style*="background-color"] * {
+  color: #374151 !important;
+}
+
+/* Khusus section title yang masih gelap */
+.kepler-gl .side-panel__content .section-title,
+.kepler-gl .side-panel__content h3,
+.kepler-gl .side-panel__content h4,
+.kepler-gl .side-panel__content .panel-title {
+  background: transparent !important;
+  color: #1f2937 !important;
+  font-weight: 600 !important;
+}
+
+/* Tab bar yang ada di atas (Layers, Filters, etc) */
+.kepler-gl .side-bar__tab-container,
+.kepler-gl .side-bar__tabs {
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+}
+
+/* Individual tabs di sidebar */
+.kepler-gl .side-bar__tab {
+  background: #f9fafb !important;
+  color: #6b7280 !important;
+}
+
+.kepler-gl .side-bar__tab:hover {
+  background: #eff6ff !important;
+  color: #3b82f6 !important;
+}
+
+.kepler-gl .side-bar__tab.active,
+.kepler-gl .side-bar__tab[class*="active"] {
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%) !important;
+  color: #ffffff !important;
+}
+
+.sc-knUjZZ.eBhgHr.side-side-panel__header__bottom {
+  background: #ffffff !important;
+}
+
+.list__item .selected .list__item {
+  background: #ffffff !important;
+}
+
+.sc-ejCKsa.grPAUi.list-selector.list-selector {
+  background: #ffffff !important;
+  color: #374151 !important;
+}
+
+/* List item - default state (putih) */
+.list__item {
+  background: #ffffff !important;
+  color: #374151 !important;
+  border-radius: 6px !important;
+  padding: 10px 12px !important;
+  margin: 4px 0 !important;
+  transition: all 0.2s ease !important;
   cursor: pointer !important;
 }
 
-/* Fix dropdown item hover states */
-.kepler-gl .dropdown-item:hover,
-.kepler-gl .list__item:hover,
-.kepler-gl .item-selector__dropdown .list__item:hover {
-  background: var(--primary-blue-light) !important;
-  background-color: var(--primary-blue-light) !important;
-  color: var(--primary-blue) !important;
+/* List item - hover state (biru muda) */
+.list__item:hover {
+  background: #eff6ff !important;
+  color: #1d4ed8 !important;
+  /* border-color: #3b82f6 !important; */
 }
 
-/* Ensure text content is visible */
-.kepler-gl .dropdown span,
-.kepler-gl .dropdown div,
-.kepler-gl .dropdown p,
-.kepler-gl .list__item span,
-.kepler-gl .list__item div {
-  color: var(--text-primary) !important;
-  font-size: 14px !important;
-  line-height: 1.4 !important;
+/* List item - selected state (biru dengan text putih) */
+.list__item.selected,
+.list__item .selected {
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%) !important;
+  color: #ffffff !important;
+  font-weight: 600 !important;
+  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.25) !important;
 }
 
-/* Fix select elements content visibility */
-.kepler-gl select {
-  background: var(--white) !important;
-  color: var(--text-primary) !important;
-  border: 1px solid var(--border-light) !important;
-  padding: 8px 12px !important;
-  border-radius: var(--radius-md) !important;
+/* List item selected - hover (biru lebih gelap dengan text putih) */
+.list__item.selected:hover,
+.list__item .selected:hover {
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%) !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.35) !important;
 }
 
-.kepler-gl select option {
-  background: var(--white) !important;
-  color: var(--text-primary) !important;
-  padding: 4px 8px !important;
-}
-
-/* =======================================================
-   FORCE ALL MENU BACKGROUNDS TO WHITE - NO BLACK ALLOWED
-   ======================================================= */
-
-/* Target Map Style selector specifically */
-.kepler-gl .map-style-selector,
-.kepler-gl .map-style-panel,
-.kepler-gl [class*="map-style"] {
-  background: var(--white) !important;
-  background-color: var(--white) !important;
-  color: var(--text-primary) !important;
-  border: 1px solid var(--border-light) !important;
-}
-
-/* Target Map Layers list specifically */
-.kepler-gl .map-layers-panel,
-.kepler-gl .map-layer-list,
-.kepler-gl [class*="map-layer"] {
-  background: var(--white) !important;
-  background-color: var(--white) !important;
-  color: var(--text-primary) !important;
-}
-
-/* Force all layer items to white background */
-.kepler-gl .layer-item,
-.kepler-gl .map-layer-item,
-.kepler-gl [class*="layer-item"] {
-  background: var(--white) !important;
-  background-color: var(--white) !important;
-  color: var(--text-primary) !important;
-  border: 1px solid var(--border-light) !important;
-  border-radius: var(--radius-sm) !important;
-  margin: 2px 0 !important;
+/* List selector container */
+.sc-ejCKsa.grPAUi.list-selector,
+.list-selector {
+  background: #ffffff !important;
+  color: #374151 !important;
   padding: 8px !important;
 }
 
-/* Override any inline dark styling */
-.kepler-gl [style*="background-color: rgb(55, 63, 81)"],
-.kepler-gl [style*="background-color: rgb(47, 53, 66)"],
-.kepler-gl [style*="background: rgb(55, 63, 81)"],
-.kepler-gl [style*="background: rgb(47, 53, 66)"],
-.kepler-gl [style*="background-color: #373f51"],
-.kepler-gl [style*="background: #373f51"] {
-  background: var(--white) !important;
-  background-color: var(--white) !important;
-  color: var(--text-primary) !important;
+/* Text di dalam selected item harus putih */
+.list__item.selected *,
+.list__item .selected * {
+  color: #ffffff !important;
 }
 
-/* Force all side panel sections to white */
-.kepler-gl .side-panel section,
-.kepler-gl .side-panel div,
-.kepler-gl .side-panel--container section,
-.kepler-gl .side-panel--container div {
-  background: var(--white) !important;
-  background-color: var(--white) !important;
-  color: var(--text-primary) !important;
+/* Text di dalam hover item (tidak selected) */
+.list__item:hover:not(.selected) * {
+  color: #1d4ed8 !important;
 }
 
-/* Make sure all text is visible */
-.kepler-gl .side-panel span,
-.kepler-gl .side-panel p,
-.kepler-gl .side-panel label,
-.kepler-gl .side-panel--container span,
-.kepler-gl .side-panel--container p,
-.kepler-gl .side-panel--container label {
-  color: var(--text-primary) !important;
+.sc-iKOmoZ.cRXoxq button.add-data-button,
+.sc-iKOmoZ.cRXoxq button.add-data-button *,
+.sc-iKOmoZ.cRXoxq button.add-data-button span,
+.sc-iKOmoZ.cRXoxq button.add-data-button div {  
+  color: #ffffff !important;
 }
-    

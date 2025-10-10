@@ -2,13 +2,17 @@
 // Copyright contributors to the kepler.gl project
 
 import {injectComponents} from '@kepler.gl/components';
-import CustomSidebarFactory from './components/side-bar';
 import CustomPanelHeaderFactory from './components/panel-header';
+import CustomPanelToggleFactory from './components/panel-toggle';
+import CustomMapPopoverFactory from './components/custom-map-popover';
+import CustomSidePanelFactory from './components/custom-side-panel';
 
-// Inject custom components into KeplerGl with correct factory names
+// Inject custom components dengan side panel putih bersih
 const KeplerGl = injectComponents([
-  [CustomSidebarFactory, 'SidebarFactory'],
-  [CustomPanelHeaderFactory, 'PanelHeaderFactory']
+  [CustomPanelHeaderFactory, 'PanelHeaderFactory'],
+  [CustomPanelToggleFactory, 'PanelToggleFactory'],
+  [CustomMapPopoverFactory, 'MapPopoverFactory'],
+  [CustomSidePanelFactory, 'SidePanelFactory']
 ]);
 
 export default KeplerGl;

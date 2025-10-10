@@ -1,259 +1,240 @@
 import React from 'react';
 import styled from 'styled-components';
 import {Icons} from '@kepler.gl/components';
-import {CustomSidePanelProps} from '../types';
 
 const StyledSidePanel = styled.div`
-  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
-  border-right: 1px solid #e1e5e9;
+  background: #ffffff !important;
+  border-right: 1px solid #e5e7eb !important;
   display: flex;
   flex-direction: column;
   height: 100%;
-  min-width: 360px;
+  min-width: 380px;
   max-width: 420px;
   position: absolute;
   left: 0;
   top: 0;
   z-index: 1000;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-  backdrop-filter: blur(20px);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 `;
 
 const PanelHeader = styled.div`
-  padding: 24px 20px;
-  border-bottom: 1px solid #e1e5e9;
-  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
-  backdrop-filter: blur(10px);
+  padding: 20px;
+  border-bottom: 1px solid #e5e7eb;
+  background: #ffffff !important;
   position: sticky;
   top: 0;
   z-index: 100;
 `;
 
 const PanelTitle = styled.h3`
-  color: #1a202c;
+  color: #1f2937 !important;
   margin: 0;
-  font-size: 20px;
-  font-weight: 700;
+  font-size: 18px;
+  font-weight: 600;
   letter-spacing: -0.025em;
-  background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
   display: flex;
   align-items: center;
   gap: 8px;
 `;
 
 const PanelSubtitle = styled.p`
-  color: #64748b;
-  margin: 8px 0 0 0;
-  font-size: 14px;
-  font-weight: 500;
-  letter-spacing: 0.025em;
+  color: #6b7280 !important;
+  margin: 6px 0 0 0;
+  font-size: 13px;
+  font-weight: 400;
   line-height: 1.5;
 `;
 
-const CustomFeatureSection = styled.div`
-  padding: 24px 20px;
-  border-bottom: 1px solid #e1e5e9;
-  background: #ffffff;
-`;
-
-const FeatureTitle = styled.h4`
-  color: #1a202c;
-  margin: 0 0 20px 0;
-  font-size: 16px;
-  font-weight: 600;
+const TabContainer = styled.div`
   display: flex;
-  align-items: center;
-  gap: 10px;
-  letter-spacing: -0.025em;
+  gap: 4px;
+  padding: 16px 20px;
+  background: #ffffff !important;
+  border-bottom: 1px solid #e5e7eb;
 `;
 
-const FeatureButton = styled.button`
-  background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
-  border: none;
-  border-radius: 12px;
-  color: white;
-  cursor: pointer;
-  padding: 16px 20px;
-  margin: 10px 0;
-  width: 100%;
-  font-size: 14px;
-  font-weight: 600;
-  letter-spacing: 0.025em;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+const Tab = styled.button<{$active?: boolean}>`
+  background: ${props => props.$active ? '#3b82f6' : '#f9fafb'} !important;
+  border: 1px solid ${props => props.$active ? '#3b82f6' : '#e5e7eb'} !important;
+  border-radius: 6px !important;
+  color: ${props => props.$active ? '#ffffff' : '#6b7280'} !important;
+  cursor: pointer !important;
+  font-size: 13px !important;
+  font-weight: 500 !important;
+  padding: 10px 16px !important;
+  transition: all 0.2s ease !important;
+  flex: 1;
+  min-height: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 12px;
-  box-shadow: 0 4px 12px rgba(0, 123, 255, 0.25);
-  position: relative;
-  overflow: hidden;
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  min-height: 48px;
-
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-    transition: left 0.5s;
-  }
+  gap: 6px;
 
   &:hover {
-    background: linear-gradient(135deg, #0056b3 0%, #004085 100%);
-    transform: translateY(-3px) scale(1.02);
-    box-shadow: 0 8px 25px rgba(0, 123, 255, 0.4);
+    background: ${props => props.$active ? '#2563eb' : '#f3f4f6'} !important;
+    border-color: ${props => props.$active ? '#2563eb' : '#d1d5db'} !important;
+    transform: translateY(-1px);
   }
 
-  &:hover::before {
-    left: 100%;
-  }
-
-  &:active {
-    transform: translateY(-1px) scale(1.01);
-    box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
-  }
-
-  &:focus-visible {
-    outline: 2px solid #ffffff;
-    outline-offset: 2px;
-  }
-
-  &:nth-child(2) {
-    background: linear-gradient(135deg, #28a745 0%, #1e7e34 100%);
-    box-shadow: 0 4px 12px rgba(40, 167, 69, 0.25);
-  }
-
-  &:nth-child(2):hover {
-    background: linear-gradient(135deg, #1e7e34 0%, #155724 100%);
-    box-shadow: 0 8px 25px rgba(40, 167, 69, 0.4);
-  }
-
-  &:nth-child(3) {
-    background: linear-gradient(135deg, #17a2b8 0%, #138496 100%);
-    box-shadow: 0 4px 12px rgba(23, 162, 184, 0.25);
-  }
-
-  &:nth-child(3):hover {
-    background: linear-gradient(135deg, #138496 0%, #0f6674 100%);
-    box-shadow: 0 8px 25px rgba(23, 162, 184, 0.4);
-  }
-
-  &:nth-child(4) {
-    background: linear-gradient(135deg, #ffc107 0%, #e0a800 100%);
-    box-shadow: 0 4px 12px rgba(255, 193, 7, 0.25);
-    color: #212529;
-  }
-
-  &:nth-child(4):hover {
-    background: linear-gradient(135deg, #e0a800 0%, #d39e00 100%);
-    box-shadow: 0 8px 25px rgba(255, 193, 7, 0.4);
+  svg {
+    width: 16px !important;
+    height: 16px !important;
   }
 `;
 
-const LayersList = styled.div`
+const TabContent = styled.div`
   flex: 1;
   overflow-y: auto;
-  padding: 24px 20px;
-  background: linear-gradient(180deg, #ffffff 0%, #f8f9fa 100%);
+  background: #ffffff !important;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(148, 163, 184, 0.3) transparent;
+
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: rgba(148, 163, 184, 0.3);
+    border-radius: 2px;
+  }
 `;
 
-const LayerItem = styled.div`
-  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
-  border: 2px solid #e9ecef;
-  border-radius: 12px;
+const Section = styled.div`
   padding: 20px;
-  margin-bottom: 16px;
-  color: #1a202c;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  cursor: pointer;
-  position: relative;
-  overflow: hidden;
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  border-bottom: 1px solid #f3f4f6;
+  background: #ffffff !important;
+`;
 
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 4px;
-    background: linear-gradient(90deg, #007bff, #28a745, #17a2b8);
-    transform: scaleX(0);
-    transition: transform 0.3s ease;
-    transform-origin: left;
-  }
+const SectionTitle = styled.h4`
+  color: #1f2937 !important;
+  margin: 0 0 16px 0;
+  font-size: 14px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+`;
+
+const ActionButton = styled.button<{$variant?: 'primary' | 'secondary' | 'success' | 'info'}>`
+  background: ${props => {
+    switch (props.$variant) {
+      case 'success': return 'linear-gradient(135deg, #10b981 0%, #059669 100%)';
+      case 'info': return 'linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%)';
+      case 'secondary': return '#f9fafb';
+      default: return 'linear-gradient(135deg, #3b82f6 0%, #2563eb 100%)';
+    }
+  }} !important;
+  border: ${props => props.$variant === 'secondary' ? '1px solid #d1d5db' : 'none'} !important;
+  border-radius: 8px !important;
+  color: ${props => props.$variant === 'secondary' ? '#374151' : '#ffffff'} !important;
+  cursor: pointer !important;
+  padding: 12px 16px !important;
+  margin: 6px 0 !important;
+  width: 100% !important;
+  font-size: 13px !important;
+  font-weight: 500 !important;
+  transition: all 0.2s ease !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  min-height: 44px !important;
 
   &:hover {
-    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-    border-color: #007bff;
-    transform: translateY(-4px) translateX(4px);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    background: ${props => {
+      switch (props.$variant) {
+        case 'success': return 'linear-gradient(135deg, #059669 0%, #047857 100%)';
+        case 'info': return 'linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%)';
+        case 'secondary': return '#f3f4f6';
+        default: return 'linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%)';
+      }
+    }} !important;
+    border-color: ${props => props.$variant === 'secondary' ? '#3b82f6' : 'transparent'} !important;
+    color: ${props => props.$variant === 'secondary' ? '#3b82f6' : '#ffffff'} !important;
+    transform: translateY(-1px) !important;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1) !important;
   }
 
-  &:hover::before {
-    transform: scaleX(1);
-  }
-
-  .layer-name {
-    font-weight: 600;
-    font-size: 15px;
-    color: #1a202c;
-    margin-bottom: 6px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-
-  .layer-description {
-    font-size: 13px;
-    color: #64748b;
-    margin-bottom: 10px;
-    line-height: 1.4;
-  }
-
-  .layer-status {
-    display: inline-block;
-    padding: 6px 12px;
-    border-radius: 20px;
-    font-size: 11px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    margin-top: 8px;
-    border: 2px solid transparent;
-    transition: all 0.2s ease;
-  }
-
-  .status-active {
-    background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
-    color: #155724;
-    border-color: #28a745;
-  }
-
-  .status-ready {
-    background: linear-gradient(135deg, #d1ecf1 0%, #bee5eb 100%);
-    color: #0c5460;
-    border-color: #17a2b8;
-  }
-
-  .status-available {
-    background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);
-    color: #856404;
-    border-color: #ffc107;
-  }
-
-  /* Hover effect for status badges */
-  &:hover .layer-status {
-    transform: scale(1.05);
+  svg {
+    width: 16px !important;
+    height: 16px !important;
   }
 `;
+
+const LayerCard = styled.div`
+  background: #ffffff !important;
+  border: 1px solid #e5e7eb !important;
+  border-radius: 8px !important;
+  padding: 16px !important;
+  margin: 8px 0 !important;
+  transition: all 0.2s ease !important;
+
+  &:hover {
+    border-color: #d1d5db !important;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05) !important;
+  }
+`;
+
+const LayerName = styled.div`
+  color: #1f2937 !important;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  margin-bottom: 4px !important;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+`;
+
+const LayerDescription = styled.div`
+  color: #6b7280 !important;
+  font-size: 12px !important;
+  margin-bottom: 8px !important;
+  line-height: 1.4;
+`;
+
+const LayerStatus = styled.span<{$status: string}>`
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+  background: ${props => {
+    switch (props.$status) {
+      case 'active': return '#ecfdf5';
+      case 'ready': return '#eff6ff';
+      default: return '#fef3c7';
+    }
+  }} !important;
+  color: ${props => {
+    switch (props.$status) {
+      case 'active': return '#047857';
+      case 'ready': return '#1d4ed8';
+      default: return '#92400e';
+    }
+  }} !important;
+  border: 1px solid ${props => {
+    switch (props.$status) {
+      case 'active': return '#10b981';
+      case 'ready': return '#3b82f6';
+      default: return '#f59e0b';
+    }
+  }};
+`;
+
+interface CustomSidePanelProps {
+  id?: string;
+  height?: number;
+  isActive?: boolean;
+  onClick?: () => void;
+  panels?: any[];
+}
 
 const CustomSidePanelFactory = () => {
   const CustomSidePanel: React.FC<CustomSidePanelProps> = ({
@@ -263,98 +244,199 @@ const CustomSidePanelFactory = () => {
     onClick,
     panels
   }) => {
+    const [activeTab, setActiveTab] = React.useState('data');
+
     const handleExportData = () => {
       console.log('Exporting data...');
-      // Add export functionality here
     };
 
     const handleImportData = () => {
       console.log('Importing data...');
-      // Add import functionality here
     };
 
     const handleAnalyzeData = () => {
       console.log('Analyzing data...');
-      // Add analysis functionality here
     };
+
+    const renderDataTab = () => (
+      <>
+        <Section>
+          <SectionTitle>
+            <Icons.Files height="16px" />
+            Data Operations
+          </SectionTitle>
+          <ActionButton $variant="success" onClick={handleImportData}>
+            <Icons.Upload height="16px" />
+            Add Data
+          </ActionButton>
+          <ActionButton $variant="secondary" onClick={handleExportData}>
+            <Icons.Share height="16px" />
+            Export Map
+          </ActionButton>
+        </Section>
+
+        <Section>
+          <SectionTitle>
+            <Icons.Layers height="16px" />
+            Datasets
+          </SectionTitle>
+          <LayerCard>
+            <LayerName>
+              📍 Jakarta Points of Interest
+            </LayerName>
+            <LayerDescription>
+              Point layer • 25 features • Tourism, Shopping, Recreation
+            </LayerDescription>
+            <LayerStatus $status="active">Active</LayerStatus>
+          </LayerCard>
+          <LayerCard>
+            <LayerName>
+              📡 Infrastructure Data
+            </LayerName>
+            <LayerDescription>
+              Point layer • 25 telecom assets • Base stations, Fiber nodes
+            </LayerDescription>
+            <LayerStatus $status="ready">Ready</LayerStatus>
+          </LayerCard>
+        </Section>
+      </>
+    );
+
+    const renderLayersTab = () => (
+      <>
+        <Section>
+          <SectionTitle>
+            <Icons.Layers height="16px" />
+            Map Layers
+          </SectionTitle>
+          <ActionButton $variant="info">
+            <Icons.Add height="16px" />
+            Add Layer
+          </ActionButton>
+        </Section>
+
+        <Section>
+          <SectionTitle>Layer Blending</SectionTitle>
+          <select style={{
+            background: '#ffffff',
+            border: '1px solid #d1d5db',
+            borderRadius: '6px',
+            color: '#374151',
+            fontSize: '13px',
+            padding: '8px 12px',
+            width: '100%'
+          }}>
+            <option value="normal">normal</option>
+            <option value="multiply">multiply</option>
+            <option value="screen">screen</option>
+          </select>
+        </Section>
+
+        <Section>
+          <SectionTitle>Map Overlay Blending</SectionTitle>
+          <select style={{
+            background: '#ffffff',
+            border: '1px solid #d1d5db',
+            borderRadius: '6px',
+            color: '#374151',
+            fontSize: '13px',
+            padding: '8px 12px',
+            width: '100%'
+          }}>
+            <option value="normal">normal</option>
+            <option value="multiply">multiply</option>
+            <option value="screen">screen</option>
+          </select>
+        </Section>
+      </>
+    );
+
+    const renderFiltersTab = () => (
+      <Section>
+        <SectionTitle>
+          <Icons.FilterFunnel height="16px" />
+          Data Filters
+        </SectionTitle>
+        <ActionButton $variant="secondary">
+          <Icons.Add height="16px" />
+          Add Filter
+        </ActionButton>
+      </Section>
+    );
+
+    const renderMapTab = () => (
+      <>
+        <Section>
+          <SectionTitle>
+            <Icons.CursorClick height="16px" />
+            Base Map
+          </SectionTitle>
+          <ActionButton $variant="success">
+            <Icons.Add height="16px" />
+            Add Map Style
+          </ActionButton>
+        </Section>
+
+        <Section>
+          <SectionTitle>Map Style</SectionTitle>
+          <LayerCard>
+            <LayerName>🗺️ Voyager</LayerName>
+            <LayerDescription>Light theme with streets and landmarks</LayerDescription>
+            <LayerStatus $status="active">Active</LayerStatus>
+          </LayerCard>
+        </Section>
+      </>
+    );
 
     return (
       <StyledSidePanel style={{height}}>
         <PanelHeader>
           <PanelTitle>
-            <span style={{fontSize: '24px'}}>🗺️</span>
+            <span style={{fontSize: '20px'}}>🗺️</span>
             Telkom GIS Spatial
           </PanelTitle>
           <PanelSubtitle>
-            Advanced geospatial intelligence platform for modern infrastructure
+            Advanced geospatial intelligence platform
           </PanelSubtitle>
         </PanelHeader>
 
-        <CustomFeatureSection>
-          <FeatureTitle>
-            <span style={{fontSize: '20px'}}>📊</span>
-            Data Operations
-          </FeatureTitle>
-          <FeatureButton onClick={handleImportData} aria-label="Import new dataset">
-            <Icons.Files height="18px" />
-            <span>Import Dataset</span>
-          </FeatureButton>
-          <FeatureButton onClick={handleExportData} aria-label="Export current map">
-            <Icons.Share height="18px" />
-            <span>Export Map</span>
-          </FeatureButton>
-          <FeatureButton onClick={handleAnalyzeData} aria-label="Analyze current data">
-            <Icons.LineChart height="18px" />
-            <span>Data Analysis</span>
-          </FeatureButton>
-        </CustomFeatureSection>
+        <TabContainer>
+          <Tab 
+            $active={activeTab === 'data'} 
+            onClick={() => setActiveTab('data')}
+          >
+            <Icons.Files height="16px" />
+            Data
+          </Tab>
+          <Tab 
+            $active={activeTab === 'layers'} 
+            onClick={() => setActiveTab('layers')}
+          >
+            <Icons.Layers height="16px" />
+            Layers
+          </Tab>
+          <Tab 
+            $active={activeTab === 'filters'} 
+            onClick={() => setActiveTab('filters')}
+          >
+            <Icons.FilterFunnel height="16px" />
+            Filters
+          </Tab>
+          <Tab 
+            $active={activeTab === 'map'} 
+            onClick={() => setActiveTab('map')}
+          >
+            <Icons.CursorClick height="16px" />
+            Map
+          </Tab>
+        </TabContainer>
 
-        <LayersList>
-          <FeatureTitle>
-            <span style={{fontSize: '20px'}}>�️</span>
-            Map Layers
-          </FeatureTitle>
-          <LayerItem>
-            <div className="layer-name">
-              <span>📍</span>
-              Jakarta Points of Interest
-            </div>
-            <div className="layer-description">
-              Point layer • 25 features • Tourism, Shopping, Recreation
-            </div>
-            <div className="layer-status status-active">Active</div>
-          </LayerItem>
-          <LayerItem>
-            <div className="layer-name">
-              <span>📡</span>
-              Infrastructure Data
-            </div>
-            <div className="layer-description">
-              Point layer • 25 telecom assets • Base stations, Fiber nodes
-            </div>
-            <div className="layer-status status-ready">Ready</div>
-          </LayerItem>
-          <LayerItem>
-            <div className="layer-name">
-              <span>👥</span>
-              Population MVT
-            </div>
-            <div className="layer-description">
-              Vector tiles • 88 kelurahan • Demographic data analysis
-            </div>
-            <div className="layer-status status-available">Available</div>
-          </LayerItem>
-          <LayerItem>
-            <div className="layer-name">
-              <span>🌍</span>
-              Base Map - Voyager
-            </div>
-            <div className="layer-description">
-              Mapbox style • Light theme • Streets and landmarks
-            </div>
-            <div className="layer-status status-active">Active</div>
-          </LayerItem>
-        </LayersList>
+        <TabContent>
+          {activeTab === 'data' && renderDataTab()}
+          {activeTab === 'layers' && renderLayersTab()}
+          {activeTab === 'filters' && renderFiltersTab()}
+          {activeTab === 'map' && renderMapTab()}
+        </TabContent>
       </StyledSidePanel>
     );
   };

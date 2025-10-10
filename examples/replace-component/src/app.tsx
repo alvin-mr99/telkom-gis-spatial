@@ -1,13 +1,13 @@
 // SPDX-License-Identifier: MIT
 // Copyright contributors to the kepler.gl project
 
-import React, {Component} from 'react';
-import {connect} from 'react-redux';
-import {Dispatch} from 'redux';
-import AutoSizer from 'react-virtualized/dist/commonjs/AutoSizer';
-import {addDataToMap, wrapTo, updateMap} from '@kepler.gl/actions';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { Dispatch } from 'redux';
+import { addDataToMap, wrapTo, updateMap } from '@kepler.gl/actions';
 import KeplerGl from './kepler-gl-custom';
-import {RootState} from './types';
+import { RootState } from './types';
+import { suppressKeplerErrors, createSafeDatasetConfig } from './utils/error-handler';
 
 interface AppProps {
   dispatch: Dispatch;
@@ -19,6 +19,10 @@ interface AppState {
   height: number;
 }
 
+interface MapContainerProps {
+  dispatch: any;
+}
+
 class App extends Component<AppProps, AppState> {
   constructor(props: AppProps) {
     super(props);
@@ -28,198 +32,125 @@ class App extends Component<AppProps, AppState> {
     };
   }
 
+  render() {
+    return <MapContainer dispatch={this.props.dispatch} />;
+  }
+}
+
+class MapContainer extends Component<MapContainerProps> {
+  private restoreErrorLogging?: () => void;
+
   componentDidMount() {
-    // Load konfigurasi dari config.json yang sudah ada dengan perbaikan tipe data
-    const jakartaMVTConfig = {
-      version: 'v1' as const,
-      config: {
-        visState: {
-          filters: [],
-          layers: [
-            {
-              id: 'jakarta-population-mvt',
-              type: 'vectorTile',
-              config: {
-                dataId: 'mvt_population_dataset_id',
-                label: 'Jakarta Population MVT',
-                color: [248, 149, 112] as [number, number, number],
-                highlightColor: [252, 242, 26, 255] as [number, number, number, number],
-                columns: {},
-                isVisible: true,
-                visConfig: {
-                  strokeColor: null,
-                  strokeOpacity: 0.8,
-                  radius: 8,
-                  radiusUnits: true,
-                  enable3d: false,
-                  stroked: true,
-                  transition: false,
-                  heightRange: [0, 500] as [number, number],
-                  elevationScale: 5,
-                  opacity: 0.85,
-                  colorRange: {
-                    name: 'Jakarta Population',
-                    type: 'custom',
-                    category: 'Custom',
-                    colors: [
-                      '#0198BD',
-                      '#42C1BC',
-                      '#9CE3B1',
-                      '#F5B272',
-                      '#EB7053',
-                      '#D50255'
-                    ]
-                  }
-                }
-              },
-              visualChannels: {
-                colorField: {
-                  name: 'populasi',
-                  type: 'real'
-                },
-                colorScale: 'quantile',
-                sizeField: {
-                  name: 'populasi',
-                  type: 'real'
-                },
-                sizeScale: 'sqrt'
-              }
-            }
-          ],
-          interactionConfig: {
-            tooltip: {
-              fieldsToShow: {
-                'mvt_population_dataset_id': [
-                  {name: 'kelurahan', format: null},
-                  {name: 'kecamatan', format: null},
-                  {name: 'kota', format: null},
-                  {name: 'populasi', format: null},
-                  {name: 'kepadatan', format: null},
-                  {name: 'luas_km2', format: null},
-                  {name: 'jumlah_kk', format: null}
-                ]
-              },
-              enabled: true,
-              compareMode: false,
-              compareType: 'absolute'
-            },
-            brush: {
-              size: 0.5,
-              enabled: false
-            },
-            geocoder: {
-              enabled: false
-            },
-            coordinate: {
-              enabled: false
-            }
-          },
-          layerBlending: 'normal',
-          splitMaps: [],
-          animationConfig: {
-            currentTime: null,
-            speed: 1
-          }
+    // Suppress Kepler.gl error notifications
+    this.restoreErrorLogging = suppressKeplerErrors();
+    this.loadMVTData();
+  }
+
+  componentWillUnmount() {
+    // Restore original error logging
+    if (this.restoreErrorLogging) {
+      this.restoreErrorLogging();
+    }
+  }
+
+  loadMVTData = async () => {
+    try {
+      // Dataset MVT (Mapbox Vector Tiles) - Updated URLs
+      const mvtDataset = {
+        info: {
+          id: "mvt_population_dataset_id",
+          label: "MVT Population",
+          format: "rows",
+          type: "vector-tile"
         },
-        mapState: {
-          bearing: 0,
-          dragRotate: false,
-          latitude: -6.2331,
-          longitude: 106.8341,
-          pitch: 0,
-          zoom: 11,
-          isSplit: false
+        data: {
+          fields: [],
+          rows: []
         },
-        mapStyle: {
-          styleType: 'custom',
-          topLayerGroups: {},
-          visibleLayerGroups: {
-            label: true,
-            road: true,
-            border: false,
-            building: true,
-            water: true,
-            land: true,
-            '3d building': false
-          },
-          threeDBuildingColor: [9.665468314072013, 17.18305478057247, 31.1442867897876] as [number, number, number],
-          mapStyles: {
-            custom: {
-              accessToken: null,
-              custom: true,
-              icon: 'https://api.maptiler.com/maps/voyager/static/0,0,1/30x30.png?key=fTJJzVpdrOiuvPhQVFv7',
-              id: 'custom',
-              label: 'Jakarta Population Voyager',
-              url: 'http://localhost:8080/styles/jakarta-population/style.json'
-            }
-          }
-        },
-        uiState: {
-          readOnly: false,
-          currentModal: null
+        metadata: {
+          type: "remote",
+          remoteTileFormat: "mvt",
+          tilesetDataUrl: "https://4sq-studio-public.s3.us-west-2.amazonaws.com/vector-tile/cb_v2/{z}/{x}/{y}.pbf",
+          tilesetMetadataUrl: "https://4sq-studio-public.s3.us-west-2.amazonaws.com/vector-tile/cb_v2/metadata.json"
         }
-      }
-    };
+      };
 
-    // Load MVT data dengan format yang benar untuk vector tiles
-    this.props.dispatch(
-      wrapTo(
-        'map',
-        addDataToMap({
-          datasets: [
-            {
-              info: {
-                label: 'Jakarta Population MVT',
-                id: 'mvt_population_dataset_id'
+      // Load MVT dataset with error suppression
+      setTimeout(() => {
+        this.props.dispatch(
+          wrapTo(
+            "map",
+            addDataToMap({
+              datasets: mvtDataset,
+              options: { 
+                centerMap: true, 
+                keepExistingConfig: false,
+                autoCreateLayers: true
               },
-              data: {
-                // Untuk MVT, kita menggunakan format fields dan rows kosong
-                // karena data akan diambil langsung dari tile server
-                fields: [],
-                rows: [],
-                // Metadata MVT untuk kepler.gl
-                metadata: {
-                  url: 'http://localhost:8080/data/jakarta-population/{z}/{x}/{y}.pbf',
-                  layerName: 'jakarta-population'
-                }
-              }
-            }
-          ],
-          config: jakartaMVTConfig
-        })
-      )
-    );
+            })
+          )
+        );
+      }, 500); // Small delay to ensure Kepler.gl is ready
 
-    // Set initial viewport to Jakarta
-    setTimeout(() => {
+      // Optional: Load additional GeoJSON data
+      setTimeout(() => {
+        this.loadGeoJSONData();
+      }, 1000);
+    } catch (error) {
+      console.warn("Failed to load MVT data:", error);
+      // Fallback: try to load only GeoJSON data
+      this.loadGeoJSONData();
+    }
+  };
+
+  loadGeoJSONData = async () => {
+    try {
+      const response = await fetch("http://localhost:8080/data/jakarta-population.json");
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
+      const geojson = await response.json();
+      const geojsonDataset = {
+        info: {
+          label: "Jakarta Population",
+          id: "jakarta_population",
+        },
+        data: geojson,
+      };
+
+      // Add GeoJSON as separate dataset
       this.props.dispatch(
         wrapTo(
-          'map',
-          updateMap({
-            latitude: -6.2331,
-            longitude: 106.8341,
-            zoom: 11
+          "map",
+          addDataToMap({
+            datasets: geojsonDataset,
+            options: { 
+              centerMap: false, 
+              keepExistingConfig: true,
+              autoCreateLayers: true
+            },
           })
         )
       );
-    }, 1000);
-  }
+    } catch (error) {
+      // Silently fail for GeoJSON - no error notifications
+      console.warn("GeoJSON data not available:", error instanceof Error ? error.message : String(error));
+    }
+  };
+
+
 
   render() {
     return (
-      <div style={{position: 'absolute', width: '100%', height: '100%'}}>
-        <AutoSizer>
-          {({height, width}) => (
-            <KeplerGl
-              id="map"
-              mapboxApiAccessToken={process.env.MapboxAccessToken}
-              width={width}
-              height={height}
-              appName="Telkom GIS Spatial"
-              version="v1"
-            />
-          )}
-        </AutoSizer>
+      <div style={{ position: 'absolute', width: '100%', height: '100%' }}>
+        <KeplerGl
+          id="map"
+          mapboxApiAccessToken={process.env.MapboxAccessToken}
+          width={window.innerWidth}
+          height={window.innerHeight}
+          appName="Telkom GIS Spatial"
+        />
       </div>
     );
   }

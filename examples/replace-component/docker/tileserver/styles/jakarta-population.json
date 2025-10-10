@@ -5,7 +5,7 @@
   "zoom": 11,
   "sources": {
     "jakarta-population": {
-      "type": "vector",
+      "type": "vector-tile",
       "url": "http://localhost:8080/data/jakarta-population.json"
     }
   },

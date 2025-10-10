@@ -6,218 +6,167 @@ import {SidebarFactory, Icons} from '@kepler.gl/components';
 import styled from 'styled-components';
 import {SideBarProps} from '@kepler.gl/components';
 
-const StyledSideBarContainer = styled.div`
-  /* Modern sidebar container with enhanced light theme */
+const StyledSideBarContainer = styled.div<{$isOpen: boolean}>`
+  /* Clean white sidebar */
   .side-panel--container {
-    /* Remove transform scaling for better responsiveness */
-    transform: none;
-    height: 100%;
-    padding: 0;
-    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
-    border-right: 1px solid #e1e5e9;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-    backdrop-filter: blur(20px);
-    min-width: 360px;
-    max-width: 420px;
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: ${props => props.$isOpen ? '#ffffff' : 'transparent'} !important;
+    border-right: ${props => props.$isOpen ? '1px solid #e5e7eb' : 'none'} !important;
+    box-shadow: ${props => props.$isOpen ? '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)' : 'none'} !important;
+    min-width: ${props => props.$isOpen ? '380px' : '0'} !important;
+    max-width: ${props => props.$isOpen ? '420px' : '0'} !important;
+    overflow: ${props => props.$isOpen ? 'visible' : 'hidden'} !important;
+    transition: all 0.3s ease !important;
+    
+    /* When closed, completely hide */
+    ${props => !props.$isOpen && `
+      width: 0 !important;
+      min-width: 0 !important;
+      max-width: 0 !important;
+      border: none !important;
+      box-shadow: none !important;
+      background: transparent !important;
+      padding: 0 !important;
+      margin: 0 !important;
+    `}
   }
-
-  /* Enhanced header styling */
+  
+  /* Hide all content when closed */
+  ${props => !props.$isOpen && `
+    .side-panel--container * {
+      display: none !important;
+      visibility: hidden !important;
+      opacity: 0 !important;
+    }
+  `}
+  
+  /* White clean header */
   .side-panel__header {
-    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
-    border-bottom: 1px solid #e1e5e9;
-    padding: 24px 20px;
-    backdrop-filter: blur(10px);
-    position: sticky;
-    top: 0;
-    z-index: 100;
+    background: #ffffff !important;
+    border-bottom: 1px solid #e5e7eb !important;
+    padding: 20px !important;
   }
-
-  /* Panel content styling */
-  .side-panel__panel {
-    background: #ffffff;
-    border-radius: 12px;
-    margin-bottom: 16px;
-    overflow: hidden;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06);
-    border: 1px solid #e1e5e9;
-  }
-
-  /* Panel header improvements */
-  .side-panel__panel-header {
-    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-    border-bottom: 1px solid #e1e5e9;
-    color: #1a202c;
-    font-weight: 600;
-    font-size: 15px;
-    padding: 16px 20px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-
-  /* Layer panel styling */
-  .layer-panel {
-    background: #ffffff;
-    border-radius: 12px;
-    margin-bottom: 16px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06);
-    border: 1px solid #e1e5e9;
-    overflow: hidden;
-  }
-
-  .layer-panel__header {
-    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-    color: #1a202c;
-    font-weight: 600;
-    padding: 16px 20px;
-    border-bottom: 1px solid #e1e5e9;
-  }
-
-  /* Tab styling enhancements */
+  
+  /* Clean white tabs */
   .side-panel__tab {
-    background: transparent;
-    border: 2px solid transparent;
-    border-radius: 12px;
-    color: #64748b;
-    font-weight: 500;
-    font-size: 14px;
-    margin: 0 4px;
-    padding: 12px 16px;
-    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-    position: relative;
-    overflow: hidden;
+    background: #ffffff !important;
+    border: 2px solid #e5e7eb !important;
+    border-radius: 8px !important;
+    color: #6b7280 !important;
+    font-weight: 500 !important;
+    font-size: 13px !important;
+    margin: 0 3px !important;
+    padding: 10px 12px !important;
+    transition: all 0.2s ease !important;
+    min-width: 55px !important;
+    min-height: 55px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    flex-direction: column !important;
+    gap: 4px !important;
   }
-
-  .side-panel__tab::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(0, 123, 255, 0.1), transparent);
-    transition: left 0.5s;
-  }
-
+  
   .side-panel__tab:hover {
-    background: #e3f2fd;
-    border-color: #007bff;
-    color: #007bff;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    background: #f9fafb !important;
+    border-color: #3b82f6 !important;
+    color: #3b82f6 !important;
+    transform: translateY(-1px) !important;
+    box-shadow: 0 2px 4px rgba(59, 130, 246, 0.1) !important;
   }
-
-  .side-panel__tab:hover::before {
-    left: 100%;
-  }
-
+  
   .side-panel__tab.active {
-    background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
-    border-color: #007bff;
-    color: #ffffff;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-    font-weight: 600;
+    background: #3b82f6 !important;
+    border-color: #3b82f6 !important;
+    color: #ffffff !important;
+    font-weight: 600 !important;
+    box-shadow: 0 4px 6px rgba(59, 130, 246, 0.2) !important;
   }
-
-  /* Content area styling */
+  
+  .side-panel__tab svg {
+    width: 18px !important;
+    height: 18px !important;
+    stroke-width: 2px !important;
+    fill: currentColor !important;
+    color: currentColor !important;
+  }
+  
+  /* White panels */
+  .side-panel__panel {
+    background: #ffffff !important;
+    border: 1px solid #e5e7eb !important;
+    border-radius: 8px !important;
+    margin: 8px 12px !important;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1) !important;
+  }
+  
+  .side-panel__panel:hover {
+    border-color: #d1d5db !important;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1) !important;
+  }
+  
+  .side-panel__panel-header {
+    background: #f9fafb !important;
+    border-bottom: 1px solid #e5e7eb !important;
+    color: #374151 !important;
+    font-weight: 600 !important;
+    font-size: 14px !important;
+    padding: 16px 20px !important;
+  }
+  
   .side-panel__content {
-    background: #ffffff;
-    padding: 20px;
-    overflow-y: auto;
+    background: #ffffff !important;
+    padding: 20px !important;
+    color: #374151 !important;
   }
 `;
 
-const StyledCloseButton = styled.div`
+const StyledToggleButton = styled.div<{$isOpen: boolean}>`
+  position: fixed;
+  top: 20px;
+  left: ${props => props.$isOpen ? '400px' : '20px'};
+  width: 40px;
+  height: 40px;
+  display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
-  color: #ffffff;
-  display: flex;
-  height: 48px;
-  position: absolute;
-  top: 0;
-  width: 48px;
-  right: 0;
-  border-radius: 0 0 0 12px;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 4px 12px rgba(0, 123, 255, 0.25);
+  background: #ffffff;
+  color: #374151;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
   cursor: pointer;
-  font-weight: 600;
-  backdrop-filter: blur(10px);
-  border: 2px solid rgba(255, 255, 255, 0.1);
-  z-index: 1000;
-
-  /* Hover effect with enhanced animation */
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  z-index: 1001;
+  
   &:hover {
-    background: linear-gradient(135deg, #0056b3 0%, #004085 100%);
-    transform: translateX(-4px) scale(1.05);
-    box-shadow: 0 8px 25px rgba(0, 123, 255, 0.4);
-    border-color: rgba(255, 255, 255, 0.2);
+    background: #f9fafb;
+    border-color: #3b82f6;
+    color: #3b82f6;
+    transform: scale(1.05);
+    box-shadow: 0 8px 15px rgba(59, 130, 246, 0.2);
   }
-
-  /* Active state */
-  &:active {
-    transform: translateX(-2px) scale(1.02);
-    box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
-  }
-
-  /* Focus state for accessibility */
-  &:focus-visible {
-    outline: 2px solid #ffffff;
-    outline-offset: 2px;
-  }
-
-  /* Icon container */
-  .close-icon {
+  
+  svg {
+    width: 20px;
+    height: 20px;
     transition: transform 0.3s ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  /* Tooltip effect */
-  &::before {
-    content: attr(data-tooltip);
-    position: absolute;
-    right: 56px;
-    top: 50%;
-    transform: translateY(-50%);
-    background: rgba(0, 0, 0, 0.8);
-    color: white;
-    padding: 6px 12px;
-    border-radius: 6px;
-    font-size: 12px;
-    font-weight: 500;
-    opacity: 0;
-    visibility: hidden;
-    transition: all 0.2s ease;
-    pointer-events: none;
-    white-space: nowrap;
-    backdrop-filter: blur(10px);
-  }
-
-  &:hover::before {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(-50%) translateX(-4px);
+    transform: rotate(${props => props.$isOpen ? '180deg' : '0deg'});
   }
 `;
 
-interface CloseButtonProps {
+interface ToggleButtonProps {
   onClick: () => void;
   isOpen: boolean;
 }
 
-const CloseButtonFactory = () => {
-  const CloseButton: React.FC<CloseButtonProps> = ({onClick, isOpen}) => (
-    <StyledCloseButton
-      className="side-bar__close"
+const ToggleButtonFactory = () => {
+  const ToggleButton: React.FC<ToggleButtonProps> = ({onClick, isOpen}) => (
+    <StyledToggleButton
+      $isOpen={isOpen}
       onClick={onClick}
-      data-tooltip={isOpen ? 'Close Panel' : 'Open Panel'}
       role="button"
       tabIndex={0}
-      aria-label={isOpen ? 'Close side panel' : 'Open side panel'}
+      aria-label={isOpen ? 'Hide sidebar' : 'Show sidebar'}
       onKeyDown={e => {
         if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault();
@@ -225,33 +174,27 @@ const CloseButtonFactory = () => {
         }
       }}
     >
-      <div className="close-icon">
-        <Icons.ArrowRight
-          height="20px"
-          style={{
-            transform: `rotate(${isOpen ? 180 : 0}deg)`,
-            transition: 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)'
-          }}
-        />
-      </div>
-    </StyledCloseButton>
+      <Icons.ArrowRight />
+    </StyledToggleButton>
   );
-  return CloseButton;
+  return ToggleButton;
 };
 
-// Custom sidebar will render kepler.gl default side bar
-// adding a wrapper component to edit its style
-function CustomSidebarFactory(CloseButton: ReturnType<typeof CloseButtonFactory>) {
-  const SideBar = SidebarFactory(CloseButton);
-  const CustomSidebar: React.FC<SideBarProps> = props => (
-    <StyledSideBarContainer>
-      <SideBar {...props} />
-    </StyledSideBarContainer>
-  );
+function CustomSidebarFactory(ToggleButton: ReturnType<typeof ToggleButtonFactory>) {
+  const SideBar = SidebarFactory(ToggleButton);
+  
+  const CustomSidebar: React.FC<SideBarProps> = props => {
+    const isOpen = props.width > 0;
+    
+    return (
+      <StyledSideBarContainer $isOpen={isOpen}>
+        <SideBar {...props} />
+      </StyledSideBarContainer>
+    );
+  };
+  
   return CustomSidebar;
 }
 
-// You can add custom dependencies to your custom factory
-CustomSidebarFactory.deps = [CloseButtonFactory];
-
+CustomSidebarFactory.deps = [ToggleButtonFactory];
 export default CustomSidebarFactory;
