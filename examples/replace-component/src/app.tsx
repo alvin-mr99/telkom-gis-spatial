@@ -7,6 +7,7 @@ import { Dispatch } from 'redux';
 import { addDataToMap, wrapTo, updateMap } from '@kepler.gl/actions';
 import KeplerGl from './kepler-gl-custom';
 import { RootState } from './types';
+import {THEME} from '@kepler.gl/constants';
 import { suppressKeplerErrors, createSafeDatasetConfig } from './utils/error-handler';
 
 interface AppProps {
@@ -146,6 +147,7 @@ class MapContainer extends Component<MapContainerProps> {
       <div style={{ position: 'absolute', width: '100%', height: '100%' }}>
         <KeplerGl
           id="map"
+          theme={THEME.light}
           mapboxApiAccessToken={process.env.MapboxAccessToken}
           width={window.innerWidth}
           height={window.innerHeight}

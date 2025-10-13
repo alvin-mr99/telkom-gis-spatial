@@ -5,6 +5,7 @@ import {createStore, combineReducers, applyMiddleware, compose} from 'redux';
 import keplerGlReducer from '@kepler.gl/reducers';
 import {taskMiddleware} from 'react-palm/tasks';
 import appReducer, {AppState} from './app-reducer';
+import {THEME} from '@kepler.gl/constants';
 
 export interface RootState {
   keplerGl: any;
@@ -16,7 +17,8 @@ const rootReducer = combineReducers({
     uiState: {
       currentModal: null,
       readOnly: false,
-      activeSidePanel: 'layer'
+      activeSidePanel: 'layer',
+      theme: THEME.light
     },
     mapStyle: {
       styleType: 'voyager'
