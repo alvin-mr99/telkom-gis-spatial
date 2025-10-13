@@ -2,14 +2,15 @@
 // Copyright contributors to the kepler.gl project
 
 import esbuild from 'esbuild';
-import {replace} from 'esbuild-plugin-replace';
-import {dotenvRun} from '@dotenv-run/esbuild';
+import { replace } from 'esbuild-plugin-replace';
+import { dotenvRun } from '@dotenv-run/esbuild';
+import { reactVirtualizedPlugin } from './react-virtualized-plugin.mjs';
 
 import process from 'node:process';
 import fs from 'node:fs';
-import {spawn} from 'node:child_process';
-import {join} from 'node:path';
-import KeplerPackage from '../../package.json' assert {type: 'json'};
+import { spawn } from 'node:child_process';
+import { join } from 'node:path';
+import KeplerPackage from '../../package.json' with {type: 'json'};
 
 const args = process.argv;
 
@@ -28,16 +29,16 @@ const EXTERNAL_LOADERS_SRC = join(LIB_DIR, 'loaders.gl');
 // For debugging hubble.gl, load hubble.gl from external hubble.gl directory
 const EXTERNAL_HUBBLE_SRC = join(LIB_DIR, '../../hubble.gl');
 
-const port = 8080;
+const port = 8081;
 
 const getThirdPartyLibraryAliases = useKeplerNodeModules => {
   const nodeModulesDir = useKeplerNodeModules ? NODE_MODULES_DIR : BASE_NODE_MODULES_DIR;
 
   const localSources = useKeplerNodeModules
     ? {
-        // Suppress useless warnings from react-date-picker's dep
-        'tiny-warning': `${SRC_DIR}/utils/src/noop.ts`
-      }
+      // Suppress useless warnings from react-date-picker's dep
+      'tiny-warning': `${SRC_DIR}/utils/src/noop.ts`
+    }
     : {};
 
   return {
@@ -53,16 +54,11 @@ const getThirdPartyLibraryAliases = useKeplerNodeModules => {
   };
 };
 
-// Env variables required for demo app
+// Update required env variables (make MapBox optional)
 const requiredEnvVariables = [
-  'MapboxAccessToken',
-  'DropboxClientId',
-  'MapboxExportToken',
-  'CartoClientId',
-  'FoursquareClientId',
-  'FoursquareDomain',
-  'FoursquareAPIURL',
-  'FoursquareUserMapsURL'
+  'CartoClientId', // Carto is now primary
+  // 'MapboxAccessToken', // Make this optional
+  // Other optional variables...
 ];
 
 /**
@@ -70,11 +66,22 @@ const requiredEnvVariables = [
  */
 const checkEnvVariables = () => {
   const missingVars = requiredEnvVariables.filter(key => !process.env[key]);
+  const optionalVars = [
+    'MapboxAccessToken',
+    'DropboxClientId', 
+    'MapboxExportToken',
+    'FoursquareClientId'
+  ].filter(key => !process.env[key]);
 
   if (missingVars.length > 0) {
-    console.warn(`⚠️  Warning: Missing environment variables: ${missingVars.join(', ')}`);
+    console.error(`❌ Error: Missing required environment variables: ${missingVars.join(', ')}`);
+    process.exit(1);
+  }
+  
+  if (optionalVars.length > 0) {
+    console.warn(`⚠️  Warning: Missing optional environment variables: ${optionalVars.join(', ')}`);
   } else {
-    console.log('✅ All required environment variables are set.');
+    console.log('✅ All environment variables are properly configured.');
   }
 };
 
@@ -94,14 +101,21 @@ const config = {
   outfile: 'dist/bundle.js',
   bundle: true,
   define: {
-    NODE_ENV
+    NODE_ENV,
+    // Add process polyfill
+    'process.env.NODE_ENV': NODE_ENV,
+    global: 'globalThis'
   },
+  // Add both inject files
+  inject: ['./process-shim.js', './react-virtualized-fix.js'],
   plugins: [
     dotenvRun({
       verbose: true,
       environment: NODE_ENV,
       root: '../../.env'
     }),
+    // Add the react-virtualized fix plugin
+    reactVirtualizedPlugin,
     // automatically injected kepler.gl package version into the bundle
     replace({
       __PACKAGE_VERSION__: KeplerPackage.version,
@@ -173,8 +187,8 @@ function addAliases(externals, args) {
       resolveAlias[name] = useLocalDeck
         ? `${NODE_MODULES_DIR}/${name}/src`
         : name === 'probe.gl'
-        ? `${EXTERNAL_DECK_SRC}/node_modules/${name}/src`
-        : `${EXTERNAL_DECK_SRC}/node_modules/@${name}/core/src`;
+          ? `${EXTERNAL_DECK_SRC}/node_modules/${name}/src`
+          : `${EXTERNAL_DECK_SRC}/node_modules/@${name}/core/src`;
 
       // if env.deck Load @${name} modules from root node_modules/@${name}
       // if env.deck_src Load @${name} modules from deck.gl/node_modules/@${name} folder parallel to kepler.gl`
@@ -259,8 +273,7 @@ function openURL(url) {
         },
         // Add these production optimizations
         define: {
-          ...config.define,
-          'process.env.NODE_ENV': '"production"'
+          'process.env.NODE_ENV': NODE_ENV
         },
         drop: ['console', 'debugger'],
         treeShaking: true,
@@ -298,8 +311,8 @@ function openURL(url) {
         sourcemap: true,
         // add alias to resolve libraries so there is only one copy of them
         ...(process.env.NODE_ENV === 'local'
-          ? {alias: localAliases}
-          : {alias: getThirdPartyLibraryAliases(false)}),
+          ? { alias: localAliases }
+          : { alias: getThirdPartyLibraryAliases(false) }),
         banner: {
           js: `new EventSource('/esbuild').addEventListener('change', () => location.reload());`
         }
@@ -312,7 +325,7 @@ function openURL(url) {
           servedir: 'dist',
           port,
           fallback: 'dist/index.html',
-          onRequest: ({remoteAddress, method, path, status, timeInMS}) => {
+          onRequest: ({ remoteAddress, method, path, status, timeInMS }) => {
             console.info(remoteAddress, status, `"${method} ${path}" [${timeInMS}ms]`);
           }
         });

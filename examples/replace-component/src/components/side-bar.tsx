@@ -90,16 +90,52 @@ const StyledSideBarContainer = styled.div`
     color: #ffffff;
     font-weight: 600;
   }
-
-  /* Content area styling */
+  
+  .side-panel__tab svg {
+    width: 18px !important;
+    height: 18px !important;
+    stroke-width: 2px !important;
+    fill: currentColor !important;
+    color: currentColor !important;
+  }
+  
+  /* White panels */
+  .side-panel__panel {
+    background: #ffffff !important;
+    border: 1px solid #e5e7eb !important;
+    border-radius: 8px !important;
+    margin: 8px 12px !important;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1) !important;
+  }
+  
+  .side-panel__panel:hover {
+    border-color: #d1d5db !important;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1) !important;
+  }
+  
+  .side-panel__panel-header {
+    background: #f9fafb !important;
+    border-bottom: 1px solid #e5e7eb !important;
+    color: #374151 !important;
+    font-weight: 600 !important;
+    font-size: 14px !important;
+    padding: 16px 20px !important;
+  }
+  
   .side-panel__content {
-    background: #ffffff;
-    padding: 20px;
-    overflow-y: auto;
+    background: #ffffff !important;
+    padding: 20px !important;
+    color: #374151 !important;
   }
 `;
 
-const StyledCloseButton = styled.div`
+const StyledToggleButton = styled.div<{$isOpen: boolean}>`
+  position: fixed;
+  top: 20px;
+  left: ${props => props.$isOpen ? '400px' : '20px'};
+  width: 40px;
+  height: 40px;
+  display: flex;
   align-items: center;
   justify-content: center;
   background: #007bff;
@@ -138,15 +174,14 @@ interface CloseButtonProps {
   isOpen: boolean;
 }
 
-const CloseButtonFactory = () => {
-  const CloseButton: React.FC<CloseButtonProps> = ({onClick, isOpen}) => (
-    <StyledCloseButton
-      className="side-bar__close"
+const ToggleButtonFactory = () => {
+  const ToggleButton: React.FC<ToggleButtonProps> = ({onClick, isOpen}) => (
+    <StyledToggleButton
+      $isOpen={isOpen}
       onClick={onClick}
-      data-tooltip={isOpen ? 'Close Panel' : 'Open Panel'}
       role="button"
       tabIndex={0}
-      aria-label={isOpen ? 'Close side panel' : 'Open side panel'}
+      aria-label={isOpen ? 'Hide sidebar' : 'Show sidebar'}
       onKeyDown={e => {
         if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault();
@@ -154,33 +189,27 @@ const CloseButtonFactory = () => {
         }
       }}
     >
-      <div className="close-icon">
-        <Icons.ArrowRight
-          height="20px"
-          style={{
-            transform: `rotate(${isOpen ? 180 : 0}deg)`,
-            transition: 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)'
-          }}
-        />
-      </div>
-    </StyledCloseButton>
+      <Icons.ArrowRight />
+    </StyledToggleButton>
   );
-  return CloseButton;
+  return ToggleButton;
 };
 
-// Custom sidebar will render kepler.gl default side bar
-// adding a wrapper component to edit its style
-function CustomSidebarFactory(CloseButton: ReturnType<typeof CloseButtonFactory>) {
-  const SideBar = SidebarFactory(CloseButton);
-  const CustomSidebar: React.FC<SideBarProps> = props => (
-    <StyledSideBarContainer>
-      <SideBar {...props} />
-    </StyledSideBarContainer>
-  );
+function CustomSidebarFactory(ToggleButton: ReturnType<typeof ToggleButtonFactory>) {
+  const SideBar = SidebarFactory(ToggleButton);
+  
+  const CustomSidebar: React.FC<SideBarProps> = props => {
+    const isOpen = props.width > 0;
+    
+    return (
+      <StyledSideBarContainer $isOpen={isOpen}>
+        <SideBar {...props} />
+      </StyledSideBarContainer>
+    );
+  };
+  
   return CustomSidebar;
 }
 
-// You can add custom dependencies to your custom factory
-CustomSidebarFactory.deps = [CloseButtonFactory];
-
+CustomSidebarFactory.deps = [ToggleButtonFactory];
 export default CustomSidebarFactory;
