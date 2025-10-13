@@ -6,80 +6,89 @@ import {SidebarFactory, Icons} from '@kepler.gl/components';
 import styled from 'styled-components';
 import {SideBarProps} from '@kepler.gl/components';
 
-const StyledSideBarContainer = styled.div<{$isOpen: boolean}>`
-  /* Clean white sidebar */
+const StyledSideBarContainer = styled.div`
+  /* Simple white background sidebar container */
   .side-panel--container {
-    background: ${props => props.$isOpen ? '#ffffff' : 'transparent'} !important;
-    border-right: ${props => props.$isOpen ? '1px solid #e5e7eb' : 'none'} !important;
-    box-shadow: ${props => props.$isOpen ? '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)' : 'none'} !important;
-    min-width: ${props => props.$isOpen ? '380px' : '0'} !important;
-    max-width: ${props => props.$isOpen ? '420px' : '0'} !important;
-    overflow: ${props => props.$isOpen ? 'visible' : 'hidden'} !important;
-    transition: all 0.3s ease !important;
-    
-    /* When closed, completely hide */
-    ${props => !props.$isOpen && `
-      width: 0 !important;
-      min-width: 0 !important;
-      max-width: 0 !important;
-      border: none !important;
-      box-shadow: none !important;
-      background: transparent !important;
-      padding: 0 !important;
-      margin: 0 !important;
-    `}
+    transform: none;
+    height: 100%;
+    padding: 0;
+    background: #ffffff;
+    border-right: 1px solid #e1e5e9;
+    min-width: 360px;
+    max-width: 420px;
   }
-  
-  /* Hide all content when closed */
-  ${props => !props.$isOpen && `
-    .side-panel--container * {
-      display: none !important;
-      visibility: hidden !important;
-      opacity: 0 !important;
-    }
-  `}
-  
-  /* White clean header */
+
+  /* Simple header styling */
   .side-panel__header {
-    background: #ffffff !important;
-    border-bottom: 1px solid #e5e7eb !important;
-    padding: 20px !important;
+    background: #ffffff;
+    border-bottom: 1px solid #e1e5e9;
+    padding: 24px 20px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
   }
-  
-  /* Clean white tabs */
+
+  /* Panel content styling */
+  .side-panel__panel {
+    background: #ffffff;
+    border-radius: 12px;
+    margin-bottom: 16px;
+    overflow: hidden;
+    border: 1px solid #e1e5e9;
+  }
+
+  /* Panel header improvements */
+  .side-panel__panel-header {
+    background: #ffffff;
+    border-bottom: 1px solid #e1e5e9;
+    color: #1a202c;
+    font-weight: 600;
+    font-size: 15px;
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  /* Layer panel styling */
+  .layer-panel {
+    background: #ffffff;
+    border-radius: 12px;
+    margin-bottom: 16px;
+    border: 1px solid #e1e5e9;
+    overflow: hidden;
+  }
+
+  .layer-panel__header {
+    background: #ffffff;
+    color: #1a202c;
+    font-weight: 600;
+    padding: 16px 20px;
+    border-bottom: 1px solid #e1e5e9;
+  }
+
+  /* Simple tab styling */
   .side-panel__tab {
-    background: #ffffff !important;
-    border: 2px solid #e5e7eb !important;
-    border-radius: 8px !important;
-    color: #6b7280 !important;
-    font-weight: 500 !important;
-    font-size: 13px !important;
-    margin: 0 3px !important;
-    padding: 10px 12px !important;
-    transition: all 0.2s ease !important;
-    min-width: 55px !important;
-    min-height: 55px !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    flex-direction: column !important;
-    gap: 4px !important;
+    background: transparent;
+    border: 2px solid transparent;
+    border-radius: 12px;
+    color: #64748b;
+    font-weight: 500;
+    font-size: 14px;
+    margin: 0 4px;
+    padding: 12px 16px;
   }
-  
+
   .side-panel__tab:hover {
-    background: #f9fafb !important;
-    border-color: #3b82f6 !important;
-    color: #3b82f6 !important;
-    transform: translateY(-1px) !important;
-    box-shadow: 0 2px 4px rgba(59, 130, 246, 0.1) !important;
+    background: #f8f9fa;
+    color: #007bff;
   }
-  
+
   .side-panel__tab.active {
-    background: #3b82f6 !important;
-    border-color: #3b82f6 !important;
-    color: #ffffff !important;
-    font-weight: 600 !important;
-    box-shadow: 0 4px 6px rgba(59, 130, 246, 0.2) !important;
+    background: #007bff;
+    border-color: #007bff;
+    color: #ffffff;
+    font-weight: 600;
   }
   
   .side-panel__tab svg {
@@ -129,33 +138,39 @@ const StyledToggleButton = styled.div<{$isOpen: boolean}>`
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #ffffff;
-  color: #374151;
-  border: 2px solid #e5e7eb;
-  border-radius: 8px;
+  background: #007bff;
+  color: #ffffff;
+  display: flex;
+  height: 48px;
+  position: absolute;
+  top: 0;
+  width: 48px;
+  right: 0;
+  border-radius: 0 0 0 12px;
   cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  z-index: 1001;
-  
+  z-index: 1000;
+
+  /* Simple hover effect */
   &:hover {
-    background: #f9fafb;
-    border-color: #3b82f6;
-    color: #3b82f6;
-    transform: scale(1.05);
-    box-shadow: 0 8px 15px rgba(59, 130, 246, 0.2);
+    background: #0056b3;
   }
-  
-  svg {
-    width: 20px;
-    height: 20px;
-    transition: transform 0.3s ease;
-    transform: rotate(${props => props.$isOpen ? '180deg' : '0deg'});
+
+  /* Focus state for accessibility */
+  &:focus-visible {
+    outline: 2px solid #ffffff;
+    outline-offset: 2px;
+  }
+
+  /* Icon container */
+  .close-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 `;
 
-interface ToggleButtonProps {
-  onClick: () => void;
+interface CloseButtonProps {
+  onClick: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
   isOpen: boolean;
 }
 
@@ -170,7 +185,7 @@ const ToggleButtonFactory = () => {
       onKeyDown={e => {
         if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault();
-          onClick();
+          onClick(e as any);
         }
       }}
     >
