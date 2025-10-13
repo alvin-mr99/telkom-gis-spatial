@@ -4,12 +4,10 @@
 import {createStore, combineReducers, applyMiddleware, compose} from 'redux';
 import keplerGlReducer from '@kepler.gl/reducers';
 import {taskMiddleware} from 'react-palm/tasks';
-import appReducer, {AppState} from './app-reducer';
 import {THEME} from '@kepler.gl/constants';
 
 export interface RootState {
   keplerGl: any;
-  app: AppState;
 }
 
 const rootReducer = combineReducers({
@@ -17,14 +15,40 @@ const rootReducer = combineReducers({
     uiState: {
       currentModal: null,
       readOnly: false,
-      activeSidePanel: 'layer',
-      theme: THEME.light
+      activeSidePanel: null, // Hide side panel
+      theme: THEME.light,
+      mapControls: {
+        visibleLayers: {
+          show: false
+        },
+        mapLegend: {
+          show: false,
+          active: false
+        },
+        toggle3d: {
+          show: false
+        },
+        splitMap: {
+          show: false
+        }
+      }
     },
     mapStyle: {
-      styleType: 'voyager'
+      styleType: 'voyager', // Default to voyager map style
+      topLayerGroups: {},
+      visibleLayerGroups: {
+        label: true,
+        road: true,
+        border: false,
+        building: true,
+        water: true,
+        land: true,
+        '3d building': true
+      },
+      threeDBuildingColor: [9.665468314072013, 17.18305478057247, 31.1442867897876],
+      mapStyles: {}
     }
-  }),
-  app: appReducer
+  })
 });
 
 const composeEnhancers = 

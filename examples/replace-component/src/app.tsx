@@ -4,11 +4,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
-import { addDataToMap, wrapTo, updateMap } from '@kepler.gl/actions';
+import { addDataToMap, wrapTo, toggleSidePanel, receiveMapConfig } from '@kepler.gl/actions';
 import KeplerGl from './kepler-gl-custom';
 import { RootState } from './types';
-import {THEME} from '@kepler.gl/constants';
-import { suppressKeplerErrors, createSafeDatasetConfig } from './utils/error-handler';
+import { THEME } from '@kepler.gl/constants';
+import { suppressKeplerErrors } from './utils/error-handler';
+import KeplerControlPanel from './components/custom-panel-header';
 
 interface AppProps {
   dispatch: Dispatch;
@@ -33,6 +34,22 @@ class App extends Component<AppProps, AppState> {
     };
   }
 
+  componentDidMount() {
+    this.handleResize();
+    window.addEventListener('resize', this.handleResize);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.handleResize);
+  }
+
+  handleResize = () => {
+    this.setState({
+      width: window.innerWidth,
+      height: window.innerHeight
+    });
+  };
+
   render() {
     return <MapContainer dispatch={this.props.dispatch} />;
   }
@@ -44,7 +61,16 @@ class MapContainer extends Component<MapContainerProps> {
   componentDidMount() {
     // Suppress Kepler.gl error notifications
     this.restoreErrorLogging = suppressKeplerErrors();
-    this.loadMVTData();
+    
+    // Load data first
+    setTimeout(() => {
+      this.loadMVTData();
+    }, 500);
+    
+    // Set Kepler.gl settings after data loads
+    setTimeout(() => {
+      this.initializeKeplerSettings();
+    }, 1500);
   }
 
   componentWillUnmount() {
@@ -54,9 +80,51 @@ class MapContainer extends Component<MapContainerProps> {
     }
   }
 
+  initializeKeplerSettings = () => {
+    // Hide side panel initially (but keep it toggleable)
+    this.props.dispatch(
+      wrapTo("map", toggleSidePanel(null))
+    );
+
+    // Set map config with voyager style - executed AFTER data load
+    const mapConfig = {
+      version: 'v1',
+      config: {
+        mapState: {
+          bearing: 0,
+          dragRotate: false,
+          latitude: 37.7749295,
+          longitude: -122.4194155,
+          pitch: 0,
+          zoom: 9,
+          isSplit: false
+        },
+        mapStyle: {
+          styleType: 'voyager',
+          topLayerGroups: {},
+          visibleLayerGroups: {
+            label: true,
+            road: true,
+            border: false,
+            building: true,
+            water: true,
+            land: true,
+            '3d building': false
+          },
+          threeDBuildingColor: [9.665468314072013, 17.18305478057247, 31.1442867897876],
+          mapStyles: {}
+        }
+      }
+    };
+
+    this.props.dispatch(
+      wrapTo("map", receiveMapConfig(mapConfig))
+    );
+  };
+
   loadMVTData = async () => {
     try {
-      // Dataset MVT (Mapbox Vector Tiles) - Updated URLs
+      // Dataset MVT (Mapbox Vector Tiles)
       const mvtDataset = {
         info: {
           id: "mvt_population_dataset_id",
@@ -76,75 +144,45 @@ class MapContainer extends Component<MapContainerProps> {
         }
       };
 
-      // Load MVT dataset with error suppression
-      setTimeout(() => {
-        this.props.dispatch(
-          wrapTo(
-            "map",
-            addDataToMap({
-              datasets: mvtDataset,
-              options: { 
-                centerMap: true, 
-                keepExistingConfig: false,
-                autoCreateLayers: true
-              },
-            })
-          )
-        );
-      }, 500); // Small delay to ensure Kepler.gl is ready
-
-      // Optional: Load additional GeoJSON data
-      setTimeout(() => {
-        this.loadGeoJSONData();
-      }, 1000);
-    } catch (error) {
-      console.warn("Failed to load MVT data:", error);
-      // Fallback: try to load only GeoJSON data
-      this.loadGeoJSONData();
-    }
-  };
-
-  loadGeoJSONData = async () => {
-    try {
-      const response = await fetch("http://localhost:8080/data/jakarta-population.json");
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      
-      const geojson = await response.json();
-      const geojsonDataset = {
-        info: {
-          label: "Jakarta Population",
-          id: "jakarta_population",
-        },
-        data: geojson,
-      };
-
-      // Add GeoJSON as separate dataset
+      // Load MVT dataset with voyager style config
       this.props.dispatch(
         wrapTo(
           "map",
           addDataToMap({
-            datasets: geojsonDataset,
+            datasets: mvtDataset,
             options: { 
-              centerMap: false, 
-              keepExistingConfig: true,
+              centerMap: true, 
+              keepExistingConfig: false,
               autoCreateLayers: true
             },
+            config: {
+              mapStyle: {
+                styleType: 'voyager',
+                topLayerGroups: {},
+                visibleLayerGroups: {
+                  label: true,
+                  road: true,
+                  border: false,
+                  building: true,
+                  water: true,
+                  land: true,
+                  '3d building': false
+                }
+              }
+            }
           })
         )
       );
+
     } catch (error) {
-      // Silently fail for GeoJSON - no error notifications
-      console.warn("GeoJSON data not available:", error instanceof Error ? error.message : String(error));
+      console.warn("Failed to load MVT data:", error);
     }
   };
 
-
-
   render() {
     return (
-      <div style={{ position: 'absolute', width: '100%', height: '100%' }}>
+      <div style={{ position: 'relative', width: '100%', height: '100vh' }}>
+        {/* Kepler.gl Map - Full screen background */}
         <KeplerGl
           id="map"
           theme={THEME.light}
@@ -153,6 +191,20 @@ class MapContainer extends Component<MapContainerProps> {
           height={window.innerHeight}
           appName="Telkom GIS Spatial"
         />
+        
+        {/* Custom Control Panel */}
+        <div 
+          style={{
+            position: 'absolute',
+            top: '16px',
+            left: '16px',
+            right: '16px',
+            zIndex: 1000,
+            pointerEvents: 'auto'
+          }}
+        >
+          <KeplerControlPanel />
+        </div>
       </div>
     );
   }
