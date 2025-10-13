@@ -1,3 +1,47 @@
+<!-- Telkom GIS Spatial Hero -->
+<h1 align="center">Telkom GIS Spatial — Kepler.gl Replace-Component</h1>
+<p align="center">GIS monitoring modern berbasis Kepler.gl, React 19 + TypeScript, Vite — cepat, responsif, dan siap production.</p>
+<p align="center"><b>Default Basemap:</b> Voyager</p>
+
+<div align="center">
+  <strong>Prasyarat Project</strong>
+  <br/>
+  Node 18.20.8 · Yarn 4.4.0 · npm 10.8.2
+</div>
+
+<div align="center">
+  <strong>Quick Start (Windows)</strong>
+</div>
+
+```powershell
+# 1) Install di root repository
+yarn install
+
+# 2) Masuk ke contoh replace-component
+cd .\examples\replace-component\
+
+# 3) Install dependencies example
+yarn install
+
+# 4) Jalankan aplikasi
+yarn start
+```
+
+- Path proyek contoh yang sedang dikembangkan: <code>examples/replace-component</code>
+- Jika muncul error terkait dependency lock, buat file <code>yarn.lock</code> di folder <code>replace-component</code>.
+ 
+ <div align="center">
+  <h3>Hasil Custom Saat ini </h3>
+<br/>
+<br/>
+
+</div>
+<strong>Custom Theme</strong>
+    <img src="./examples/replace-component/public/telkom-gis-spatial.png" alt="version" /> 
+<br/>
+<strong>MVT</strong>
+     <img src="./examples/replace-component/public/telkom-gis-spatial-1.png" alt="version" /> 
+
 <p align="right">
   <a href="https://npmjs.org/package/kepler.gl">
     <img src="https://img.shields.io/npm/v/kepler.gl.svg?style=flat" alt="version" />
@@ -552,3 +596,4 @@ Read more about [addDataToMap](./docs/api-reference/actions/actions.md#adddatato
 [43]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
 [44]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number
 [45]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function
+
