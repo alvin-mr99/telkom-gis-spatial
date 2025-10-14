@@ -7,10 +7,16 @@ import { Dispatch } from 'redux';
 import { addDataToMap, wrapTo, toggleSidePanel, receiveMapConfig, toggleModal } from '@kepler.gl/actions';
 import KeplerGl from './kepler-gl-custom';
 import { RootState } from './types';
+<<<<<<< HEAD
 import { THEME } from '@kepler.gl/constants';
 import { suppressKeplerErrors } from './utils/error-handler';
 import KeplerControlPanel from './components/custom-panel-header';
 import MapControlsPanel from './components/map-controls-panel';
+=======
+import {THEME} from '@kepler.gl/constants';
+import { suppressKeplerErrors, createSafeDatasetConfig } from './utils/error-handler';
+import KeplerGlPanel from './components/kepler-panel';
+>>>>>>> e620e4970cb9e6df7fd9a921a99ba212e69b5d45
 
 interface AppProps {
   dispatch: Dispatch;
@@ -223,6 +229,7 @@ class MapContainer extends Component<MapContainerProps> {
           width={window.innerWidth}
           height={window.innerHeight}
           appName="Telkom GIS Spatial"
+          version="v2.6.0"
         />
         
         {/* Custom Control Panel */}
