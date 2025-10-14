@@ -99,6 +99,9 @@ class MapContainer extends Component<MapContainerProps> {
     setTimeout(() => {
       this.initializeKeplerSettings();
     }, 1500);
+
+
+      this.loadHouseholdTiles();
   }
 
   componentWillUnmount() {
@@ -107,6 +110,87 @@ class MapContainer extends Component<MapContainerProps> {
       this.restoreErrorLogging();
     }
   }
+
+  
+// Tambahan: Auto-load dataset vector tile untuk households (sesuai test_martin.html)
+  loadHouseholdTiles = async () => {
+    try {
+      // Sumber Sampling - dengan metadata URL untuk deteksi source-layer
+      const householdsSamplingDataset = {
+        info: {
+          id: "households_sampling_tileset",
+          label: "Indonesia Households (Sampling)",
+          format: "rows",
+          type: "vector-tile"
+        },
+        data: {fields: [], rows: []},
+        metadata: {
+          type: "remote",
+          remoteTileFormat: "mvt",
+          // URL tanpa .pbf extension seperti di test_martin.html
+          tilesetDataUrl: "https://telkom-access-geospatial-martin.3ddm.my.id/household_points_tiles/{z}/{x}/{y}",
+          // Tambahkan metadata URL untuk deteksi source-layer dan fields
+          tilesetMetadataUrl: "https://telkom-access-geospatial-martin.3ddm.my.id/household_points_tiles/metadata.json"
+        }
+      };
+
+      // Sumber Clustering - dengan metadata URL untuk deteksi source-layer
+      const householdsClusteringDataset = {
+        info: {
+          id: "households_clustering_tileset",
+          label: "Indonesia Households (Clustering)",
+          format: "rows",
+          type: "vector-tile"
+        },
+        data: {fields: [], rows: []},
+        metadata: {
+          type: "remote",
+          remoteTileFormat: "mvt",
+          // URL tanpa .pbf extension seperti di test_martin.html
+          tilesetDataUrl: "https://telkom-access-geospatial-martin.3ddm.my.id/household_points_clustered_tiles/{z}/{x}/{y}",
+          // Tambahkan metadata URL untuk deteksi source-layer dan fields
+          tilesetMetadataUrl: "https://telkom-access-geospatial-martin.3ddm.my.id/household_points_clustered_tiles/metadata.json"
+        }
+      };
+
+      // Dispatch kedua dataset dengan delay yang lebih pendek
+      setTimeout(() => {
+        this.props.dispatch(
+          wrapTo(
+            "map",
+            addDataToMap({
+              datasets: householdsSamplingDataset,
+              options: {
+                centerMap: true, // Center map untuk dataset pertama
+                keepExistingConfig: false, // Reset config untuk fokus ke household data
+                autoCreateLayers: true
+              }
+            })
+          )
+        );
+      }, 800);
+
+      setTimeout(() => {
+        this.props.dispatch(
+          wrapTo(
+            "map",
+            addDataToMap({
+              datasets: householdsClusteringDataset,
+              options: {
+                centerMap: false, // Jangan center lagi untuk dataset kedua
+                keepExistingConfig: true,
+                autoCreateLayers: true
+              }
+            })
+          )
+        );
+      }, 1200);
+    } catch (error) {
+      // Hindari error notification: cukup log di console
+      console.warn("Household vector tiles not available:", error instanceof Error ? error.message : String(error));
+    }
+  };
+
 
   initializeKeplerSettings = () => {
     // Hide side panel initially (but keep it toggleable)
