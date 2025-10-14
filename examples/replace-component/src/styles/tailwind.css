@@ -895,15 +895,31 @@ video {
 
 /* Memastikan Kepler.gl tidak terganggu oleh overlay */
 #app {
-    position: relative;
-    width: 100%;
-    height: 100vh;
-    overflow: hidden;
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  background-color: #f7f7f7 !important;
 }
 
 /* Reset styles yang mungkin mengganggu */
 body {
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #f7f7f7 !important;
 }
+
+/* Force Kepler.gl to use light background */
+.kepler-gl,
+.kepler-gl__map-container,
+.mapboxgl-map,
+[class*="kepler-gl"] {
+  background-color: #f7f7f7 !important;
+}
+
+/* Override Kepler's dark theme background */
+.kepler-gl .mapboxgl-canvas-container {
+  background-color: transparent !important;
+}
+
