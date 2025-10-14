@@ -15,7 +15,7 @@ const rootReducer = combineReducers({
     uiState: {
       currentModal: null,
       readOnly: false,
-      activeSidePanel: null, // Hide side panel
+      activeSidePanel: 'layer', // Hide side panel
       theme: THEME.light,
       mapControls: {
         visibleLayers: {

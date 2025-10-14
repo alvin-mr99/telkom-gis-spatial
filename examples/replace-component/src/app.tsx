@@ -110,9 +110,9 @@ class MapContainer extends Component<MapContainerProps> {
 
   initializeKeplerSettings = () => {
     // Hide side panel initially (but keep it toggleable)
-    this.props.dispatch(
-      wrapTo("map", toggleSidePanel(null))
-    );
+    // this.props.dispatch(
+    //   wrapTo("map", toggleSidePanel(null))
+    // );
 
     // Set map config with voyager style - executed AFTER data load
     const mapConfig = {
