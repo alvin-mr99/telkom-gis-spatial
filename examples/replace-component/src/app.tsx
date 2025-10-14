@@ -292,6 +292,13 @@ class MapContainer extends Component<MapContainerProps> {
   };
 
   render() {
+    const { keplerGl } = this.props;
+    
+    // Get current map style to determine theme
+    const currentMapStyle = keplerGl?.map?.mapStyle?.styleType || 'voyager';
+    const isDarkTheme = currentMapStyle === 'dark' || currentMapStyle === 'muted_night';
+    const keplerTheme = isDarkTheme ? 'dark' : 'light';
+    
     return (
       <div style={{ 
         position: 'relative', 
@@ -302,7 +309,7 @@ class MapContainer extends Component<MapContainerProps> {
         {/* Kepler.gl Map - Full screen background */}
         <KeplerGl
           id="map"
-          theme="light"
+          theme={keplerTheme}
           mapboxApiAccessToken={process.env.MapboxAccessToken}
           width={window.innerWidth}
           height={window.innerHeight}
@@ -331,7 +338,7 @@ class MapContainer extends Component<MapContainerProps> {
             bottom: '24px',
             left: '50%',
             transform: 'translateX(-50%)',
-            zIndex: 1000,
+            zIndex: 50,
             pointerEvents: 'auto',
             width: 'calc(100% - 48px)',
             maxWidth: '570px'
