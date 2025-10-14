@@ -21,7 +21,7 @@ const reducers = combineReducers({
     uiState: {
       currentModal: null, // Hide "Add Data To Map" modal on startup
       readOnly: false,
-      activeSidePanel: null
+      activeSidePanel: 'layer'
     },
     mapStyle: {
       styleType: 'voyager', // Set default to voyager (light theme)
