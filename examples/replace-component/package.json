@@ -3,10 +3,14 @@
   "version": "0.1.0",
   "scripts": {
     "prestart": "taskkill /F /IM node.exe 2>nul || echo No Node processes to kill",
-    "start": "node esbuild.config.mjs --start",
-    "build": "node esbuild.config.mjs --build",
-    "start:local": "NODE_ENV=local node esbuild.config.mjs --start",
-    "start:clean": "npm run prestart && npm start",
+    "build:css": "tailwindcss -i ./src/styles/tailwind.css -o ./src/styles/output.css --watch",
+    "build:css:prod": "tailwindcss -i ./src/styles/tailwind.css -o ./src/styles/output.css --minify",
+    "dev": "vite",
+    "start": "yarn build:css & vite",
+    "build": "yarn build:css:prod && vite build",
+    "preview": "vite preview",
+    "start:local": "NODE_ENV=local yarn build:css & vite",
+    "start:clean": "yarn prestart && yarn start",
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
@@ -16,8 +20,8 @@
     "@kepler.gl/reducers": "^3.0.0",
     "@kepler.gl/schemas": "^3.0.0",
     "@kepler.gl/utils": "^3.0.0",
-    "esbuild": "^0.19.0",
     "global": "^4.3.0",
+    "lucide-react": "^0.545.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-palm": "^3.3.6",
@@ -28,16 +32,19 @@
     "styled-components": "^5.3.11"
   },
   "devDependencies": {
-    "@dotenv-run/esbuild": "^1.0.0",
     "@types/react": "^18.2.0",
     "@types/react-dom": "^18.2.0",
     "@types/react-redux": "^7.1.25",
     "@types/react-virtualized": "^9.21.0",
     "@types/redux-actions": "^2.6.0",
     "@types/styled-components": "^5.1.26",
-    "esbuild-plugin-copy": "^2.1.1",
-    "esbuild-plugin-replace": "^1.4.0",
-    "typescript": "^5.0.0"
+    "@vitejs/plugin-react": "^4.0.0",
+    "autoprefixer": "^10.4.21",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^3.4.17",
+    "typescript": "^5.0.0",
+    "vite": "^5.0.0",
+    "vite-plugin-wasm": "^3.3.0"
   },
   "engines": {
     "node": ">=18"
