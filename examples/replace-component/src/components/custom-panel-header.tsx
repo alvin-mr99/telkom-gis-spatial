@@ -1,7 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Calendar, MapPin, Layers, ChevronDown, Search, PanelLeft } from 'lucide-react';
+import { Calendar, ChevronDown, Search, BarChart3, Filter, Edit, Palette } from 'lucide-react';
+import ModalDate from './HeadPanel/modalDate';
+import ModalSearch from './HeadPanel/modalSearch';
 
-// Mock data untuk dropdown options
 const regionOptions = ['Region 1', 'Region 2', 'Region 3', 'Region 4'];
 const witelOptions = ['Witel Jakarta', 'Witel Bandung', 'Witel Surabaya', 'Witel Medan'];
 const stoOptions = ['STO Jakarta Pusat', 'STO Jakarta Barat', 'STO Jakarta Timur', 'STO Jakarta Selatan'];
@@ -16,68 +17,67 @@ function ModernKeplerPanel() {
     const [kpi, setKpi] = useState('KPI');
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
-    const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+    const [openDropdown, setOpenDropdown] = useState(null);
+    const [activeIcon, setActiveIcon] = useState(null);
+    const [showDateModal, setShowDateModal] = useState(false);
+    const [showSearchModal, setShowSearchModal] = useState(false);
 
-    const IconButton = ({ icon: Icon, active = false, onClick = undefined, title = "" }) => (
-        <button 
-            onClick={onClick}
+    const IconButton = ({ icon: Icon, id, title }) => (
+        <button
+            onClick={() => setActiveIcon(activeIcon === id ? null : id)}
             title={title}
-            className={`w-8 h-8 rounded-lg flex items-center justify-center transition-all duration-200 ${
-                active
+            className={`w-7 h-7 rounded-md flex items-center justify-center transition-all duration-200 text-gray-600 border border-gray-200
+                ${activeIcon === id
                     ? 'bg-blue-500 text-white shadow-md'
-                    : 'bg-white/90 text-gray-600 hover:bg-white hover:text-gray-800 border border-gray-200'
-            }`}>
-            <Icon size={16} />
+                    : 'bg-white/90 hover:bg-white hover:text-gray-800'}
+            `}
+        >
+            <Icon size={14} />
         </button>
     );
 
-    const Dropdown = ({ id, value, onChange, options = [], placeholder = "Select..." }) => {
-        const dropdownRef = useRef<HTMLDivElement>(null);
+    const Dropdown = ({ id, value, onChange, options = [] }) => {
+        const dropdownRef = useRef(null);
         const isOpen = openDropdown === id;
 
         useEffect(() => {
-            const handleClickOutside = (event: MouseEvent) => {
-                if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+            const handleClickOutside = (event) => {
+                if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
                     setOpenDropdown(null);
                 }
             };
-
             if (isOpen) {
                 document.addEventListener('mousedown', handleClickOutside);
                 return () => document.removeEventListener('mousedown', handleClickOutside);
             }
         }, [isOpen]);
 
-        const toggleDropdown = (e: React.MouseEvent) => {
+        const toggleDropdown = (e) => {
             e.stopPropagation();
             setOpenDropdown(isOpen ? null : id);
         };
 
-        const selectOption = (option: string) => {
+        const selectOption = (option) => {
             onChange(option);
             setOpenDropdown(null);
         };
 
         return (
             <div className="relative" ref={dropdownRef}>
-                <button 
+                <button
                     onClick={toggleDropdown}
-                    className="px-3 py-1.5 bg-white/95 backdrop-blur-sm border border-gray-200 rounded-lg text-xs font-medium text-gray-700 hover:bg-white hover:border-gray-300 transition-all duration-200 flex items-center gap-1.5 min-w-[90px] justify-between shadow-sm"
+                    className="px-3 py-1.5 bg-white/95 border border-gray-200 rounded-md text-sm font-medium text-gray-700 hover:border-gray-300 transition-all flex items-center justify-between min-w-[75px]"
                 >
-                    <span className="truncate">{value}</span>
-                    <ChevronDown 
-                        size={14} 
-                        className={`opacity-50 transition-transform duration-200 flex-shrink-0 ${isOpen ? 'rotate-180' : ''}`} 
-                    />
+                    <span className="truncate text-sm">{value}</span>
+                    <ChevronDown size={12} className={`ml-2 opacity-50 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
                 </button>
-                
                 {isOpen && (
-                    <div className="absolute top-full mt-1 left-0 right-0 bg-white border border-gray-200 rounded-lg shadow-xl z-[9999] max-h-48 overflow-y-auto">
-                        {options.map((option, index) => (
+                    <div className="absolute top-full mt-1 left-0 right-0 bg-white border border-gray-200 rounded-md shadow-md z-50 max-h-32 overflow-y-auto">
+                        {options.map((option, i) => (
                             <button
-                                key={index}
+                                key={i}
                                 onClick={() => selectOption(option)}
-                                className="w-full px-3 py-1.5 text-left text-xs text-gray-700 hover:bg-blue-50 hover:text-blue-600 first:rounded-t-lg last:rounded-b-lg transition-colors duration-150"
+                                className="w-full px-3 py-1.5 text-left text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600"
                             >
                                 {option}
                             </button>
@@ -88,82 +88,62 @@ function ModernKeplerPanel() {
         );
     };
 
-    const DatePicker = ({ value, onChange, placeholder }) => {
-        return (
-            <div className="relative">
-                <input
-                    type="date"
-                    value={value}
-                    onChange={(e) => onChange(e.target.value)}
-                    className="px-3 py-1.5 pl-8 bg-white/95 backdrop-blur-sm border border-gray-200 rounded-lg text-xs font-medium text-gray-700 hover:bg-white hover:border-gray-300 transition-all duration-200 shadow-sm min-w-[110px]"
-                    placeholder={placeholder}
-                />
-                <Calendar size={14} className="absolute left-2.5 top-1/2 transform -translate-y-1/2 opacity-40 pointer-events-none text-gray-600" />
-            </div>
-        );
-    };
+    const DateButton = () => (
+        <button
+            onClick={() => setShowDateModal(true)}
+            className="px-3 py-1.5 bg-white/95 border border-gray-200 rounded-md text-sm font-medium text-gray-700 hover:border-gray-300 transition-all flex items-center min-w-[85px]"
+        >
+            <Calendar size={12} className="mr-1.5 opacity-50 text-gray-600" />
+            <span className="text-sm">
+                {startDate && endDate ? `${startDate} - ${endDate}` : 'Date'}
+            </span>
+        </button>
+    );
 
     return (
-        <div className="w-full max-w-5xl mx-auto px-4">
-            <div className="bg-white/95 backdrop-blur-xl border border-gray-200/80 rounded-xl shadow-lg">
-                <div className="px-4 py-3">
-                    <div className="flex items-center gap-2.5 flex-wrap">
-
-                        {/* Dropdowns - Baris Pertama */}
-                        <div className="flex items-center gap-2 flex-wrap">
-                            <IconButton icon={MapPin} active={true} title="Map View" />
-                            <IconButton icon={Layers} title="Layers" />
-                            <Dropdown 
-                                id="region"
-                                value={region} 
-                                onChange={setRegion} 
-                                options={regionOptions}
-                            />
-                            <Dropdown 
-                                id="witel"
-                                value={witel} 
-                                onChange={setWitel} 
-                                options={witelOptions}
-                            />
-                            <Dropdown 
-                                id="sto"
-                                value={sto} 
-                                onChange={setSto} 
-                                options={stoOptions}
-                            />
-                            <Dropdown 
-                                id="daily"
-                                value={daily} 
-                                onChange={setDaily} 
-                                options={dailyOptions}
-                            />
-
-                            {/* Date Pickers */}
-                            <DatePicker value={startDate} onChange={setStartDate} placeholder="Start" />
-                            <DatePicker value={endDate} onChange={setEndDate} placeholder="End" />
-
-                            {/* KPI Dropdown */}
-                            <Dropdown 
-                                id="kpi"
-                                value={kpi} 
-                                onChange={setKpi} 
-                                options={kpiOptions}
-                            />
-
-                            {/* Search Button */}
-                            <button 
-                                onClick={() => {
-                                    console.log('Search:', { region, witel, sto, daily, kpi, startDate, endDate });
-                                }}
-                                className="w-8 h-8 bg-blue-500 hover:bg-blue-600 rounded-lg flex items-center justify-center transition-all duration-200 shadow-md hover:shadow-lg ml-1"
-                            >
-                                <Search size={16} className="text-white" />
-                            </button>
-                        </div>
+        <>
+            <div className="absolute left-1/2 -translate-x-1/2 z-50">
+                <div className="w-full max-w-4xl bg-white/95 backdrop-blur-xl border border-gray-200/80 rounded-lg shadow-md px-3 py-2">
+                    {/* Satu baris - Semua controls dalam satu baris */}
+                    <div className="flex items-center justify-center gap-1.5">
+                        <IconButton icon={BarChart3} id="chart" title="Chart" />
+                        <IconButton icon={Filter} id="filter" title="Filter" />
+                        <IconButton icon={Palette} id="palette" title="Palette" />
+                        <IconButton icon={Edit} id="edit" title="Edit" />
+                        
+                        <div className="w-px h-5 bg-gray-300 mx-1.5"></div>
+                        
+                        <Dropdown id="region" value={region} onChange={setRegion} options={regionOptions} />
+                        <Dropdown id="witel" value={witel} onChange={setWitel} options={witelOptions} />
+                        <Dropdown id="sto" value={sto} onChange={setSto} options={stoOptions} />
+                        <Dropdown id="daily" value={daily} onChange={setDaily} options={dailyOptions} />
+                        <DateButton />
+                        <Dropdown id="kpi" value={kpi} onChange={setKpi} options={kpiOptions} />
+                        
+                        <button
+                            onClick={() => setShowSearchModal(true)}
+                            className="w-7 h-7 bg-blue-500 hover:bg-blue-600 rounded-md flex items-center justify-center shadow-md ml-1"
+                        >
+                            <Search size={14} className="text-white" />
+                        </button>
                     </div>
                 </div>
             </div>
-        </div>
+
+            <ModalDate
+                isOpen={showDateModal}
+                onClose={() => setShowDateModal(false)}
+                startDate={startDate}
+                endDate={endDate}
+                onStartDateChange={setStartDate}
+                onEndDateChange={setEndDate}
+            />
+
+            <ModalSearch
+                isOpen={showSearchModal}
+                onClose={() => setShowSearchModal(false)}
+            />
+        </>
     );
 }
 
