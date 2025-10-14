@@ -103,7 +103,7 @@ function ModernKeplerPanel() {
     return (
         <>
             <div className="absolute left-1/2 -translate-x-1/2 z-50">
-                <div className="w-full max-w-4xl bg-white/95 backdrop-blur-xl border border-gray-200/80 rounded-lg shadow-md px-3 py-2">
+                <div className="w-full max-w-4xl bg-white/20 backdrop-blur-xl border border-gray-200/80 rounded-lg shadow-md px-3 py-2">
                     {/* Satu baris - Semua controls dalam satu baris */}
                     <div className="flex items-center justify-center gap-1.5">
                         <IconButton icon={BarChart3} id="chart" title="Chart" />
