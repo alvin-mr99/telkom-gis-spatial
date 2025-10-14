@@ -108,24 +108,6 @@ function ModernKeplerPanel() {
             <div className="bg-white/95 backdrop-blur-xl border border-gray-200/80 rounded-xl shadow-lg">
                 <div className="px-4 py-3">
                     <div className="flex items-center gap-2.5 flex-wrap">
-                        {/* Icon Buttons Group */}
-                        {/* <div className="flex items-center gap-1.5 bg-gray-50/80 rounded-lg p-1.5 border border-gray-200/60">
-                            <IconButton 
-                                icon={PanelLeft} 
-                                onClick={() => console.log('Toggle panel')}
-                                title="Toggle Panel"
-                            />
-                            <IconButton icon={MapPin} active={true} title="Map View" />
-                            <IconButton icon={Layers} title="Layers" />
-                            <IconButton 
-                                icon={() => <div className="w-3.5 h-3.5 rounded border-2 border-current"></div>} 
-                                title="Rectangle Tool"
-                            />
-                            <IconButton 
-                                icon={() => <div className="w-3.5 h-3.5 rounded-full border-2 border-current"></div>} 
-                                title="Circle Tool"
-                            />
-                        </div> */}
 
                         {/* Dropdowns - Baris Pertama */}
                         <div className="flex items-center gap-2 flex-wrap">
