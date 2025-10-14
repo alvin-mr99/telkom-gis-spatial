@@ -6,7 +6,7 @@ import {createRoot} from 'react-dom/client';
 import {Provider} from 'react-redux';
 import store from './store';
 import App from './app';
-// import './styles/light-theme.css';
+import './styles/light-theme.css';
 
 const Root: React.FC = () => (
   <Provider store={store}>

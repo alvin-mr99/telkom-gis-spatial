@@ -9,6 +9,7 @@ import KeplerGl from './kepler-gl-custom';
 import { RootState } from './types';
 import {THEME} from '@kepler.gl/constants';
 import { suppressKeplerErrors, createSafeDatasetConfig } from './utils/error-handler';
+import KeplerGlPanel from './components/kepler-panel';
 
 interface AppProps {
   dispatch: Dispatch;
@@ -152,7 +153,9 @@ class MapContainer extends Component<MapContainerProps> {
           width={window.innerWidth}
           height={window.innerHeight}
           appName="Telkom GIS Spatial"
+          version="v2.6.0"
         />
+        <KeplerGlPanel />
       </div>
     );
   }
