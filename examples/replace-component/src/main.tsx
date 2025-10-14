@@ -16,8 +16,27 @@ import App from './app';
 const initialState = {};
 
 const reducers = combineReducers({
-  // Use keplerGlReducer directly without complex initial state
-  keplerGl: keplerGlReducer
+  // Initialize keplerGl with modal hidden and voyager map style
+  keplerGl: keplerGlReducer.initialState({
+    uiState: {
+      currentModal: null, // Hide "Add Data To Map" modal on startup
+      readOnly: false,
+      activeSidePanel: null
+    },
+    mapStyle: {
+      styleType: 'voyager', // Set default to voyager (light theme)
+      topLayerGroups: {},
+      visibleLayerGroups: {
+        label: true,
+        road: true,
+        border: false,
+        building: true,
+        water: true,
+        land: true,
+        '3d building': false
+      }
+    }
+  })
 });
 
 const middlewares = [taskMiddleware];

@@ -4,12 +4,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
-import { addDataToMap, wrapTo, toggleSidePanel, receiveMapConfig } from '@kepler.gl/actions';
+import { addDataToMap, wrapTo, toggleSidePanel, receiveMapConfig, toggleModal } from '@kepler.gl/actions';
 import KeplerGl from './kepler-gl-custom';
 import { RootState } from './types';
 import { THEME } from '@kepler.gl/constants';
 import { suppressKeplerErrors } from './utils/error-handler';
 import KeplerControlPanel from './components/custom-panel-header';
+import MapControlsPanel from './components/map-controls-panel';
 
 interface AppProps {
   dispatch: Dispatch;
@@ -61,6 +62,33 @@ class MapContainer extends Component<MapContainerProps> {
   componentDidMount() {
     // Suppress Kepler.gl error notifications
     this.restoreErrorLogging = suppressKeplerErrors();
+    
+    // Close any modal immediately
+    this.props.dispatch(
+      wrapTo("map", toggleModal(null))
+    );
+    
+    // Set voyager map style immediately to prevent black background
+    this.props.dispatch(
+      wrapTo("map", receiveMapConfig({
+        version: 'v1',
+        config: {
+          mapStyle: {
+            styleType: 'voyager',
+            topLayerGroups: {},
+            visibleLayerGroups: {
+              label: true,
+              road: true,
+              border: false,
+              building: true,
+              water: true,
+              land: true,
+              '3d building': false
+            }
+          }
+        }
+      }))
+    );
     
     // Load data first
     setTimeout(() => {
@@ -181,11 +209,16 @@ class MapContainer extends Component<MapContainerProps> {
 
   render() {
     return (
-      <div style={{ position: 'relative', width: '100%', height: '100vh' }}>
+      <div style={{ 
+        position: 'relative', 
+        width: '100%', 
+        height: '100vh',
+        backgroundColor: '#f7f7f7' // Light background to prevent black screen
+      }}>
         {/* Kepler.gl Map - Full screen background */}
         <KeplerGl
           id="map"
-          theme={THEME.light}
+          theme="light"
           mapboxApiAccessToken={process.env.MapboxAccessToken}
           width={window.innerWidth}
           height={window.innerHeight}
@@ -204,6 +237,22 @@ class MapContainer extends Component<MapContainerProps> {
           }}
         >
           <KeplerControlPanel />
+        </div>
+
+        {/* Map Controls Panel - Positioned at bottom center (horizontal layout) */}
+        <div
+          style={{
+            position: 'absolute',
+            bottom: '24px',
+            left: '50%',
+            transform: 'translateX(-50%)',
+            zIndex: 1000,
+            pointerEvents: 'auto',
+            width: 'calc(100% - 48px)',
+            maxWidth: '570px'
+          }}
+        >
+          <MapControlsPanel />
         </div>
       </div>
     );
