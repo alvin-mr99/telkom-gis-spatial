@@ -7,6 +7,7 @@ import { Provider } from 'react-redux';
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import { taskMiddleware } from 'react-palm/tasks';
 import keplerGlReducer from '@kepler.gl/reducers';
+import './clear-auth';
 
 // Import Tailwind CSS
 import './styles/tailwind.css';
