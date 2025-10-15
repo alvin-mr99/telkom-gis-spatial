@@ -139,12 +139,6 @@ function MapControlsPanel() {
         item.id === id ? { ...item, active: !item.active } : item
       )
     );
-    
-    // TODO: If connected to real Kepler layers, dispatch layerVisConfigChange
-    // const layer = layers.find(l => l.id === `layer-${id}`);
-    // if (layer) {
-    //   dispatch(layerVisConfigChange(layer, { isVisible: !item.active }));
-    // }
   };
 
   // Toggle all legend items visibility
@@ -155,11 +149,6 @@ function MapControlsPanel() {
     setLegendItems(items =>
       items.map(item => ({ ...item, active: newActiveState }))
     );
-    
-    // TODO: If connected to real Kepler layers, toggle all
-    // layers.forEach(layer => {
-    //   dispatch(layerVisConfigChange(layer, { isVisible: newActiveState }));
-    // });
   };
 
   const activeLegendCount = legendItems.filter(item => item.active).length;
@@ -167,15 +156,15 @@ function MapControlsPanel() {
   const hiddenCount = legendItems.length - 6;
 
   return (
-    <div className="w-full bg-white rounded-lg shadow-md border border-gray-200 overflow-hidden">
+    <div className="w-full bg-white/20 backdrop-blur-xl border border-gray-200/80 rounded-lg shadow-md overflow-hidden font-inter-normal">
       {/* Map Controls Section */}
       <div className="px-3 py-2 border-b border-gray-200">
         {/* Header */}
         <div className="flex items-center justify-between mb-2">
-          <h3 className="text-xs font-semibold text-gray-900">Map Controls</h3>
+          <h3 className="text-xs font-inter-semibold text-gray-900">Map Controls</h3>
           <div className="flex items-center gap-1.5">
-            <span className="text-[10px] font-medium text-blue-600">Zoom: {Math.round(zoom)}</span>
-            <span className="text-[10px] text-gray-500 capitalize">{mapStyle}</span>
+            <span className="text-[10px] font-inter-medium text-blue-600">Zoom: {Math.round(zoom)}</span>
+            <span className="text-[10px] font-inter-normal text-gray-500 capitalize">{mapStyle}</span>
           </div>
         </div>
         
@@ -185,10 +174,10 @@ function MapControlsPanel() {
           <div className="relative flex-1" ref={mapStyleRef}>
             <button
               onClick={() => setMapStyleOpen(!mapStyleOpen)}
-              className="w-full px-2 py-1.5 bg-white border border-gray-300 rounded text-left text-[11px] font-medium text-gray-700 hover:bg-gray-50 hover:border-gray-400 transition-all duration-200 flex items-center gap-1.5"
+              className="w-full px-2 py-1.5 bg-white border border-gray-300 rounded text-left text-[11px] font-inter-medium text-gray-700 hover:bg-gray-50 hover:border-gray-400 transition-all duration-200 flex items-center gap-1.5"
             >
               <Map size={12} className="text-gray-600" />
-              <span className="flex-1 capitalize">{mapStyle}</span>
+              <span className="flex-1 capitalize font-inter-normal">{mapStyle}</span>
               <ChevronDown
                 size={11}
                 className={`text-gray-500 transition-transform duration-200 ${
@@ -203,9 +192,9 @@ function MapControlsPanel() {
                   <button
                     key={style.id}
                     onClick={() => handleMapStyleChange(style.id)}
-                    className={`w-full px-2 py-1.5 text-left text-[11px] hover:bg-blue-50 transition-colors duration-150 ${
+                    className={`w-full px-2 py-1.5 text-left text-[11px] font-inter-normal hover:bg-blue-50 transition-colors duration-150 ${
                       style.id === mapStyle || style.label.toLowerCase() === mapStyle.toLowerCase()
-                        ? 'bg-blue-50 text-blue-600 font-medium'
+                        ? 'bg-blue-50 text-blue-600 font-inter-medium'
                         : 'text-gray-700'
                     }`}
                   >
@@ -267,13 +256,12 @@ function MapControlsPanel() {
         {/* Header */}
         <div className="flex items-center justify-between mb-2">
           <div className="flex items-center gap-1.5">
-            <h3 className="text-xs font-semibold text-gray-900">Map Legend</h3>
-            <span className="text-[10px] font-medium text-blue-600">{activeLegendCount} active</span>
+            <h3 className="text-xs font-inter-semibold text-gray-900">Map Legend</h3>
+            <span className="text-[10px] font-inter-medium text-blue-600">{activeLegendCount} active</span>
           </div>
           <div className="flex items-center gap-1.5">
             <button
               onClick={() => {
-                // TODO: Open modal/dialog untuk add new layer
                 console.log('Add new layer');
               }}
               className="w-6 h-6 rounded border border-gray-300 bg-white hover:bg-blue-50 hover:border-blue-400 transition-all duration-200 flex items-center justify-center"
@@ -311,37 +299,36 @@ function MapControlsPanel() {
           <>
             <div className="grid grid-cols-2 gap-1.5 max-h-64 overflow-y-auto pr-0.5">
               {visibleLegendItems.map((item) => (
-            <button
-              key={item.id}
-              onClick={() => toggleLegendItem(item.id)}
-              className={`p-1.5 rounded border transition-all duration-200 text-left ${
-                item.active
-                  ? 'bg-white border-gray-300 hover:border-gray-400 shadow-sm'
-                  : 'bg-gray-50 border-gray-200 opacity-60 hover:opacity-80'
-              }`}
-            >
-              <div className="flex items-start justify-between mb-1">
-                <div
-                  className="w-2.5 h-2.5 rounded-full flex-shrink-0"
-                  style={{ backgroundColor: item.color }}
-                />
                 <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    // TODO: Remove/delete this layer
-                    console.log('Remove layer:', item.id);
-                  }}
-                  className="text-gray-400 hover:text-red-600 transition-colors"
-                  title="Remove Layer"
+                  key={item.id}
+                  onClick={() => toggleLegendItem(item.id)}
+                  className={`p-1.5 rounded border transition-all duration-200 text-left ${
+                    item.active
+                      ? 'bg-white border-gray-300 hover:border-gray-400 shadow-sm'
+                      : 'bg-gray-50 border-gray-200 opacity-60 hover:opacity-80'
+                  }`}
                 >
-                  <Minus size={10} />
+                  <div className="flex items-start justify-between mb-1">
+                    <div
+                      className="w-2.5 h-2.5 rounded-full flex-shrink-0"
+                      style={{ backgroundColor: item.color }}
+                    />
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        console.log('Remove layer:', item.id);
+                      }}
+                      className="text-gray-400 hover:text-red-600 transition-colors"
+                      title="Remove Layer"
+                    >
+                      <Minus size={10} />
+                    </button>
+                  </div>
+                  <div className="text-[11px] font-inter-semibold text-gray-900 mb-0.5 line-clamp-1">
+                    {item.name}
+                  </div>
+                  <div className="text-[9px] font-inter-normal text-gray-500">{item.count} items</div>
                 </button>
-              </div>
-              <div className="text-[11px] font-semibold text-gray-900 mb-0.5 line-clamp-1">
-                {item.name}
-              </div>
-              <div className="text-[9px] text-gray-500">{item.count} items</div>
-            </button>
               ))}
             </div>
 
@@ -349,7 +336,7 @@ function MapControlsPanel() {
             {!showAllLegend && hiddenCount > 0 && (
               <button
                 onClick={() => setShowAllLegend(true)}
-                className="w-full mt-1.5 py-1.5 rounded border border-gray-300 bg-white hover:bg-gray-50 transition-all duration-200 text-[11px] font-medium text-gray-700 flex items-center justify-center gap-1"
+                className="w-full mt-1.5 py-1.5 rounded border border-gray-300 bg-white hover:bg-gray-50 transition-all duration-200 text-[11px] font-inter-medium text-gray-700 flex items-center justify-center gap-1"
               >
                 <span>Show {hiddenCount} more items</span>
                 <ChevronDown size={12} className="text-gray-600" />
@@ -359,7 +346,7 @@ function MapControlsPanel() {
             {showAllLegend && hiddenCount > 0 && (
               <button
                 onClick={() => setShowAllLegend(false)}
-                className="w-full mt-1.5 py-1.5 rounded border border-gray-300 bg-white hover:bg-gray-50 transition-all duration-200 text-[11px] font-medium text-gray-700 flex items-center justify-center gap-1"
+                className="w-full mt-1.5 py-1.5 rounded border border-gray-300 bg-white hover:bg-gray-50 transition-all duration-200 text-[11px] font-inter-medium text-gray-700 flex items-center justify-center gap-1"
               >
                 <span>Show Less</span>
                 <ChevronUp size={12} className="text-gray-600" />

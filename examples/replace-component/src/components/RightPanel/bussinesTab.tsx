@@ -59,28 +59,28 @@ const BusinessTab: React.FC = () => {
     };
 
     return (
-        <div className="space-y-6">
+        <div className="space-y-4 font-inter-normal">
             {/* Active Projects Section */}
             <div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">Active Projects</h3>
-                <div className="space-y-4">
+                <h3 className="text-base font-inter-semibold text-gray-900 mb-3">Active Projects</h3>
+                <div className="space-y-3">
                     {projects.map((project) => (
-                        <div key={project.id} className="bg-gray-50 rounded-lg p-4">
+                        <div key={project.id} className="bg-gray-50 rounded-lg p-3">
                             <div className="flex items-start justify-between mb-2">
-                                <h4 className="font-medium text-gray-900 text-sm">{project.name}</h4>
-                                <span className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(project.status)}`}>
+                                <h4 className="font-inter-medium text-gray-900 text-xs">{project.name}</h4>
+                                <span className={`px-2 py-0.5 rounded-full text-xs font-inter-medium ${getStatusColor(project.status)}`}>
                                     {project.status}
                                 </span>
                             </div>
-                            <div className="w-full bg-gray-200 rounded-full h-2 mb-2">
+                            <div className="w-full bg-gray-200 rounded-full h-1.5 mb-2">
                                 <div
-                                    className="bg-blue-500 h-2 rounded-full transition-all"
+                                    className="bg-blue-500 h-1.5 rounded-full transition-all"
                                     style={{ width: `${project.progress}%` }}
                                 ></div>
                             </div>
                             <div className="flex justify-between text-xs text-gray-600">
-                                <span>{project.progress}% Complete</span>
-                                <span>Due: {project.dueDate}</span>
+                                <span className="font-inter-normal">{project.progress}% Complete</span>
+                                <span className="font-inter-normal">Due: {project.dueDate}</span>
                             </div>
                         </div>
                     ))}
@@ -89,18 +89,18 @@ const BusinessTab: React.FC = () => {
 
             {/* Budget Summary */}
             <div>
-                <div className="space-y-3 bg-gray-50 rounded-lg p-4">
+                <div className="space-y-2">
                     <div className="flex justify-between items-center">
-                        <span className="text-gray-600 text-sm">Total Budget</span>
-                        <span className="font-semibold text-gray-900">{counterData.totalBudget}</span>
+                        <span className="text-gray-600 text-xs font-inter-normal">Total Budget</span>
+                        <span className="font-inter-semibold text-gray-900 text-xs">{counterData.totalBudget}</span>
                     </div>
                     <div className="flex justify-between items-center">
-                        <span className="text-gray-600 text-sm">Spent</span>
-                        <span className="font-semibold text-gray-900">{counterData.spent}</span>
+                        <span className="text-gray-600 text-xs font-inter-normal">Spent</span>
+                        <span className="font-inter-semibold text-gray-900 text-xs">{counterData.spent}</span>
                     </div>
                     <div className="flex justify-between items-center">
-                        <span className="text-gray-600 text-sm">Remaining</span>
-                        <span className="font-semibold text-green-600">{counterData.remaining}</span>
+                        <span className="text-gray-600 text-xs font-inter-normal">Remaining</span>
+                        <span className="font-inter-semibold text-green-600 text-xs">{counterData.remaining}</span>
                     </div>
                 </div>
             </div>

@@ -1,6 +1,23 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Font Family Override */
+@layer base {
+  * {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  }
+  
+  html {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  }
+  
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  }
+}
 
 *,
 :after,
@@ -117,7 +134,8 @@
 :after,
 :before {
     box-sizing: border-box;
-    border: 0 solid #e5e7eb
+    border: 0 solid #e5e7eb;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
 }
 
 :after,
@@ -132,7 +150,7 @@ html {
     -moz-tab-size: 4;
     -o-tab-size: 4;
     tab-size: 4;
-    font-family: ui-sans-serif, system-ui, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
     font-feature-settings: normal;
     font-variation-settings: normal;
     -webkit-tap-highlight-color: transparent
@@ -140,7 +158,8 @@ html {
 
 body {
     margin: 0;
-    line-height: inherit
+    line-height: inherit;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
 }
 
 hr {
@@ -887,6 +906,7 @@ video {
   transform: translateY(-50%) !important;
   z-index: 1000 !important;
   pointer-events: auto !important;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
 }
 
 .sc-eGgGjL.kLnZxZ.side-bar__close {
@@ -900,6 +920,7 @@ video {
   height: 100vh;
   overflow: hidden;
   background-color: #f7f7f7 !important;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
 }
 
 /* Reset styles yang mungkin mengganggu */
@@ -908,6 +929,7 @@ body {
   padding: 0;
   overflow: hidden;
   background-color: #f7f7f7 !important;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
 }
 
 /* Force Kepler.gl to use light background */
@@ -916,10 +938,47 @@ body {
 .mapboxgl-map,
 [class*="kepler-gl"] {
   background-color: #f7f7f7 !important;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
 }
 
 /* Override Kepler's dark theme background */
 .kepler-gl .mapboxgl-canvas-container {
   background-color: transparent !important;
+}
+
+/* Font override untuk semua komponen custom */
+.custom-panel-header,
+.custom-panel-right,
+.custom-panel-controls,
+.modal-content,
+.dropdown-content,
+.tooltip-content {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif !important;
+}
+
+/* Font weight utilities yang lebih spesifik untuk Inter */
+.font-inter-light {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  font-weight: 300;
+}
+
+.font-inter-normal {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  font-weight: 400;
+}
+
+.font-inter-medium {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  font-weight: 500;
+}
+
+.font-inter-semibold {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  font-weight: 600;
+}
+
+.font-inter-bold {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  font-weight: 700;
 }
 
