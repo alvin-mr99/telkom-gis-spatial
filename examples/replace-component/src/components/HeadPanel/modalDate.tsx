@@ -26,8 +26,8 @@ const ModalDate: React.FC<ModalDateProps> = ({
     };
 
     return (
-        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center">
-            <div className="bg-white rounded-lg shadow-xl p-6 w-80">
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-[10000] flex items-center justify-center">
+            <div className="bg-white rounded-lg shadow-xl p-6 w-80 z-[10001]">
                 <div className="flex justify-between items-center mb-4">
                     <h3 className="text-lg font-semibold">Select Date Range</h3>
                     <button

@@ -2,6 +2,8 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Calendar, ChevronDown, Search, BarChart3, Filter, Edit, Palette } from 'lucide-react';
 import ModalDate from './HeadPanel/modalDate';
 import ModalSearch from './HeadPanel/modalSearch';
+import SpatialAnalysisModal from './spatial-analysis-modal';
+import MapStyleLayersModal from './map-style-layers-modal';
 
 const regionOptions = ['Region 1', 'Region 2', 'Region 3', 'Region 4'];
 const witelOptions = ['Witel Jakarta', 'Witel Bandung', 'Witel Surabaya', 'Witel Medan'];
@@ -21,15 +23,23 @@ function ModernKeplerPanel() {
     const [activeIcon, setActiveIcon] = useState(null);
     const [showDateModal, setShowDateModal] = useState(false);
     const [showSearchModal, setShowSearchModal] = useState(false);
+    const [showSpatialModal, setShowSpatialModal] = useState(false);
+    const [showMapStyleModal, setShowMapStyleModal] = useState(false);
 
-    const IconButton = ({ icon: Icon, id, title }) => (
+    const IconButton = ({ icon: Icon, id, title, onClick, isActive }) => (
         <button
-            onClick={() => setActiveIcon(activeIcon === id ? null : id)}
+            onClick={() => {
+                if (onClick) {
+                    onClick();
+                } else {
+                    setActiveIcon(activeIcon === id ? null : id);
+                }
+            }}
             title={title}
-            className={`w-7 h-7 rounded-md flex items-center justify-center transition-all duration-200 text-gray-600 border border-gray-200
-                ${activeIcon === id
-                    ? 'bg-blue-500 text-white shadow-md'
-                    : 'bg-white/90 hover:bg-white hover:text-gray-800'}
+            className={`w-7 h-7 rounded-md flex items-center justify-center transition-all duration-200 border border-gray-200
+                ${isActive || activeIcon === id
+                    ? 'bg-blue-500 text-white shadow-md border-blue-500'
+                    : 'bg-white/90 hover:bg-white text-gray-600 hover:text-gray-800'}
             `}
         >
             <Icon size={14} />
@@ -107,8 +117,20 @@ function ModernKeplerPanel() {
                     {/* Satu baris - Semua controls dalam satu baris */}
                     <div className="flex items-center justify-center gap-1.5">
                         <IconButton icon={BarChart3} id="chart" title="Chart" />
-                        <IconButton icon={Filter} id="filter" title="Filter" />
-                        <IconButton icon={Palette} id="palette" title="Palette" />
+                        <IconButton 
+                            icon={Filter} 
+                            id="filter" 
+                            title="Spatial Analysis"
+                            onClick={() => setShowSpatialModal(true)}
+                            isActive={showSpatialModal}
+                        />
+                        <IconButton 
+                            icon={Palette} 
+                            id="palette" 
+                            title="Map Style & Layers"
+                            onClick={() => setShowMapStyleModal(true)}
+                            isActive={showMapStyleModal}
+                        />
                         <IconButton icon={Edit} id="edit" title="Edit" />
                         
                         <div className="w-px h-5 bg-gray-300 mx-1.5"></div>
@@ -142,6 +164,16 @@ function ModernKeplerPanel() {
             <ModalSearch
                 isOpen={showSearchModal}
                 onClose={() => setShowSearchModal(false)}
+            />
+
+            <SpatialAnalysisModal
+                isOpen={showSpatialModal}
+                onClose={() => setShowSpatialModal(false)}
+            />
+
+            <MapStyleLayersModal
+                isOpen={showMapStyleModal}
+                onClose={() => setShowMapStyleModal(false)}
             />
         </>
     );
