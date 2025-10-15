@@ -11,6 +11,8 @@ import { THEME } from '@kepler.gl/constants';
 import { suppressKeplerErrors } from './utils/error-handler';
 import KeplerControlPanel from './components/custom-panel-header';
 import MapControlsPanel from './components/map-controls-panel';
+import CustomPanelRight from './components/custom-panel-right';
+import PanelToggleButton from './components/panel-toggle-button';
 
 interface AppProps {
   dispatch: Dispatch;
@@ -20,6 +22,7 @@ interface AppProps {
 interface AppState {
   width: number;
   height: number;
+  rightPanelOpen: boolean;
 }
 
 interface MapContainerProps {
@@ -31,7 +34,8 @@ class App extends Component<AppProps, AppState> {
     super(props);
     this.state = {
       width: window.innerWidth,
-      height: window.innerHeight
+      height: window.innerHeight,
+      rightPanelOpen: false
     };
   }
 
@@ -51,9 +55,33 @@ class App extends Component<AppProps, AppState> {
     });
   };
 
+  toggleRightPanel = () => {
+    this.setState(prevState => ({
+      rightPanelOpen: !prevState.rightPanelOpen
+    }));
+  };
+
+  closeRightPanel = () => {
+    this.setState({ rightPanelOpen: false });
+  };
+
   render() {
-    return <MapContainer dispatch={this.props.dispatch} />;
+    return (
+      <MapContainer 
+        dispatch={this.props.dispatch} 
+        rightPanelOpen={this.state.rightPanelOpen}
+        onToggleRightPanel={this.toggleRightPanel}
+        onCloseRightPanel={this.closeRightPanel}
+      />
+    );
   }
+}
+
+interface MapContainerProps {
+  dispatch: any;
+  rightPanelOpen: boolean;
+  onToggleRightPanel: () => void;
+  onCloseRightPanel: () => void;
 }
 
 class MapContainer extends Component<MapContainerProps> {
@@ -100,8 +128,7 @@ class MapContainer extends Component<MapContainerProps> {
       this.initializeKeplerSettings();
     }, 1500);
 
-
-      this.loadHouseholdTiles();
+    this.loadHouseholdTiles();
   }
 
   componentWillUnmount() {
@@ -111,8 +138,7 @@ class MapContainer extends Component<MapContainerProps> {
     }
   }
 
-  
-// Tambahan: Auto-load dataset vector tile untuk households (sesuai test_martin.html)
+  // Tambahan: Auto-load dataset vector tile untuk households (sesuai test_martin.html)
   loadHouseholdTiles = async () => {
     try {
       // Sumber Sampling - dengan metadata URL untuk deteksi source-layer
@@ -127,9 +153,7 @@ class MapContainer extends Component<MapContainerProps> {
         metadata: {
           type: "remote",
           remoteTileFormat: "mvt",
-          // URL tanpa .pbf extension seperti di test_martin.html
           tilesetDataUrl: "https://telkom-access-geospatial-martin.3ddm.my.id/household_points_tiles/{z}/{x}/{y}",
-          // Tambahkan metadata URL untuk deteksi source-layer dan fields
           tilesetMetadataUrl: "https://telkom-access-geospatial-martin.3ddm.my.id/household_points_tiles/metadata.json"
         }
       };
@@ -146,9 +170,7 @@ class MapContainer extends Component<MapContainerProps> {
         metadata: {
           type: "remote",
           remoteTileFormat: "mvt",
-          // URL tanpa .pbf extension seperti di test_martin.html
           tilesetDataUrl: "https://telkom-access-geospatial-martin.3ddm.my.id/household_points_clustered_tiles/{z}/{x}/{y}",
-          // Tambahkan metadata URL untuk deteksi source-layer dan fields
           tilesetMetadataUrl: "https://telkom-access-geospatial-martin.3ddm.my.id/household_points_clustered_tiles/metadata.json"
         }
       };
@@ -161,8 +183,8 @@ class MapContainer extends Component<MapContainerProps> {
             addDataToMap({
               datasets: householdsSamplingDataset,
               options: {
-                centerMap: true, // Center map untuk dataset pertama
-                keepExistingConfig: false, // Reset config untuk fokus ke household data
+                centerMap: true,
+                keepExistingConfig: false,
                 autoCreateLayers: true
               }
             })
@@ -177,7 +199,7 @@ class MapContainer extends Component<MapContainerProps> {
             addDataToMap({
               datasets: householdsClusteringDataset,
               options: {
-                centerMap: false, // Jangan center lagi untuk dataset kedua
+                centerMap: false,
                 keepExistingConfig: true,
                 autoCreateLayers: true
               }
@@ -186,19 +208,11 @@ class MapContainer extends Component<MapContainerProps> {
         );
       }, 1200);
     } catch (error) {
-      // Hindari error notification: cukup log di console
       console.warn("Household vector tiles not available:", error instanceof Error ? error.message : String(error));
     }
   };
 
-
   initializeKeplerSettings = () => {
-    // Hide side panel initially (but keep it toggleable)
-    // this.props.dispatch(
-    //   wrapTo("map", toggleSidePanel(null))
-    // );
-
-    // Set map config with voyager style - executed AFTER data load
     const mapConfig = {
       version: 'v1',
       config: {
@@ -236,7 +250,6 @@ class MapContainer extends Component<MapContainerProps> {
 
   loadMVTData = async () => {
     try {
-      // Dataset MVT (Mapbox Vector Tiles)
       const mvtDataset = {
         info: {
           id: "mvt_population_dataset_id",
@@ -256,7 +269,6 @@ class MapContainer extends Component<MapContainerProps> {
         }
       };
 
-      // Load MVT dataset with voyager style config
       this.props.dispatch(
         wrapTo(
           "map",
@@ -304,7 +316,7 @@ class MapContainer extends Component<MapContainerProps> {
         position: 'relative', 
         width: '100%', 
         height: '100vh',
-        backgroundColor: '#f7f7f7' // Light background to prevent black screen
+        backgroundColor: '#f7f7f7'
       }}>
         {/* Kepler.gl Map - Full screen background */}
         <KeplerGl
@@ -317,7 +329,7 @@ class MapContainer extends Component<MapContainerProps> {
           version="v2.6.0"
         />
         
-        {/* Custom Control Panel */}
+        {/* Custom Control Panel - Top Header */}
         <div 
           style={{
             position: 'absolute',
@@ -328,8 +340,20 @@ class MapContainer extends Component<MapContainerProps> {
             pointerEvents: 'auto'
           }}
         >
-          <KeplerControlPanel />
+          <KeplerControlPanel onToggleRightPanel={this.props.onToggleRightPanel} />
         </div>
+
+        {/* Custom Right Panel - Analysis Dashboard */}
+        <CustomPanelRight 
+          isOpen={this.props.rightPanelOpen}
+          onClose={this.props.onCloseRightPanel}
+        />
+
+        {/* Panel Toggle Button */}
+        <PanelToggleButton 
+          isOpen={this.props.rightPanelOpen}
+          onToggle={this.props.onToggleRightPanel}
+        />
 
         {/* Map Controls Panel - Positioned at bottom center (horizontal layout) */}
         <div

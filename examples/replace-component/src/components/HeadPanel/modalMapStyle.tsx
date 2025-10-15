@@ -15,7 +15,7 @@ import {
   Lightbulb
 } from 'lucide-react';
 
-interface MapStyleLayersModalProps {
+interface ModalMapStyleProps {
   isOpen: boolean;
   onClose: () => void;
 }
@@ -131,7 +131,7 @@ const layers: Layer[] = [
   }
 ];
 
-const MapStyleLayersModal: React.FC<MapStyleLayersModalProps> = ({ isOpen, onClose }) => {
+const ModalMapStyle: React.FC<ModalMapStyleProps> = ({ isOpen, onClose }) => {
   const dispatch = useDispatch();
   const keplerGl = useSelector((state: any) => state.keplerGl?.map);
   
@@ -411,4 +411,4 @@ const MapStyleLayersModal: React.FC<MapStyleLayersModalProps> = ({ isOpen, onClo
   );
 };
 
-export default MapStyleLayersModal;
+export default ModalMapStyle;

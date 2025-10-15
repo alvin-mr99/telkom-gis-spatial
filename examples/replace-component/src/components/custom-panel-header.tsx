@@ -2,8 +2,8 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Calendar, ChevronDown, Search, BarChart3, Filter, Edit, Palette } from 'lucide-react';
 import ModalDate from './HeadPanel/modalDate';
 import ModalSearch from './HeadPanel/modalSearch';
-import SpatialAnalysisModal from './spatial-analysis-modal';
-import MapStyleLayersModal from './map-style-layers-modal';
+import ModalSpatialAnalysis from './HeadPanel/modalSpatialAnalysis';
+import ModalMapStyle from './HeadPanel/modalMapStyle';
 
 const regionOptions = ['Region 1', 'Region 2', 'Region 3', 'Region 4'];
 const witelOptions = ['Witel Jakarta', 'Witel Bandung', 'Witel Surabaya', 'Witel Medan'];
@@ -11,7 +11,11 @@ const stoOptions = ['STO Jakarta Pusat', 'STO Jakarta Barat', 'STO Jakarta Timur
 const dailyOptions = ['Daily', 'Weekly', 'Monthly', 'Quarterly'];
 const kpiOptions = ['Throughput', 'Latency', 'Packet Loss', 'Availability'];
 
-function ModernKeplerPanel() {
+interface ModernKeplerPanelProps {
+    onToggleRightPanel?: () => void;
+}
+
+function ModernKeplerPanel({ onToggleRightPanel }: ModernKeplerPanelProps) {
     const [region, setRegion] = useState('Region');
     const [witel, setWitel] = useState('Witel');
     const [sto, setSto] = useState('STO');
@@ -25,26 +29,51 @@ function ModernKeplerPanel() {
     const [showSearchModal, setShowSearchModal] = useState(false);
     const [showSpatialModal, setShowSpatialModal] = useState(false);
     const [showMapStyleModal, setShowMapStyleModal] = useState(false);
+    const [hoveredIcon, setHoveredIcon] = useState<string | null>(null);
 
-    const IconButton = ({ icon: Icon, id, title, onClick, isActive }) => (
-        <button
-            onClick={() => {
-                if (onClick) {
-                    onClick();
-                } else {
-                    setActiveIcon(activeIcon === id ? null : id);
-                }
-            }}
-            title={title}
-            className={`w-7 h-7 rounded-md flex items-center justify-center transition-all duration-200 border border-gray-200
-                ${isActive || activeIcon === id
-                    ? 'bg-blue-500 text-white shadow-md border-blue-500'
-                    : 'bg-white/90 hover:bg-white text-gray-600 hover:text-gray-800'}
-            `}
-        >
-            <Icon size={14} />
-        </button>
-    );
+    const IconButton = ({ icon: Icon, id, title, tooltipText, onClick, isActive }) => {
+        const [showTooltip, setShowTooltip] = useState(false);
+
+        return (
+            <div className="relative">
+                <button
+                    onClick={() => {
+                        if (onClick) {
+                            onClick();
+                        } else {
+                            setActiveIcon(activeIcon === id ? null : id);
+                        }
+                    }}
+                    onMouseEnter={() => {
+                        setHoveredIcon(id);
+                        setShowTooltip(true);
+                    }}
+                    onMouseLeave={() => {
+                        setHoveredIcon(null);
+                        setShowTooltip(false);
+                    }}
+                    title={title}
+                    className={`w-7 h-7 rounded-md flex items-center justify-center transition-all duration-200 border border-gray-200
+                        ${isActive || activeIcon === id
+                            ? 'bg-blue-500 text-white shadow-md border-blue-500'
+                            : 'bg-white/90 hover:bg-white text-gray-600 hover:text-gray-800'}
+                    `}
+                >
+                    <Icon size={14} />
+                </button>
+                
+                {/* Tooltip */}
+                {showTooltip && (
+                    <div className="absolute top-full mt-2 left-1/2 transform -translate-x-1/2 z-[10002]">
+                        <div className="bg-gray-900 text-white text-xs font-medium px-2 py-1 rounded-md whitespace-nowrap">
+                            {tooltipText}
+                            <div className="absolute -top-1 left-1/2 transform -translate-x-1/2 w-2 h-2 bg-gray-900 rotate-45"></div>
+                        </div>
+                    </div>
+                )}
+            </div>
+        );
+    };
 
     const Dropdown = ({ id, value, onChange, options = [] }) => {
         const dropdownRef = useRef(null);
@@ -116,11 +145,18 @@ function ModernKeplerPanel() {
                 <div className="w-full max-w-4xl bg-white/95 backdrop-blur-xl border border-gray-200/80 rounded-lg shadow-md px-3 py-2">
                     {/* Satu baris - Semua controls dalam satu baris */}
                     <div className="flex items-center justify-center gap-1.5">
-                        <IconButton icon={BarChart3} id="chart" title="Chart" />
+                        <IconButton 
+                            icon={BarChart3} 
+                            id="chart" 
+                            title="Dashboard Analysis"
+                            tooltipText="Dashboard Analysis"
+                            onClick={onToggleRightPanel}
+                        />
                         <IconButton 
                             icon={Filter} 
                             id="filter" 
                             title="Spatial Analysis"
+                            tooltipText="Filtering"
                             onClick={() => setShowSpatialModal(true)}
                             isActive={showSpatialModal}
                         />
@@ -128,10 +164,16 @@ function ModernKeplerPanel() {
                             icon={Palette} 
                             id="palette" 
                             title="Map Style & Layers"
+                            tooltipText="Map Style"
                             onClick={() => setShowMapStyleModal(true)}
                             isActive={showMapStyleModal}
                         />
-                        <IconButton icon={Edit} id="edit" title="Edit" />
+                        <IconButton 
+                            icon={Edit} 
+                            id="edit" 
+                            title="Map Editor"
+                            tooltipText="Map Editor"
+                        />
                         
                         <div className="w-px h-5 bg-gray-300 mx-1.5"></div>
                         
@@ -166,12 +208,12 @@ function ModernKeplerPanel() {
                 onClose={() => setShowSearchModal(false)}
             />
 
-            <SpatialAnalysisModal
+            <ModalSpatialAnalysis
                 isOpen={showSpatialModal}
                 onClose={() => setShowSpatialModal(false)}
             />
 
-            <MapStyleLayersModal
+            <ModalMapStyle
                 isOpen={showMapStyleModal}
                 onClose={() => setShowMapStyleModal(false)}
             />

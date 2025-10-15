@@ -11,7 +11,7 @@ import {
   Play
 } from 'lucide-react';
 
-interface SpatialAnalysisModalProps {
+interface ModalSpatialAnalysisProps {
   isOpen: boolean;
   onClose: () => void;
 }
@@ -72,7 +72,7 @@ const useCases: UseCase[] = [
   }
 ];
 
-function SpatialAnalysisModal({ isOpen, onClose }: SpatialAnalysisModalProps) {
+const ModalSpatialAnalysis: React.FC<ModalSpatialAnalysisProps> = ({ isOpen, onClose }) => {
   const [activeTab, setActiveTab] = useState<TabType>('use-cases');
   const [searchRadius, setSearchRadius] = useState(500);
   const [infrastructureType, setInfrastructureType] = useState('ODC');
@@ -313,6 +313,6 @@ function SpatialAnalysisModal({ isOpen, onClose }: SpatialAnalysisModalProps) {
       </div>
     </>
   );
-}
+};
 
-export default SpatialAnalysisModal;
+export default ModalSpatialAnalysis;
