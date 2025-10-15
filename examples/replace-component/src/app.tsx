@@ -13,6 +13,7 @@ import KeplerControlPanel from './components/custom-panel-header';
 import MapControlsPanel from './components/map-controls-panel';
 import CustomPanelRight from './components/custom-panel-right';
 import PanelToggleButton from './components/panel-toggle-button';
+import LoginPage from './components/login-page';
 
 interface AppProps {
   dispatch: Dispatch;
@@ -20,9 +21,9 @@ interface AppProps {
 }
 
 interface AppState {
-  width: number;
+  width: number;  
   height: number;
-  rightPanelOpen: boolean;
+  isAuthenticated: boolean;
 }
 
 interface MapContainerProps {
@@ -32,10 +33,15 @@ interface MapContainerProps {
 class App extends Component<AppProps, AppState> {
   constructor(props: AppProps) {
     super(props);
+    
+    // Check if user is already authenticated
+    const isAuth = localStorage.getItem('telkom_gis_auth') === 'true';
+    console.log('🔐 Auth check:', isAuth);
+    
     this.state = {
       width: window.innerWidth,
       height: window.innerHeight,
-      rightPanelOpen: false
+      isAuthenticated: isAuth
     };
   }
 
@@ -47,6 +53,16 @@ class App extends Component<AppProps, AppState> {
   componentWillUnmount() {
     window.removeEventListener('resize', this.handleResize);
   }
+
+  handleLogin = () => {
+    this.setState({ isAuthenticated: true });
+  };
+
+  handleLogout = () => {
+    localStorage.removeItem('telkom_gis_auth');
+    localStorage.removeItem('telkom_gis_user');
+    this.setState({ isAuthenticated: false });
+  };
 
   handleResize = () => {
     this.setState({
@@ -66,14 +82,16 @@ class App extends Component<AppProps, AppState> {
   };
 
   render() {
-    return (
-      <MapContainer 
-        dispatch={this.props.dispatch} 
-        rightPanelOpen={this.state.rightPanelOpen}
+    const { isAuthenticated } = this.state;
+
+    if (!isAuthenticated) {
+      return <LoginPage onLogin={this.handleLogin} />;
+    }
+
+    return <MapContainer dispatch={this.props.dispatch}
+    rightPanelOpen={this.state.rightPanelOpen}
         onToggleRightPanel={this.toggleRightPanel}
-        onCloseRightPanel={this.closeRightPanel}
-      />
-    );
+        onCloseRightPanel={this.closeRightPanel} />;
   }
 }
 
