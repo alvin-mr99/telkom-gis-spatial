@@ -5,11 +5,11 @@ import ModalSearch from './HeadPanel/modalSearch';
 import ModalSpatialAnalysis from './HeadPanel/modalSpatialAnalysis';
 import ModalMapStyle from './HeadPanel/modalMapStyle';
 
-const regionOptions = ['Region 1', 'Region 2', 'Region 3', 'Region 4'];
-const witelOptions = ['Witel Jakarta', 'Witel Bandung', 'Witel Surabaya', 'Witel Medan'];
-const stoOptions = ['STO Jakarta Pusat', 'STO Jakarta Barat', 'STO Jakarta Timur', 'STO Jakarta Selatan'];
+const regionOptions = ['Jakarta', 'Bandung', 'Surabaya', 'Medan'];
+const witelOptions = ['Jakarta Selatan', 'Jakarta Utara', 'Jakarta Timur', 'Jakarta Barat'];
+const stoOptions = ['STO-01', 'STO-02', 'STO-03', 'STO-04'];
 const dailyOptions = ['Daily', 'Weekly', 'Monthly', 'Quarterly'];
-const kpiOptions = ['Throughput', 'Latency', 'Packet Loss', 'Availability'];
+const kpiOptions = ['KPI', 'Revenue', 'Utilization', 'Bandwidth', 'Incident', 'Availability'];
 
 interface ModernKeplerPanelProps {
     onToggleRightPanel?: () => void;
@@ -53,7 +53,7 @@ function ModernKeplerPanel({ onToggleRightPanel }: ModernKeplerPanelProps) {
                         setShowTooltip(false);
                     }}
                     title={title}
-                    className={`w-7 h-7 rounded-md flex items-center justify-center transition-all duration-200 border border-gray-200
+                    className={`w-7 h-7 rounded-md flex items-center justify-center transition-all duration-200 border border-gray-200 font-inter-medium
                         ${isActive || activeIcon === id
                             ? 'bg-blue-500 text-white shadow-md border-blue-500'
                             : 'bg-white/90 hover:bg-white text-gray-600 hover:text-gray-800'}
@@ -65,7 +65,7 @@ function ModernKeplerPanel({ onToggleRightPanel }: ModernKeplerPanelProps) {
                 {/* Tooltip */}
                 {showTooltip && (
                     <div className="absolute top-full mt-2 left-1/2 transform -translate-x-1/2 z-[10002]">
-                        <div className="bg-gray-900 text-white text-xs font-medium px-2 py-1 rounded-md whitespace-nowrap">
+                        <div className="bg-gray-900 text-white text-xs font-inter-medium px-2 py-1 rounded-md whitespace-nowrap">
                             {tooltipText}
                             <div className="absolute -top-1 left-1/2 transform -translate-x-1/2 w-2 h-2 bg-gray-900 rotate-45"></div>
                         </div>
@@ -102,12 +102,12 @@ function ModernKeplerPanel({ onToggleRightPanel }: ModernKeplerPanelProps) {
         };
 
         return (
-            <div className="relative" ref={dropdownRef}>
+            <div className="relative font-inter-normal" ref={dropdownRef}>
                 <button
                     onClick={toggleDropdown}
-                    className="px-3 py-1.5 bg-white/95 border border-gray-200 rounded-md text-sm font-medium text-gray-700 hover:border-gray-300 transition-all flex items-center justify-between min-w-[75px]"
+                    className="px-2 py-1.5 bg-white/95 border border-gray-200 rounded-md text-xs font-inter-medium text-gray-700 hover:border-gray-300 transition-all flex items-center justify-between min-w-[90px]"
                 >
-                    <span className="truncate text-sm">{value}</span>
+                    <span className="truncate text-xs font-inter-normal">{value}</span>
                     <ChevronDown size={12} className={`ml-2 opacity-50 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
                 </button>
                 {isOpen && (
@@ -116,7 +116,7 @@ function ModernKeplerPanel({ onToggleRightPanel }: ModernKeplerPanelProps) {
                             <button
                                 key={i}
                                 onClick={() => selectOption(option)}
-                                className="w-full px-3 py-1.5 text-left text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600"
+                                className="w-full px-2.5 py-1.5 text-left text-xs font-inter-normal text-gray-700 hover:bg-blue-50 hover:text-blue-600"
                             >
                                 {option}
                             </button>
@@ -130,10 +130,10 @@ function ModernKeplerPanel({ onToggleRightPanel }: ModernKeplerPanelProps) {
     const DateButton = () => (
         <button
             onClick={() => setShowDateModal(true)}
-            className="px-3 py-1.5 bg-white/95 border border-gray-200 rounded-md text-sm font-medium text-gray-700 hover:border-gray-300 transition-all flex items-center min-w-[85px]"
+            className="px-3 py-1.5 bg-white/95 border border-gray-200 rounded-md text-xs font-inter-medium text-gray-700 hover:border-gray-300 transition-all flex items-center min-w-[85px]"
         >
             <Calendar size={12} className="mr-1.5 opacity-50 text-gray-600" />
-            <span className="text-sm">
+            <span className="text-xs font-inter-normal">
                 {startDate && endDate ? `${startDate} - ${endDate}` : 'Date'}
             </span>
         </button>
@@ -142,7 +142,7 @@ function ModernKeplerPanel({ onToggleRightPanel }: ModernKeplerPanelProps) {
     return (
         <>
             <div className="absolute left-1/2 -translate-x-1/2 z-50">
-                <div className="w-full max-w-4xl bg-white/95 backdrop-blur-xl border border-gray-200/80 rounded-lg shadow-md px-3 py-2">
+                <div className="w-full max-w-4xl bg-white/20 backdrop-blur-xl border border-gray-200/80 rounded-lg shadow-md px-3 py-2 font-inter-normal">
                     {/* Satu baris - Semua controls dalam satu baris */}
                     <div className="flex items-center justify-center gap-1.5">
                         <IconButton 
