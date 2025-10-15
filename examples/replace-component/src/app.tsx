@@ -340,7 +340,7 @@ class MapContainer extends Component<MapContainerProps> {
             pointerEvents: 'auto'
           }}
         >
-          <KeplerControlPanel />
+          <KeplerControlPanel onToggleRightPanel={this.props.onToggleRightPanel} />
         </div>
 
         {/* Custom Right Panel - Analysis Dashboard */}
