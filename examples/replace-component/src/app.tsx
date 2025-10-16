@@ -5,7 +5,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import { Routes, Route, Navigate } from 'react-router-dom';
-import { addDataToMap, wrapTo, toggleSidePanel, receiveMapConfig, toggleModal } from '@kepler.gl/actions';
+import { addDataToMap, wrapTo, toggleSidePanel, receiveMapConfig, toggleModal, toggleMapControl  } from '@kepler.gl/actions';
 import KeplerGl from './kepler-gl-custom';
 import { RootState } from './types';
 import { THEME } from '@kepler.gl/constants';
@@ -23,7 +23,7 @@ interface AppProps {
 }
 
 interface AppState {
-  width: number;  
+  width: number;
   height: number;
   isAuthenticated: boolean;
   rightPanelOpen: boolean;
@@ -36,11 +36,11 @@ interface MapContainerProps {
 class App extends Component<AppProps, AppState> {
   constructor(props: AppProps) {
     super(props);
-    
+
     // Check if user is already authenticated
     const isAuth = localStorage.getItem('telkom_gis_auth') === 'true';
     console.log('🔐 Auth check:', isAuth);
-    
+
     this.state = {
       width: window.innerWidth,
       height: window.innerHeight,
@@ -149,12 +149,12 @@ class MapContainer extends Component<MapContainerProps> {
   componentDidMount() {
     // Suppress Kepler.gl error notifications
     this.restoreErrorLogging = suppressKeplerErrors();
-    
+
     // Close any modal immediately
     this.props.dispatch(
       wrapTo("map", toggleModal(null))
     );
-    
+
     // Set voyager map style immediately to prevent black background
     this.props.dispatch(
       wrapTo("map", receiveMapConfig({
@@ -176,16 +176,23 @@ class MapContainer extends Component<MapContainerProps> {
         }
       }))
     );
-    
+
     // Load data first
     // setTimeout(() => {
     //   this.loadMVTData();
     // }, 500);
-    
+
     // Set Kepler.gl settings after data loads
     setTimeout(() => {
       this.initializeKeplerSettings();
     }, 1500);
+
+    // Aktivkan legend setelah settings diinisialisasi
+    setTimeout(() => {
+      this.props.dispatch(
+        wrapTo("map", toggleMapControl('mapLegend'))
+      );
+    }, 2000);
 
     this.loadHouseholdTiles();
   }
@@ -197,141 +204,6 @@ class MapContainer extends Component<MapContainerProps> {
     }
   }
 
-  // Tambahan: Auto-load dataset vector tile untuk households (sesuai test_martin.html)
-  loadHouseholdTiles = async () => {
-    try {
-      // Sumber Sampling - dengan metadata URL untuk deteksi source-layer
-      const householdsSamplingDataset = {
-        info: {
-          id: "households_sampling_tileset",
-          label: "Indonesia Households (Sampling)",
-          format: "rows",
-          type: "vector-tile"
-        },
-        data: {fields: [], rows: []},
-        metadata: {
-          type: "remote",
-          remoteTileFormat: "mvt",
-          tilesetDataUrl: "https://telkom-access-geospatial-martin.3ddm.my.id/household_points_tiles/{z}/{x}/{y}",
-          tilesetMetadataUrl: "https://telkom-access-geospatial-martin.3ddm.my.id/household_points_tiles/metadata.json"
-        }
-      };
-
-      // Sumber Clustering - dengan metadata URL untuk deteksi source-layer
-      const householdsClusteringDataset = {
-        info: {
-          id: "households_clustering_tileset",
-          label: "Indonesia Households (Clustering)",
-          format: "rows",
-          type: "vector-tile"
-        },
-        data: {fields: [], rows: []},
-        metadata: {
-          type: "remote",
-          remoteTileFormat: "mvt",
-          tilesetDataUrl: "https://telkom-access-geospatial-martin.3ddm.my.id/household_points_clustered_tiles/{z}/{x}/{y}",
-          tilesetMetadataUrl: "https://telkom-access-geospatial-martin.3ddm.my.id/household_points_clustered_tiles/metadata.json"
-        }
-      };
-
-      // Sumber Clustering - dengan metadata URL untuk deteksi source-layer
-      const TStoBoundaries = {
-        info: {
-          id: "t_sto_boundaries",
-          label: "T-Sto Boundaries",
-          format: "rows",
-          type: "vector-tile"
-        },
-        data: {fields: [], rows: []},
-        metadata: {
-          type: "remote",
-          remoteTileFormat: "mvt",
-          tilesetDataUrl: "https://telkom-access-geospatial-martin.3ddm.my.id/t_sto_boundaries/{z}/{x}/{y}",
-          tilesetMetadataUrl: "https://telkom-access-geospatial-martin.3ddm.my.id/t_sto_boundaries/metadata.json"
-        }
-      };
-
-       // Sumber Clustering - dengan metadata URL untuk deteksi source-layer
-       const TbayExternal = {
-        info: {
-          id: "t_bay_external",
-          label: "T-Bay External",
-          format: "rows",
-          type: "vector-tile"
-        },
-        data: {fields: [], rows: []},
-        metadata: {
-          type: "remote",
-          remoteTileFormat: "mvt",
-          tilesetDataUrl: "https://telkom-access-geospatial-martin.3ddm.my.id/t_bay_external/{z}/{x}/{y}",
-          tilesetMetadataUrl: "https://telkom-access-geospatial-martin.3ddm.my.id/t_bay_external/metadata.json"
-        }
-      };
-
-      // Dispatch kedua dataset dengan delay yang lebih pendek
-      setTimeout(() => {
-        this.props.dispatch(
-          wrapTo(
-            "map",
-            addDataToMap({
-              datasets: householdsSamplingDataset,
-              options: {
-                centerMap: true,
-                keepExistingConfig: false,
-                autoCreateLayers: true
-              }
-            })
-          )
-        );
-      }, 800);
-
-      setTimeout(() => {
-        this.props.dispatch(
-          wrapTo(
-            "map",
-            addDataToMap({
-              datasets: householdsClusteringDataset,
-              options: {
-                centerMap: false,
-                keepExistingConfig: true,
-                autoCreateLayers: true
-              }
-            })
-          )
-        );
-      }, 1200);
-
-      setTimeout(() => {
-        this.props.dispatch(
-          wrapTo(
-            "map",
-            addDataToMap({
-              datasets: TStoBoundaries,
-              options: {
-                centerMap: false,
-                keepExistingConfig: true,
-                autoCreateLayers: true
-              }
-            })
-          )
-        );
-      }, 1000);
-      setTimeout(() => {
-        this.props.dispatch(
-          wrapTo(
-            "map",
-            addDataToMap({
-              datasets: TbayExternal,
-            })
-          )
-        );
-      }, 1400);
-
-    } catch (error) {
-      console.warn("Household vector tiles not available:", error instanceof Error ? error.message : String(error));
-    }
-  };
-
   initializeKeplerSettings = () => {
     const mapConfig = {
       version: 'v1',
@@ -339,10 +211,10 @@ class MapContainer extends Component<MapContainerProps> {
         mapState: {
           bearing: 0,
           dragRotate: false,
-          latitude: 37.7749295,
-          longitude: -122.4194155,
+          latitude: -0.7893, // Ubah dari -2.5489 ke -0.7893 (lebih ke utara)
+          longitude: 113.9213, // Ubah dari 118.0149 ke 113.9213 (lebih ke kiri sedikit)
           pitch: 0,
-          zoom: 9,
+          zoom: 4, 
           isSplit: false
         },
         mapStyle: {
@@ -366,6 +238,176 @@ class MapContainer extends Component<MapContainerProps> {
     this.props.dispatch(
       wrapTo("map", receiveMapConfig(mapConfig))
     );
+  };
+
+  // Tambahan: Auto-load dataset vector tile untuk households (sesuai test_martin.html)
+  loadHouseholdTiles = async () => {
+    try {
+      // Sumber Sampling - dengan metadata URL untuk deteksi source-layer
+      const householdsSamplingDataset = {
+        info: {
+          id: "households_sampling_tileset",
+          label: "Indonesia Households (Sampling)",
+          format: "rows",
+          type: "vector-tile"
+        },
+        data: { fields: [], rows: [] },
+        metadata: {
+          type: "remote",
+          remoteTileFormat: "mvt",
+          tilesetDataUrl: "https://telkom-access-geospatial-martin.3ddm.my.id/household_points_tiles/{z}/{x}/{y}",
+          tilesetMetadataUrl: "https://telkom-access-geospatial-martin.3ddm.my.id/household_points_tiles/metadata.json"
+        }
+      };
+
+      // Sumber Clustering - dengan metadata URL untuk deteksi source-layer
+      const householdsClusteringDataset = {
+        info: {
+          id: "households_clustering_tileset",
+          label: "Indonesia Households (Clustering)",
+          format: "rows",
+          type: "vector-tile"
+        },
+        data: { fields: [], rows: [] },
+        metadata: {
+          type: "remote",
+          remoteTileFormat: "mvt",
+          tilesetDataUrl: "https://telkom-access-geospatial-martin.3ddm.my.id/household_points_clustered_tiles/{z}/{x}/{y}",
+          tilesetMetadataUrl: "https://telkom-access-geospatial-martin.3ddm.my.id/household_points_clustered_tiles/metadata.json"
+        }
+      };
+
+      // Sumber T-Sto Boundaries - akan di-hide secara default
+      const TStoBoundaries = {
+        info: {
+          id: "t_sto_boundaries",
+          label: "T-Sto Boundaries",
+          format: "rows",
+          type: "vector-tile"
+        },
+        data: { fields: [], rows: [] },
+        metadata: {
+          type: "remote",
+          remoteTileFormat: "mvt",
+          tilesetDataUrl: "https://telkom-access-geospatial-martin.3ddm.my.id/t_sto_boundaries/{z}/{x}/{y}",
+          tilesetMetadataUrl: "https://telkom-access-geospatial-martin.3ddm.my.id/t_sto_boundaries/metadata.json"
+        }
+      };
+
+      // Sumber T-Bay External - akan di-hide secara default
+      const TbayExternal = {
+        info: {
+          id: "t_bay_external",
+          label: "T-Bay External",
+          format: "rows",
+          type: "vector-tile"
+        },
+        data: { fields: [], rows: [] },
+        metadata: {
+          type: "remote",
+          remoteTileFormat: "mvt",
+          tilesetDataUrl: "https://telkom-access-geospatial-martin.3ddm.my.id/t_bay_external/{z}/{x}/{y}",
+          tilesetMetadataUrl: "https://telkom-access-geospatial-martin.3ddm.my.id/t_bay_external/metadata.json"
+        }
+      };
+
+      // Dispatch dataset dengan koordinat yang sudah disesuaikan
+      setTimeout(() => {
+        this.props.dispatch(
+          wrapTo(
+            "map",
+            addDataToMap({
+              datasets: householdsSamplingDataset,
+              options: {
+                centerMap: true,
+                keepExistingConfig: false,
+                autoCreateLayers: true
+              },
+              config: {
+                mapState: {
+                  latitude: -0.7893, // Ubah dari -2.5489 ke -0.7893
+                  longitude: 113.9213, // Ubah dari 118.0149 ke 113.9213
+                  zoom: 4
+                }
+              }
+            })
+          )
+        );
+      }, 800);
+
+      setTimeout(() => {
+        this.props.dispatch(
+          wrapTo(
+            "map",
+            addDataToMap({
+              datasets: householdsClusteringDataset,
+              options: {
+                centerMap: false,
+                keepExistingConfig: true,
+                autoCreateLayers: true
+              }
+            })
+          )
+        );
+      }, 1200);
+
+      // Load T-Sto Boundaries dengan visibility hidden
+      setTimeout(() => {
+        this.props.dispatch(
+          wrapTo(
+            "map",
+            addDataToMap({
+              datasets: TStoBoundaries,
+              options: {
+                centerMap: false,
+                keepExistingConfig: true,
+                autoCreateLayers: true
+              },
+              config: {
+                visState: {
+                  layers: [{
+                    id: "t_sto_boundaries_layer",
+                    config: {
+                      isVisible: false // Hide layer by default
+                    }
+                  }]
+                }
+              }
+            })
+          )
+        );
+      }, 1000);
+
+      // Load T-Bay External dengan visibility hidden
+      setTimeout(() => {
+        this.props.dispatch(
+          wrapTo(
+            "map",
+            addDataToMap({
+              datasets: TbayExternal,
+              options: {
+                centerMap: false,
+                keepExistingConfig: true,
+                autoCreateLayers: true
+              },
+              config: {
+                visState: {
+                  layers: [{
+                    id: "t_bay_external_layer",
+                    config: {
+                      isVisible: false // Hide layer by default
+                    }
+                  }]
+                }
+              }
+            })
+          )
+        );
+      }, 1400);
+
+    } catch (error) {
+      console.warn("Household vector tiles not available:", error instanceof Error ? error.message : String(error));
+    }
   };
 
   loadMVTData = async () => {
@@ -394,8 +436,8 @@ class MapContainer extends Component<MapContainerProps> {
           "map",
           addDataToMap({
             datasets: mvtDataset,
-            options: { 
-              centerMap: true, 
+            options: {
+              centerMap: true,
               keepExistingConfig: false,
               autoCreateLayers: true
             },
@@ -425,16 +467,16 @@ class MapContainer extends Component<MapContainerProps> {
 
   render() {
     const { keplerGl } = this.props;
-    
+
     // Get current map style to determine theme
     const currentMapStyle = keplerGl?.map?.mapStyle?.styleType || 'voyager';
     const isDarkTheme = currentMapStyle === 'dark' || currentMapStyle === 'muted_night';
     const keplerTheme = isDarkTheme ? 'dark' : 'light';
-    
+
     return (
-      <div style={{ 
-        position: 'relative', 
-        width: '100%', 
+      <div style={{
+        position: 'relative',
+        width: '100%',
         height: '100vh',
         backgroundColor: '#f7f7f7'
       }}>
@@ -448,9 +490,9 @@ class MapContainer extends Component<MapContainerProps> {
           appName="Telkom GIS Spatial"
           version="v2.6.0"
         />
-        
+
         {/* Custom Control Panel - Top Header */}
-        <div 
+        <div
           style={{
             position: 'absolute',
             top: '16px',
@@ -487,13 +529,13 @@ class MapContainer extends Component<MapContainerProps> {
         </div>
 
         {/* Custom Right Panel - Analysis Dashboard */}
-        <CustomPanelRight 
+        <CustomPanelRight
           isOpen={this.props.rightPanelOpen}
           onClose={this.props.onCloseRightPanel}
         />
 
         {/* Panel Toggle Button */}
-        <PanelToggleButton 
+        <PanelToggleButton
           isOpen={this.props.rightPanelOpen}
           onToggle={this.props.onToggleRightPanel}
         />
