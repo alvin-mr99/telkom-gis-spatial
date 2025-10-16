@@ -33,9 +33,14 @@ module.exports = {
           '0%': { opacity: '0', transform: 'translateY(-10px)' },
           '100%': { opacity: '1', transform: 'translateY(0)' },
         },
+        progress: {
+          '0%': { width: '100%' },
+          '100%': { width: '0%' },
+        },
       },
       animation: {
         fadeIn: 'fadeIn 0.2s ease-out',
+        progress: 'progress 3s linear forwards',
       },
     },
   },
