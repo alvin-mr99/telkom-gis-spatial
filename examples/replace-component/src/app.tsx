@@ -137,9 +137,9 @@ class MapContainer extends Component<MapContainerProps> {
     );
     
     // Load data first
-    setTimeout(() => {
-      this.loadMVTData();
-    }, 500);
+    // setTimeout(() => {
+    //   this.loadMVTData();
+    // }, 500);
     
     // Set Kepler.gl settings after data loads
     setTimeout(() => {
@@ -193,6 +193,40 @@ class MapContainer extends Component<MapContainerProps> {
         }
       };
 
+      // Sumber Clustering - dengan metadata URL untuk deteksi source-layer
+      const TStoBoundaries = {
+        info: {
+          id: "t_sto_boundaries",
+          label: "T-Sto Boundaries",
+          format: "rows",
+          type: "vector-tile"
+        },
+        data: {fields: [], rows: []},
+        metadata: {
+          type: "remote",
+          remoteTileFormat: "mvt",
+          tilesetDataUrl: "https://telkom-access-geospatial-martin.3ddm.my.id/t_sto_boundaries/{z}/{x}/{y}",
+          tilesetMetadataUrl: "https://telkom-access-geospatial-martin.3ddm.my.id/t_sto_boundaries/metadata.json"
+        }
+      };
+
+       // Sumber Clustering - dengan metadata URL untuk deteksi source-layer
+       const TbayExternal = {
+        info: {
+          id: "t_bay_external",
+          label: "T-Bay External",
+          format: "rows",
+          type: "vector-tile"
+        },
+        data: {fields: [], rows: []},
+        metadata: {
+          type: "remote",
+          remoteTileFormat: "mvt",
+          tilesetDataUrl: "https://telkom-access-geospatial-martin.3ddm.my.id/t_bay_external/{z}/{x}/{y}",
+          tilesetMetadataUrl: "https://telkom-access-geospatial-martin.3ddm.my.id/t_bay_external/metadata.json"
+        }
+      };
+
       // Dispatch kedua dataset dengan delay yang lebih pendek
       setTimeout(() => {
         this.props.dispatch(
@@ -225,6 +259,33 @@ class MapContainer extends Component<MapContainerProps> {
           )
         );
       }, 1200);
+
+      setTimeout(() => {
+        this.props.dispatch(
+          wrapTo(
+            "map",
+            addDataToMap({
+              datasets: TStoBoundaries,
+              options: {
+                centerMap: false,
+                keepExistingConfig: true,
+                autoCreateLayers: true
+              }
+            })
+          )
+        );
+      }, 1000);
+      setTimeout(() => {
+        this.props.dispatch(
+          wrapTo(
+            "map",
+            addDataToMap({
+              datasets: TbayExternal,
+            })
+          )
+        );
+      }, 1400);
+
     } catch (error) {
       console.warn("Household vector tiles not available:", error instanceof Error ? error.message : String(error));
     }
