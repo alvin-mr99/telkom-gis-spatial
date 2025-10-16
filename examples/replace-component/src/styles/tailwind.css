@@ -982,3 +982,29 @@ body {
   font-weight: 700;
 }
 
+/* Override Kepler.gl Map Controls Position */
+/* Push Kepler default controls (3D button, language selector, etc.) down below profile dropdown */
+.kepler-gl .map-control {
+  top: 80px !important; /* Push down to avoid overlap with profile dropdown */
+}
+
+.kepler-gl .map-control-top-right {
+  top: 80px !important;
+}
+
+/* Adjust individual control buttons in the top-right corner */
+.kepler-gl .map-control-panel {
+  margin-top: 80px !important;
+}
+
+/* For Mapbox/Maplibre controls in top-right */
+.mapboxgl-ctrl-top-right,
+.maplibregl-ctrl-top-right {
+  top: 80px !important;
+}
+
+/* Ensure proper stacking */
+.mapboxgl-ctrl-top-right .mapboxgl-ctrl,
+.maplibregl-ctrl-top-right .maplibregl-ctrl {
+  margin-top: 8px !important;
+}

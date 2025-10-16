@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { LogIn, Mail, Lock, Eye, EyeOff, MapPin } from 'lucide-react';
 
 interface LoginPageProps {
@@ -6,6 +7,7 @@ interface LoginPageProps {
 }
 
 const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
+  const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -44,6 +46,7 @@ const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
       
       setIsLoading(false);
       onLogin();
+      navigate('/');
     }, 1000);
   };
 
