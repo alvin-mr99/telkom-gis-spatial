@@ -22,8 +22,8 @@ const rootReducer = combineReducers({
           show: false
         },
         mapLegend: {
-          show: false,
-          active: false
+          show: true,     // Ubah dari false ke true
+          active: true    // Ubah dari false ke true
         },
         toggle3d: {
           show: false
