@@ -4,6 +4,7 @@ import { User, LogOut, Settings, HelpCircle, ChevronDown } from 'lucide-react';
 import ProfileModal from './ProfileModals/profile-modal';
 import SettingsModal from './ProfileModals/settings-modal';
 import HelpSupportModal from './ProfileModals/help-support-modal';
+import LogoutConfirmModal from './ProfileModals/logout-confirm-modal';
 
 interface ProfileDropdownProps {
   onLogout: () => void;
@@ -15,6 +16,7 @@ const ProfileDropdown: React.FC<ProfileDropdownProps> = ({ onLogout }) => {
   const [showProfileModal, setShowProfileModal] = useState(false);
   const [showSettingsModal, setShowSettingsModal] = useState(false);
   const [showHelpModal, setShowHelpModal] = useState(false);
+  const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   // Get user data from localStorage
@@ -128,7 +130,10 @@ const ProfileDropdown: React.FC<ProfileDropdownProps> = ({ onLogout }) => {
           {/* Logout Section */}
           <div className="border-t border-gray-200 py-1">
             <button
-              onClick={handleLogout}
+              onClick={() => {
+                setIsOpen(false);
+                setShowLogoutConfirm(true);
+              }}
               className="w-full px-3 py-2 flex items-center gap-2.5 text-xs font-inter-medium text-red-600 hover:bg-red-50 transition-colors duration-150 group"
             >
               <LogOut size={14} className="text-red-500 group-hover:text-red-600" />
@@ -142,6 +147,11 @@ const ProfileDropdown: React.FC<ProfileDropdownProps> = ({ onLogout }) => {
       <ProfileModal isOpen={showProfileModal} onClose={() => setShowProfileModal(false)} />
       <SettingsModal isOpen={showSettingsModal} onClose={() => setShowSettingsModal(false)} />
       <HelpSupportModal isOpen={showHelpModal} onClose={() => setShowHelpModal(false)} />
+      <LogoutConfirmModal 
+        isOpen={showLogoutConfirm} 
+        onClose={() => setShowLogoutConfirm(false)}
+        onConfirm={handleLogout}
+      />
     </div>
   );
 };
