@@ -4,7 +4,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
-import { addDataToMap, wrapTo, toggleSidePanel, receiveMapConfig, toggleModal, toggleMapControl } from '@kepler.gl/actions';
+import { Routes, Route, Navigate } from 'react-router-dom';
+import { addDataToMap, wrapTo, toggleSidePanel, receiveMapConfig, toggleModal, toggleMapControl  } from '@kepler.gl/actions';
 import KeplerGl from './kepler-gl-custom';
 import { RootState } from './types';
 import { THEME } from '@kepler.gl/constants';
@@ -14,6 +15,7 @@ import MapControlsPanel from './components/map-controls-panel';
 import CustomPanelRight from './components/custom-panel-right';
 import PanelToggleButton from './components/panel-toggle-button';
 import LoginPage from './components/login-page';
+import ProfileDropdown from './components/profile-dropdown';
 
 interface AppProps {
   dispatch: Dispatch;
@@ -24,6 +26,7 @@ interface AppState {
   width: number;
   height: number;
   isAuthenticated: boolean;
+  rightPanelOpen: boolean;
 }
 
 interface MapContainerProps {
@@ -41,13 +44,21 @@ class App extends Component<AppProps, AppState> {
     this.state = {
       width: window.innerWidth,
       height: window.innerHeight,
-      isAuthenticated: isAuth
+      isAuthenticated: isAuth,
+      rightPanelOpen: false
     };
   }
 
   componentDidMount() {
     this.handleResize();
     window.addEventListener('resize', this.handleResize);
+    
+    // Re-check auth status on mount (in case localStorage was modified)
+    const isAuth = localStorage.getItem('telkom_gis_auth') === 'true';
+    if (isAuth !== this.state.isAuthenticated) {
+      console.log('🔄 Auth state mismatch, updating...', { localStorage: isAuth, state: this.state.isAuthenticated });
+      this.setState({ isAuthenticated: isAuth });
+    }
   }
 
   componentWillUnmount() {
@@ -84,14 +95,43 @@ class App extends Component<AppProps, AppState> {
   render() {
     const { isAuthenticated } = this.state;
 
-    if (!isAuthenticated) {
-      return <LoginPage onLogin={this.handleLogin} />;
-    }
-
-    return <MapContainer dispatch={this.props.dispatch}
-      rightPanelOpen={this.state.rightPanelOpen}
-      onToggleRightPanel={this.toggleRightPanel}
-      onCloseRightPanel={this.closeRightPanel} />;
+    return (
+      <Routes>
+        <Route 
+          path="/login" 
+          element={
+            isAuthenticated ? (
+              <Navigate to="/" replace />
+            ) : (
+              <LoginPage onLogin={this.handleLogin} />
+            )
+          } 
+        />
+        <Route 
+          path="/" 
+          element={
+            isAuthenticated ? (
+              <MapContainer 
+                dispatch={this.props.dispatch}
+                rightPanelOpen={this.state.rightPanelOpen}
+                onToggleRightPanel={this.toggleRightPanel}
+                onCloseRightPanel={this.closeRightPanel}
+                onLogout={this.handleLogout}
+              />
+            ) : (
+              <Navigate to="/login" replace />
+            )
+          } 
+        />
+        {/* Catch all route - redirect based on auth status */}
+        <Route 
+          path="*" 
+          element={
+            <Navigate to={isAuthenticated ? "/" : "/login"} replace />
+          } 
+        />
+      </Routes>
+    );
   }
 }
 
@@ -100,6 +140,7 @@ interface MapContainerProps {
   rightPanelOpen: boolean;
   onToggleRightPanel: () => void;
   onCloseRightPanel: () => void;
+  onLogout: () => void;
 }
 
 class MapContainer extends Component<MapContainerProps> {
@@ -462,6 +503,29 @@ class MapContainer extends Component<MapContainerProps> {
           }}
         >
           <KeplerControlPanel onToggleRightPanel={this.props.onToggleRightPanel} />
+        </div>
+
+        {/* Right Side Controls Container */}
+        <div
+          style={{
+            position: 'absolute',
+            top: '16px',
+            right: '16px',
+            zIndex: 1001,
+            pointerEvents: 'none',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '8px',
+            alignItems: 'flex-end'
+          }}
+        >
+          {/* Profile Dropdown - Top of stack */}
+          <div style={{ pointerEvents: 'auto' }}>
+            <ProfileDropdown onLogout={this.props.onLogout} />
+          </div>
+          
+          {/* Spacer to push Kepler controls down */}
+          <div style={{ height: '8px' }} />
         </div>
 
         {/* Custom Right Panel - Analysis Dashboard */}
