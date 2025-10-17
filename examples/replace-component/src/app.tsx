@@ -16,6 +16,7 @@ import CustomPanelRight from './components/custom-panel-right';
 import PanelToggleButton from './components/panel-toggle-button';
 import LoginPage from './components/login-page';
 import ProfileDropdown from './components/profile-dropdown';
+import LoginSuccessAlert from './components/ProfileModals/login-success-alert';
 
 interface AppProps {
   dispatch: Dispatch;
@@ -28,6 +29,7 @@ interface AppState {
   isAuthenticated: boolean;
   rightPanelOpen: boolean;
   mapControlsOpen: boolean; // Tambahkan state untuk map controls
+  showLoginSuccess: boolean;
 }
 
 interface MapContainerProps {
@@ -54,6 +56,7 @@ class App extends Component<AppProps, AppState> {
       isAuthenticated: isAuth,
       rightPanelOpen: false,
       mapControlsOpen: true // Default map controls terbuka
+      showLoginSuccess: false
     };
   }
 
@@ -74,7 +77,10 @@ class App extends Component<AppProps, AppState> {
   }
 
   handleLogin = () => {
-    this.setState({ isAuthenticated: true });
+    this.setState({ 
+      isAuthenticated: true,
+      showLoginSuccess: true 
+    });
   };
 
   handleLogout = () => {
@@ -108,10 +114,26 @@ class App extends Component<AppProps, AppState> {
   };
 
   render() {
-    const { isAuthenticated } = this.state;
+    const { isAuthenticated, showLoginSuccess } = this.state;
+
+    // Get user data for success alert
+    const userDataString = localStorage.getItem('telkom_gis_user');
+    const userData = userDataString ? JSON.parse(userDataString) : null;
+    const userEmail = userData?.email || 'user@telkom.com';
+    const userName = userEmail.split('@')[0].replace(/[._-]/g, ' ').split(' ').map((word: string) => 
+      word.charAt(0).toUpperCase() + word.slice(1)
+    ).join(' ');
 
     return (
-      <Routes>
+      <>
+        {/* Login Success Alert */}
+        <LoginSuccessAlert 
+          isOpen={showLoginSuccess}
+          onClose={() => this.setState({ showLoginSuccess: false })}
+          userName={userName}
+        />
+        
+        <Routes>
         <Route 
           path="/login" 
           element={
@@ -148,6 +170,7 @@ class App extends Component<AppProps, AppState> {
           } 
         />
       </Routes>
+      </>
     );
   }
 }
