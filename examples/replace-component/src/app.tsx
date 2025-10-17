@@ -55,7 +55,7 @@ class App extends Component<AppProps, AppState> {
       height: window.innerHeight,
       isAuthenticated: isAuth,
       rightPanelOpen: false,
-      mapControlsOpen: true // Default map controls terbuka
+      mapControlsOpen: true ,
       showLoginSuccess: false
     };
   }
