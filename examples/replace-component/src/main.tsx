@@ -10,6 +10,7 @@ import { taskMiddleware } from 'react-palm/tasks';
 import keplerGlReducer from '@kepler.gl/reducers';
 import './clear-auth';
 
+
 // Import Tailwind CSS
 import './styles/tailwind.css';
 

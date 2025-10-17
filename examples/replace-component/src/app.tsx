@@ -5,7 +5,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import { Routes, Route, Navigate } from 'react-router-dom';
-import { addDataToMap, wrapTo, toggleSidePanel, receiveMapConfig, toggleModal, toggleMapControl  } from '@kepler.gl/actions';
+import { addDataToMap, wrapTo, toggleSidePanel, receiveMapConfig, toggleModal, toggleMapControl } from '@kepler.gl/actions';
 import KeplerGl from './kepler-gl-custom';
 import { RootState } from './types';
 import { THEME } from '@kepler.gl/constants';
@@ -27,10 +27,17 @@ interface AppState {
   height: number;
   isAuthenticated: boolean;
   rightPanelOpen: boolean;
+  mapControlsOpen: boolean; // Tambahkan state untuk map controls
 }
 
 interface MapContainerProps {
   dispatch: any;
+  rightPanelOpen: boolean;
+  mapControlsOpen: boolean; // Tambahkan prop untuk map controls
+  onToggleRightPanel: () => void;
+  onCloseRightPanel: () => void;
+  onToggleMapControls: () => void; // Tambahkan prop untuk toggle map controls
+  onLogout: () => void;
 }
 
 class App extends Component<AppProps, AppState> {
@@ -45,7 +52,8 @@ class App extends Component<AppProps, AppState> {
       width: window.innerWidth,
       height: window.innerHeight,
       isAuthenticated: isAuth,
-      rightPanelOpen: false
+      rightPanelOpen: false,
+      mapControlsOpen: true // Default map controls terbuka
     };
   }
 
@@ -92,6 +100,13 @@ class App extends Component<AppProps, AppState> {
     this.setState({ rightPanelOpen: false });
   };
 
+  // Tambahkan method untuk toggle map controls
+  toggleMapControls = () => {
+    this.setState(prevState => ({
+      mapControlsOpen: !prevState.mapControlsOpen
+    }));
+  };
+
   render() {
     const { isAuthenticated } = this.state;
 
@@ -114,8 +129,10 @@ class App extends Component<AppProps, AppState> {
               <MapContainer 
                 dispatch={this.props.dispatch}
                 rightPanelOpen={this.state.rightPanelOpen}
+                mapControlsOpen={this.state.mapControlsOpen}
                 onToggleRightPanel={this.toggleRightPanel}
                 onCloseRightPanel={this.closeRightPanel}
+                onToggleMapControls={this.toggleMapControls}
                 onLogout={this.handleLogout}
               />
             ) : (
@@ -138,8 +155,10 @@ class App extends Component<AppProps, AppState> {
 interface MapContainerProps {
   dispatch: any;
   rightPanelOpen: boolean;
+  mapControlsOpen: boolean;
   onToggleRightPanel: () => void;
   onCloseRightPanel: () => void;
+  onToggleMapControls: () => void;
   onLogout: () => void;
 }
 
@@ -177,11 +196,6 @@ class MapContainer extends Component<MapContainerProps> {
       }))
     );
 
-    // Load data first
-    // setTimeout(() => {
-    //   this.loadMVTData();
-    // }, 500);
-
     // Set Kepler.gl settings after data loads
     setTimeout(() => {
       this.initializeKeplerSettings();
@@ -193,6 +207,12 @@ class MapContainer extends Component<MapContainerProps> {
         wrapTo("map", toggleMapControl('mapLegend'))
       );
     }, 2000);
+
+    setTimeout(() => {
+      this.props.dispatch(
+        wrapTo("map", toggleMapControl('mapEffects'))
+      );
+    }, 2500);
 
     this.loadHouseholdTiles();
   }
@@ -211,8 +231,8 @@ class MapContainer extends Component<MapContainerProps> {
         mapState: {
           bearing: 0,
           dragRotate: false,
-          latitude: -0.7893, // Ubah dari -2.5489 ke -0.7893 (lebih ke utara)
-          longitude: 113.9213, // Ubah dari 118.0149 ke 113.9213 (lebih ke kiri sedikit)
+          latitude: -0.7893, 
+          longitude: 113.9213, 
           pitch: 0,
           zoom: 4, 
           isSplit: false
@@ -231,6 +251,18 @@ class MapContainer extends Component<MapContainerProps> {
           },
           threeDBuildingColor: [9.665468314072013, 17.18305478057247, 31.1442867897876],
           mapStyles: {}
+        },
+        uiState: {
+          mapControls: {
+            mapEffects: {
+              show: true,
+              active: false
+            },
+            mapLegend: {
+              show: true,
+              active: false
+            }
+          }
         }
       }
     };
@@ -534,27 +566,73 @@ class MapContainer extends Component<MapContainerProps> {
           onClose={this.props.onCloseRightPanel}
         />
 
-        {/* Panel Toggle Button */}
+        {/* Panel Toggle Button untuk Right Panel */}
         <PanelToggleButton
           isOpen={this.props.rightPanelOpen}
           onToggle={this.props.onToggleRightPanel}
+          side="right"
+          width={288}
         />
 
-        {/* Map Controls Panel - Positioned at bottom center (horizontal layout) */}
+        {/* Map Controls Panel dengan Toggle Button */}
         <div
           style={{
             position: 'absolute',
-            bottom: '24px',
-            left: '50%',
+            bottom: this.props.mapControlsOpen ? '24px' : '-400px', // Pindahkan container ke bawah ketika ditutup
+            left: '50%', 
             transform: 'translateX(-50%)',
             zIndex: 50,
             pointerEvents: 'auto',
             width: 'calc(100% - 48px)',
-            maxWidth: '570px'
+            maxWidth: '570px',
+            transition: 'bottom 0.3s ease' // Tambahkan transisi untuk container
           }}
         >
-          <MapControlsPanel />
+          {/* Toggle Button untuk Map Controls - selalu terlihat */}
+          <div style={{ 
+            display: 'flex', 
+            justifyContent: 'center', 
+            transition: 'margin-bottom 0.3s ease'
+          }}>
+            <PanelToggleButton
+              isOpen={this.props.mapControlsOpen}
+              onToggle={this.props.onToggleMapControls}
+              side="bottom"
+            />
+          </div>
+
+          {/* Map Controls Panel dengan animasi */}
+          <div
+            style={{
+              transition: 'all 0.3s ease',
+              transform: this.props.mapControlsOpen ? 'translateY(0)' : 'translateY(100%)',
+              opacity: this.props.mapControlsOpen ? 1 : 0,
+              pointerEvents: this.props.mapControlsOpen ? 'auto' : 'none'
+            }}
+          >
+            <MapControlsPanel />
+          </div>
         </div>
+
+        {/* Toggle button tetap untuk map controls ketika panel tertutup */}
+        {!this.props.mapControlsOpen && (
+          <div
+            style={{
+              position: 'absolute',
+              bottom: '24px',
+              left: '50%',
+              transform: 'translateX(-50%)',
+              zIndex: 50,
+              pointerEvents: 'auto'
+            }}
+          >
+            <PanelToggleButton
+              isOpen={this.props.mapControlsOpen}
+              onToggle={this.props.onToggleMapControls}
+              side="bottom"
+            />
+          </div>
+        )}
       </div>
     );
   }
