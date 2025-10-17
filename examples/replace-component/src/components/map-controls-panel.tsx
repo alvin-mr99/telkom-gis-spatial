@@ -156,7 +156,7 @@ function MapControlsPanel() {
   const hiddenCount = legendItems.length - 6;
 
   return (
-    <div className="w-full bg-white/20 backdrop-blur-xl border border-gray-200/80 rounded-lg shadow-md overflow-hidden font-inter-normal">
+    <div className="w-full h-auto max-h-96 bg-white/10 backdrop-blur-xl border border-gray-200/80 rounded-lg shadow-lg overflow-hidden font-inter-normal">
       {/* Map Controls Section */}
       <div className="px-3 py-2 border-b border-gray-200">
         {/* Header */}
@@ -187,7 +187,7 @@ function MapControlsPanel() {
             </button>
 
             {mapStyleOpen && (
-              <div className="absolute top-full mt-1 left-0 right-0 bg-white border border-gray-200 rounded shadow-lg z-50 overflow-hidden">
+              <div className="absolute bottom-full mb-1 left-0 right-0 bg-white border border-gray-200 rounded shadow-lg z-50 overflow-hidden">
                 {mapStyles.map((style) => (
                   <button
                     key={style.id}

@@ -15,26 +15,30 @@ const rootReducer = combineReducers({
     uiState: {
       currentModal: null,
       readOnly: false,
-      activeSidePanel: 'layer', // Hide side panel
+      activeSidePanel: 'layer', 
       theme: THEME.light,
       mapControls: {
         visibleLayers: {
           show: false
         },
         mapLegend: {
-          show: true,     // Ubah dari false ke true
-          active: true    // Ubah dari false ke true
+          show: true,     
+          active: false    
         },
         toggle3d: {
           show: false
         },
         splitMap: {
           show: false
+        },
+        mapEffects: {
+          show: true,      
+          active: false   
         }
       }
     },
     mapStyle: {
-      styleType: 'voyager', // Default to voyager map style
+      styleType: 'voyager',
       topLayerGroups: {},
       visibleLayerGroups: {
         label: true,
@@ -43,7 +47,7 @@ const rootReducer = combineReducers({
         building: true,
         water: true,
         land: true,
-        '3d building': true
+        '3d building': false
       },
       threeDBuildingColor: [9.665468314072013, 17.18305478057247, 31.1442867897876],
       mapStyles: {}
